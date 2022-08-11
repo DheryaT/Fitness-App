@@ -16,7 +16,7 @@ const Tabs = () => {
                 <Tab.Screen name="Home" component={Home} />
                 <Tab.Screen name="Calc" component={Calculator} />
             </Tab.Navigator>
-            <Text>he</Text>
+            <Text>hehe</Text>
         </NavigationContainer>
     )
 }
