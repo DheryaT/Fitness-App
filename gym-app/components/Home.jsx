@@ -3,7 +3,7 @@ import { View, Text} from "react-native";
 
 const Home = () => {
     return(
-        <View style={{backgroundColor:'red'}}>
+        <View style={{backgroundColor:'green'}}>
             <Text>Home!</Text>
         </View>
     )
