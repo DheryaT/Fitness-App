@@ -1,13 +1,22 @@
 import React from "react";
-import { View, Text} from "react-native";
+import {ImageBackground, StyleSheet,Text,View, Image,TextInput} from 'react-native';
 
 const Home = () => {
     return(
-        <View style={{backgroundColor:'green'}}>
-            <Text>Home!</Text>
+        <View style={styles.container}>
+            <Text style={styles.Title}>Hi ... {"\n"}Let's check your activity</Text>
         </View>
     )
 }
 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        margin: 20
+    },
+    Title:{
+        fontSize: 22
+    },
 
+})
 export { Home };
