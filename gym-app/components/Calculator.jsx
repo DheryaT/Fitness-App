@@ -10,4 +10,4 @@ const Calculator = () => {
 }
 
 
-export { Calculator }; //test
+export { Calculator }; //tes

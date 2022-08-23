@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home } from "./Home";
 import { Calculator } from "./Calculator";
+import { Login } from "./Login";
 
 
 const Tabs = () => {
@@ -15,6 +16,7 @@ const Tabs = () => {
             <Tab.Navigator>
                 <Tab.Screen name="Home" component={Home} />
                 <Tab.Screen name="Calc" component={Calculator} />
+                <Tab.Screen name="Login" component={Login} />
             </Tab.Navigator>
             <Text>hehe</Text>
         </NavigationContainer>
