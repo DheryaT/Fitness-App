@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home } from "./Home";
 import { Calculator } from "./Calculator";
 import { Login } from "./Login";
+import { Timer } from "./Timer";
 
 
 const Tabs = (props) => {
@@ -16,7 +17,8 @@ const Tabs = (props) => {
             <Tab.Navigator>
                 <Tab.Screen name="Home" component={Home} initialParams = {{user: props.user}}/>
                 <Tab.Screen name="Calc" component={Calculator} />
-                <Tab.Screen name="Login" name="Login"
+                <Tab.Screen name="Timer" component={Timer} />
+                <Tab.Screen name="Login"
                     component={Login}
                     options={{ title: 'Login' }}
                     initialParams = {{auth: props.auth}} />
