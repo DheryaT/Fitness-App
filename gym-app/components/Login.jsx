@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { Button } from 'react-native';
 import {ImageBackground, StyleSheet,Text,View, Image,TextInput} from 'react-native';
+import { loginFunction, logoutFunction } from '../api/Authentication';
 
 const image = { uri: "https://preview.redd.it/32zg2lkzo9l81.png?auto=webp&s=b2bad9bd024bf71d4a2592ddc8aace2cef65af0a" };
 
 const Login = ({navigation, route}) => {
+
+    const [loginEmail, setLoginEmail] = useState("");
+    const [loginPassword, setLoginPassword] = useState("");
+
     return(
         
         <View style={styles.container}>
@@ -12,17 +17,34 @@ const Login = ({navigation, route}) => {
             <View style={styles.inputView}>
                 <TextInput
                 style={styles.TextInput}
-                placeholder="Username"
-
+                placeholder="Email"
+                onChangeText={(text) => {
+                    setLoginEmail(text);
+                }}
             />
             </View>
             <View style={styles.inputView}>
             <TextInput style={styles.TextInput}
-            secureTextEntry={true}
+            secureTextEntry={true} 
              placeholder="Password"
-
+             onChangeText={(text) => {
+                setLoginPassword(text);
+            }}
             />
             </View>
+            <Button
+                 title="Login"
+                 onPress={() =>
+                 loginFunction(route.params.auth,
+                    loginEmail,
+                    loginPassword)
+                }
+            />
+            <Button
+                 title="LogOut"
+                 onPress={() => logoutFunction(route.params.auth)
+                }
+            />
             <Button
                  title="Register"
                  onPress={() =>

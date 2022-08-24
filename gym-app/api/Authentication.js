@@ -22,7 +22,9 @@ export const registerFunction = async (auth,
   }
 };
 
-const login = async () => {
+export const loginFunction = async (auth,
+  loginEmail,
+  loginPassword) => {
   try {
     const user = await signInWithEmailAndPassword(
       auth,
@@ -35,6 +37,6 @@ const login = async () => {
   }
 };
 
-const logout = async () => {
+export const logoutFunction = async (auth) => {
   await signOut(auth);
 };

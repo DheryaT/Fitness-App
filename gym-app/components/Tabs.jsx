@@ -7,16 +7,19 @@ import { Calculator } from "./Calculator";
 import { Login } from "./Login";
 
 
-const Tabs = () => {
+const Tabs = (props) => {
 
     const Tab = createBottomTabNavigator();
 
     return(
         <NavigationContainer>
             <Tab.Navigator>
-                <Tab.Screen name="Home" component={Home} />
+                <Tab.Screen name="Home" component={Home} initialParams = {{user: props.user}}/>
                 <Tab.Screen name="Calc" component={Calculator} />
-                <Tab.Screen name="Login" component={Login} />
+                <Tab.Screen name="Login" name="Login"
+                    component={Login}
+                    options={{ title: 'Login' }}
+                    initialParams = {{auth: props.auth}} />
             </Tab.Navigator>
         </NavigationContainer>
     )

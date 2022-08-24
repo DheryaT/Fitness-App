@@ -6,17 +6,27 @@ import {Register} from './components/Register'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator} from '@react-navigation/native-stack';
 import { auth } from "./firebase-config";
+import { useState } from 'react';
+import {
+  onAuthStateChanged
+} from "firebase/auth";
 
 
 export default function App() {
 
   const Stack = createNativeStackNavigator();
-  const loggedin = false;
+  const [loggedin, setLoggedIn ]= useState(false);
 
+  const [user, setUser] = useState({});
+
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+    setLoggedIn(user ? true : false)
+  });
 
 
   return (
-    loggedin ?  <Tabs/> : <NavigationContainer>
+    loggedin ?  <Tabs user={user} auth={auth}/> : <NavigationContainer>
     <Stack.Navigator>
       <Stack.Screen
         name="Login"

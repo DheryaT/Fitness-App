@@ -1,10 +1,10 @@
 import React from "react";
 import {ImageBackground, StyleSheet,Text,View, Image,TextInput} from 'react-native';
 
-const Home = () => {
+const Home = ({navigation, route}) => {
     return(
         <View style={styles.container}>
-            <Text style={styles.Title}>Hi ... {"\n"}Let's check your activity</Text>
+            <Text style={styles.Title}>Hi {route.params.user?.email} {"\n"}Let's check your activity</Text>
         </View>
     )
 }
