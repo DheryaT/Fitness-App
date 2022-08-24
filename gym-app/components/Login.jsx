@@ -10,6 +10,14 @@ const Login = ({navigation, route}) => {
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
 
+    const loginLoad = ()=>{
+
+        loginFunction(route.params.auth,
+            loginEmail,
+            loginPassword)
+        
+    }
+
     return(
         
         <View style={styles.container}>
@@ -35,9 +43,7 @@ const Login = ({navigation, route}) => {
             <Button
                  title="Login"
                  onPress={() =>
-                 loginFunction(route.params.auth,
-                    loginEmail,
-                    loginPassword)
+                    loginLoad()
                 }
             />
             <Button
