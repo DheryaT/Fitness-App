@@ -1,33 +1,42 @@
 import React, { useState } from 'react';
-import { Button } from 'react-native';
 import {ImageBackground, StyleSheet,Text,View, Image,TextInput} from 'react-native';
+import { registerFunction } from '../api/Authentication';
+import { Button } from 'react-native';
 
 const image = { uri: "https://preview.redd.it/32zg2lkzo9l81.png?auto=webp&s=b2bad9bd024bf71d4a2592ddc8aace2cef65af0a" };
 
-const Login = ({navigation, route}) => {
-    return(
-        
-        <View style={styles.container}>
+const Register = ({navigation, route}) => {
 
+    const [registerEmail, setRegisterEmail] = useState("");
+    const [registerPassword, setRegisterPassword] = useState("");
+
+    return(
+
+        <View style={styles.container}>
+            <Text>{route.params.auth ? "Yes" : "No"}</Text>
             <View style={styles.inputView}>
                 <TextInput
                 style={styles.TextInput}
-                placeholder="Username"
-
+                placeholder="Register Email"
+                onChangeText={(text) => {
+                  setRegisterEmail(text);
+                }}
             />
             </View>
             <View style={styles.inputView}>
             <TextInput style={styles.TextInput}
-            secureTextEntry={true}
-             placeholder="Password"
-
+             placeholder="Register Password"
+             onChangeText={(text) => {
+                setRegisterPassword(text);
+              }}
             />
             </View>
+            
             <Button
-                 title="Register"
-                 onPress={() =>
-                 navigation.navigate('Register', {auth: route.params.auth})
-                }
+              title = "Register"
+              onPress={() => registerFunction( route.params.auth,
+                registerEmail,
+                registerPassword)}
             />
             
         </View>
@@ -43,7 +52,6 @@ const styles = StyleSheet.create({
     },
     TextInput: {
         height: 50,
-        width: '100%',
         flex: 1,
         padding: 10,
         marginLeft: 20,
@@ -65,4 +73,4 @@ const styles = StyleSheet.create({
       },
 })
 
-export { Login }; //tes
+export { Register }; //tes
