@@ -41,11 +41,6 @@ const Login = ({navigation, route}) => {
                 }
             />
             <Button
-                 title="LogOut"
-                 onPress={() => logoutFunction(route.params.auth)
-                }
-            />
-            <Button
                  title="Register"
                  onPress={() =>
                  navigation.navigate('Register', {auth: route.params.auth})
