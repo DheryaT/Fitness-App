@@ -14,14 +14,7 @@ const TimerContainer = () => {
         </Stacks.Navigator>
     )
 }
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        margin: 20
-    },
-    Title: {
-        fontSize: 22
-    },
 
-})
+
+
 export { TimerContainer }; //tes

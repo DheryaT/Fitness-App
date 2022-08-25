@@ -6,7 +6,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CountdownTimer } from "./CountdownTimer";
 import { Tabs } from "./Tabs";
 
-
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faCirclePlay } from '@fortawesome/free-solid-svg-icons/faCirclePlay'
 
 
 const Timer = ({ navigation }) => {
@@ -23,8 +24,8 @@ const Timer = ({ navigation }) => {
     return (
 
 
-
-        <ScrollView style={styles.container}>
+        <SafeAreaView style={styles.container}>
+        <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
 
 
 
@@ -128,10 +129,20 @@ const Timer = ({ navigation }) => {
 
                     }}
                 />
-                <Button title="Start" style={styles.startBut} onPress={() => navigation.navigate('CountdownTimer')} > </Button>
 
             </View>
+            <View style={styles.container}>
+            <TouchableOpacity style={styles.startBut}  onPress={() => navigation.navigate('CountdownTimer')} ><FontAwesomeIcon icon={faCirclePlay} size={50}/></TouchableOpacity>
+
+            </View>
+            <View style={styles.quickhead}>
+                    <Text style={styles.textStyle}> Presets</Text>
+            </View>
+
+
         </ScrollView>
+            </SafeAreaView>
+
     )
 }
 
@@ -139,7 +150,9 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#e0e0e0',
         flex: 1,
+        
     },
+    
     body: {
         backgroundColor: '#e0e0e0',
         flex: 1,
@@ -173,14 +186,15 @@ const styles = StyleSheet.create({
         marginLeft: "10%",
         marginTop: "14%",
         position: 'absolute',
+        
 
     },
     TimerS: {
         marginLeft: "35%",
     },
     startBut: {
-        left: "10%",
-
+        top:50,
+        left: 50,
     }
 })
 export { Timer }; 
