@@ -56,7 +56,7 @@ const Tabs = (props) => {
           ),
           headerLeft: () => (
             <TouchableOpacity style={styles.buttonLoc} onPress={() => { alert("Timer does this and does that") }}>
-              <FontAwesomeIcon icon = {faCircleQuestion}/>
+              <FontAwesomeIcon icon = {faCircleQuestion} size = {30}/>
             </TouchableOpacity>
           ),
           tabBarIcon: (info) => (<FontAwesomeIcon icon={faStopwatch} size={25}/>)
@@ -76,6 +76,9 @@ const styles = StyleSheet.create({
   buttonLoc: {
     height: "30%",
     width: "30%",
+    marginLeft: 20,
+    marginLeft: 25,
+    marginTop: -20,
   },
 })
 export { Tabs };
