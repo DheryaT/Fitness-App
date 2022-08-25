@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home } from "./Home";
 import { Calculator } from "./Calculator";
+import { CountdownTimer } from "./CountdownTimer";
 import { Login } from "./Login";
 import { Timer } from "./Timer";
 import { logoutFunction } from "../api/Authentication";
@@ -13,13 +14,15 @@ import { faHouse } from '@fortawesome/free-solid-svg-icons/faHouse'
 import { faStopwatch } from '@fortawesome/free-solid-svg-icons/faStopwatch'
 import { faCalculator } from '@fortawesome/free-solid-svg-icons/faCalculator'
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons/faCircleQuestion'
+import { createNativeStackNavigator} from '@react-navigation/native-stack';
+import { TimerContainer } from "./TimerContainer";
 
 const Tabs = (props) => {
-
   const Tab = createBottomTabNavigator();
+  const Stacks = createNativeStackNavigator();
 
   return (
-    <NavigationContainer>
+    <NavigationContainer >
       <Tab.Navigator>
         <Tab.Screen name="Home" component={Home} initialParams={{ user: props.user }} options={{
           headerTitle: "Home",
@@ -44,7 +47,8 @@ const Tabs = (props) => {
           ),
           tabBarIcon: (info) => (<FontAwesomeIcon icon= {faCalculator} size={25}/>)
         }} />
-        <Tab.Screen name="Timer" component={Timer} options={{
+        <Tab.Screen name="Timer" component={TimerContainer} options={{
+
           headerTitle: "Timer",
           headerRight: () => (
             <Button
@@ -60,19 +64,18 @@ const Tabs = (props) => {
             </TouchableOpacity>
           ),
           tabBarIcon: (info) => (<FontAwesomeIcon icon={faStopwatch} size={25}/>)
+          
         }} />
+
       </Tab.Navigator>
+      
     </NavigationContainer>
+
     
   )
 }
+
 const styles = StyleSheet.create({
-  image1: {
-    height: 30,
-    width: 30,
-    marginLeft: 30,
-    marginTop: -10,
-  },
   buttonLoc: {
     height: "30%",
     width: "30%",

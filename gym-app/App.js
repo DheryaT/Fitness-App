@@ -28,7 +28,7 @@ export default function App() {
 
 
   return (
-    isLoading ?<View style={styles.container}><ActivityIndicator size="large" color="black"/></View>  :  (loggedin ? <Tabs user={user} auth={auth}/> : <NavigationContainer>
+    isLoading ?<View style={styles.container}><ActivityIndicator size="large" color="black"/></View>  :  (loggedin ? <Tabs user={user} auth={auth}/> : <NavigationContainer >
     <Stack.Navigator>
       <Stack.Screen
         name="Login"
