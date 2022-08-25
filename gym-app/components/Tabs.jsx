@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faHouse } from '@fortawesome/free-solid-svg-icons/faHouse'
 import { faStopwatch } from '@fortawesome/free-solid-svg-icons/faStopwatch'
 import { faCalculator } from '@fortawesome/free-solid-svg-icons/faCalculator'
+import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons/faCircleQuestion'
 
 const Tabs = (props) => {
 
@@ -55,8 +56,7 @@ const Tabs = (props) => {
           ),
           headerLeft: () => (
             <TouchableOpacity style={styles.buttonLoc} onPress={() => { alert("Timer does this and does that") }}>
-              <Image source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Icon-round-Question_mark.svg/640px-Icon-round-Question_mark.svg.png', }}
-                style={styles.image1} />
+              <FontAwesomeIcon icon = {faCircleQuestion}/>
             </TouchableOpacity>
           ),
           tabBarIcon: (info) => (<FontAwesomeIcon icon={faStopwatch} size={25}/>)
