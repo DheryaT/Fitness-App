@@ -7,7 +7,11 @@ import { Calculator } from "./Calculator";
 import { Login } from "./Login";
 import { Timer } from "./Timer";
 import { logoutFunction } from "../api/Authentication";
-
+import  Icon  from 'react-native-vector-icons/FontAwesome'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faHouse } from '@fortawesome/free-solid-svg-icons/faHouse'
+import { faStopwatch } from '@fortawesome/free-solid-svg-icons/faStopwatch'
+import { faCalculator } from '@fortawesome/free-solid-svg-icons/faCalculator'
 
 const Tabs = (props) => {
 
@@ -25,7 +29,9 @@ const Tabs = (props) => {
               color="black"
             />
           ),
+          tabBarIcon: (info) => (<FontAwesomeIcon icon= {faHouse} size={25}/>)
         }} />
+
         <Tab.Screen name="Calc" component={Calculator} options={{
           headerTitle: "Home",
           headerRight: () => (
@@ -35,6 +41,7 @@ const Tabs = (props) => {
               color="black"
             />
           ),
+          tabBarIcon: (info) => (<FontAwesomeIcon icon= {faCalculator} size={25}/>)
         }} />
         <Tab.Screen name="Timer" component={Timer} options={{
           headerTitle: "Timer",
@@ -44,6 +51,7 @@ const Tabs = (props) => {
               title="LogOut"
               color="black"
             />
+            
           ),
           headerLeft: () => (
             <TouchableOpacity style={styles.buttonLoc} onPress={() => { alert("Timer does this and does that") }}>
@@ -51,9 +59,11 @@ const Tabs = (props) => {
                 style={styles.image1} />
             </TouchableOpacity>
           ),
+          tabBarIcon: (info) => (<FontAwesomeIcon icon={faStopwatch} size={25}/>)
         }} />
       </Tab.Navigator>
     </NavigationContainer>
+    
   )
 }
 const styles = StyleSheet.create({
