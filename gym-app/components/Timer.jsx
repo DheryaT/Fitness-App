@@ -131,9 +131,9 @@ const Timer = ({ navigation }) => {
                 />
 
             </View>
-            <View style={styles.container}>
+            <View style={styles.container1}>
             <TouchableOpacity style={styles.startBut}  onPress={() => navigation.navigate('CountdownTimer')} ><FontAwesomeIcon icon={faCirclePlay} size={50}/></TouchableOpacity>
-
+                    <Text style={styles.textStart}>Start</Text>
             </View>
             <View style={styles.quickhead}>
                     <Text style={styles.textStyle}> Presets</Text>
@@ -150,6 +150,14 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#e0e0e0',
         flex: 1,
+        
+        
+    },
+    container1: {
+        backgroundColor: '#e0e0e0',
+        flex: 1,
+        margin: 30,
+        borderColor: '#000000',
         
     },
     
@@ -181,6 +189,10 @@ const styles = StyleSheet.create({
         fontSize: 30,
         marginLeft: "5%",
     },
+    textStart: {
+        fontSize: 20,
+        left: '11%',
+    },
     textSets: {
         fontSize: 23,
         marginLeft: "10%",
@@ -193,8 +205,8 @@ const styles = StyleSheet.create({
         marginLeft: "35%",
     },
     startBut: {
-        top:50,
-        left: 50,
+        
+        left: '10%',
     }
 })
 export { Timer }; 
