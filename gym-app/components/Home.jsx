@@ -6,10 +6,14 @@ import { auth, db } from "../firebase-config";
 const Home = ({navigation, route}) => {
 
     const sendUser = async () => {
-        await setDoc(doc(db, "users", `${route.params.user?.email}`), {
+        await setDoc(doc(db, "users", `${route.params.user?.email}`), 
+        
+        {
             name: `${route.params.user?.email}`,
-            sched: { day: "back"}
-        })
+            sched: { day: "chest"},
+        },
+        
+        )
     }
 
     return(
