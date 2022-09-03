@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useCallback } from 'react';
 import CountDown from 'react-native-countdown-component';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView,TouchableOpacity } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -17,8 +17,8 @@ export default function Timer({ navigation }){
     const [Work, setCount2] = useState(0)
     const [Rest, setCount3] = useState(0)
     const [Cooldown, setCount4] = useState(0)
-    const incrementPrepare = () => {setCount(Prepare + 1);}
-    const DecrementPrepare = () => {if(Prepare>=0){setCount(Prepare - 1);}}
+    const incrementPrepare = useCallback(() => setCount(Prepare + 1), [Prepare]);
+    const DecrementPrepare = useCallback(() => setCount(Prepare - 1), [Prepare]);
     const incrementSets= () => {setCount1(Sets + 1);}
     const DecrementSets = () => {if(Sets>=0){setCount1(Sets - 1);}}
     const incrementWork = () => {setCount2(Work + 1);}
@@ -30,7 +30,6 @@ export default function Timer({ navigation }){
 
     const SavePreset = async () => {
         await setDoc(doc(db, "preset", `${route.params.user?.email}`), 
-        
         {
             Prepare: Prepare,
             Sets: Sets,
@@ -53,12 +52,8 @@ export default function Timer({ navigation }){
 
     return (
 
-
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
-
-
-
                 <View style={styles.quickhead}>
                     <Text style={styles.textStyle}>Quick Start:</Text >
                 </View>
@@ -177,8 +172,6 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#e0e0e0',
         flex: 1,
-
-
     },
     container1: {
         backgroundColor: '#e0e0e0',
