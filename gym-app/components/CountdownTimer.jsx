@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import CountDown from 'react-native-countdown-component';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, ScrollView, Image, Button, TouchableHighlight } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons/faCircleXmark'
 import { faCirclePause } from '@fortawesome/free-regular-svg-icons/faCirclePause'
 import { faCirclePlay } from '@fortawesome/free-regular-svg-icons/faCirclePlay'
-
 import { Timer } from 'react-native-stopwatch-timer';
+import { useRoute } from '@react-navigation/native';
 
 const CountdownTimer = ({ navigation }) => {
     const [isTimerStart, setIsTimerStart] = useState(false);
     const [timerDuration, setTimerDuration] = useState(5000);
     const [resetTimer, setResetTimer] = useState(false);
-
+    const route = useRoute();
     return (
 
         <SafeAreaView style={styles.container}>
-            <Text style={styles.textStyle}>WE GOOO JIM</Text>
+            <Text style={styles.textStyle}>WE GOOO JIM{route.params.Prepare}</Text>
             <TouchableOpacity title="Start" style={styles.ExitIcon} onLongPress={() => navigation.navigate("Timer")}  ><FontAwesomeIcon icon={faCircleXmark} size={50} /></TouchableOpacity>
             <View style={styles.sectionStyle}>
                 <Timer
