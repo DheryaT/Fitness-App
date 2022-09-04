@@ -1,117 +1,121 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Pressable } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Pressable, Animated, Button, Alert } from 'react-native';
+import Constants from 'expo-constants';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons/faCircleXmark'
 import { faCirclePause } from '@fortawesome/free-regular-svg-icons/faCirclePause'
 import { faCirclePlay } from '@fortawesome/free-regular-svg-icons/faCirclePlay'
 import { Timer } from 'react-native-stopwatch-timer';
 import { useRoute } from '@react-navigation/native';
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
 const CountdownTimer = ({ navigation }) => {
     const route = useRoute();
-    const [isTimerStart, setIsTimerStart] = useState(false);
+    const [isPlaying, setIsPlaying] = React.useState(true);
+    const [timeIndex, setTimeIndex] = React.useState(0);
+    const [thing, setThing] = React.useState('');
+
+    const duration = [0.000001,route.params.Prepare, route.params.Sets, route.params.Work, route.params.Rest, route.params.Cooldown,0.000001];
+    var newIndex;
+    const setTHING = () => {
+        if (newIndex == 1) {
+            setThing('Prepare');
+
+        }
+        else if (newIndex == 2) {
+            setThing('Sets');
+
+        }
+        else if (newIndex == 3) {
+            setThing('Work');
+
+        }
+        else if (newIndex == 4) {
+            setThing('Rest');
+
+        }
+        else if (newIndex == 5) {
+            setThing('Cooldown');
+
+        }
+    }
+
     return (
 
         <SafeAreaView style={styles.container}>
-            <View>
-                <Text style={styles.TextS}> Prepare</Text>
-                <Timer
-                    totalDuration={route.params.Prepare*1000}
-                    start={isTimerStart}
-                    options={options}
+                <CountdownCircleTimer
+                    size={350}
+                    key={timeIndex}
+                    isPlaying={isPlaying}
+                    duration={duration[timeIndex]}
+                    colors={[
+                        ['#FFFF00', 0.4],
+                        ['#0000ff', 0.4],
+                    ]}
+                    onComplete={() => {
+                        
+                        setTimeIndex((index) => {
+       
+                            newIndex = index + 1;
+                            console.log(newIndex,":   ",index);
+                            setTHING();
+                            if (newIndex == duration.length) {
+                                return 6;
+                            }
+                            
+                            return newIndex;
+                        });
+                        if (newIndex == 6) {
+                            setThing('Finished');
+                
+                        }}}
 
-                />
-                <Text style={styles.TextS}> Sets</Text>
+                >
 
-                <Timer
-                    totalDuration={route.params.Sets*1000}
-                    start={isTimerStart}
-                    options={options}
+                    {({ remainingTime, animatedColor }) => (
+                        <Animated.Text style={{ color: animatedColor, fontSize: 40, textAlign: 'center' }}>
 
-                />
-                <Text style={styles.TextS}> Work</Text>
-                <Timer
-                    totalDuration={route.params.Work*1000}
-                    start={isTimerStart}
-                    options={options}
+                            {thing}{"\n"}
+                            {remainingTime}
+                        </Animated.Text>
 
-                />
-                <Text style={styles.TextS}> Rest</Text>
-                <Timer
-                    totalDuration={route.params.Rest*1000}
-                    start={isTimerStart}
-                    options={options}
+                    )}
 
-                />
-                 <Text style={styles.TextS}> Cooldown</Text>
-                <Timer
-                    totalDuration={route.params.Cooldown*1000}
-                    start={isTimerStart}
-                    options={options}
-
-                />
+                </CountdownCircleTimer>
                 <Pressable style={styles.pause}
                     onPress={() => {
-                        setIsTimerStart(!isTimerStart);
-    
-                    }}
-                    >
-                    {!isTimerStart ? <FontAwesomeIcon icon={faCirclePause} size={50} /> : <FontAwesomeIcon icon={faCirclePlay} size={50} /> }
-                </Pressable>
-                <TouchableOpacity style={styles.ExitIcon} onLongPress={() => navigation.navigate("Timer")}  ><FontAwesomeIcon icon={faCircleXmark} size={50} /></TouchableOpacity>
+                        setIsPlaying((prev) => !prev)
+                    }}>
 
-            </View>
+                    {!isPlaying ? <FontAwesomeIcon icon={faCirclePlay} size={50} /> : <FontAwesomeIcon icon={faCirclePause} size={50} />}
+
+                </Pressable>
+
+
+                <TouchableOpacity style={styles.exit} onLongPress={() => navigation.navigate("Timer")}  ><FontAwesomeIcon icon={faCircleXmark} size={50} /></TouchableOpacity>
+
         </SafeAreaView>
     )
+
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#e0e0e0',
-        textAlign: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: Constants.statusBarHeight,
+        backgroundColor: '#ecf0f1',
+        padding: 8,
     },
-    ExitIcon: {
-        left: "45%",
-        top: '3%',
+    pause: {
+        top: '5%',
+        right: '20%',
     },
-    title: {
-        fontSize: 22
+    exit: {
+        bottom: '3%',
+        left: '20%',
     },
-    textStyle: {
-        fontSize: 30,
-    },
-    TextS: {
-        fontSize: 25,
-        textAlign: "center",
-
-    },
-    buttonText: {
-        fontSize: 20,
-        left:'45%',
-        top: '30%',
-      },
-      pause: {
-        left:'45%',
-        top: '2%',
-        
-      },
-
 
 })
-const options = {
-    container: {
-        backgroundColor: '#000000',
-        padding: 1,
-        borderRadius: 20,
-        left: '10%',
-        width: '80%',
-        alignItems: 'center',
-    },
-    text: {
-        fontSize: 65,
-        color: '#FFF',
-
-    },
-};
 
 export { CountdownTimer }; //tes
