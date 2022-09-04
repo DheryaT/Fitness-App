@@ -17,10 +17,16 @@ const Home = ({navigation, route}) => {
         await setDoc(doc(db, "users", `${route.params.user?.email}`), 
         
         {
-            name: `${route.params.user?.email}`,
-            sched: { day: "chest"},
+            countdown: {
+                rest: 10,
+                sets: 15
+            },
+            max: {
+                bench: 10
+            }
+
         },
-        
+        {merge: true}
         )
     }
 

@@ -8,6 +8,7 @@ import { CountdownTimer } from "./CountdownTimer";
 import { Login } from "./Login";
 import { Timer } from "./Timer";
 import { logoutFunction } from "../api/Authentication";
+import { faCalendarDays } from '@fortawesome/free-regular-svg-icons/faCalendarDays'
 import  Icon  from 'react-native-vector-icons/FontAwesome'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faHouse } from '@fortawesome/free-solid-svg-icons/faHouse'
@@ -16,6 +17,7 @@ import { faCalculator } from '@fortawesome/free-solid-svg-icons/faCalculator'
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons/faCircleQuestion'
 import { createNativeStackNavigator} from '@react-navigation/native-stack';
 import { TimerContainer } from "./TimerContainer";
+import {Schedule} from './Schedule'
 
 const Tabs = (props) => {
   const Tab = createBottomTabNavigator();
@@ -34,6 +36,17 @@ const Tabs = (props) => {
             />
           ),
           tabBarIcon: (info) => (<FontAwesomeIcon icon= {faHouse} size={25}/>)
+        }} />
+        <Tab.Screen name="Schedule" component={Schedule} options={{
+          headerTitle: "Schedule",
+          headerRight: () => (
+            <Button
+              onPress={() => logoutFunction(props.auth)}
+              title="LogOut"
+              color="black"
+            />
+          ),
+          tabBarIcon: (info) => (<FontAwesomeIcon icon= {faCalendarDays} size={25}/>)
         }} />
 
         <Tab.Screen name="Calc" component={Calculator} options={{
