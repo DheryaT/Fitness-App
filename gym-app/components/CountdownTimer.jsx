@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, ScrollView, Image, Button, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Pressable } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons/faCircleXmark'
 import { faCirclePause } from '@fortawesome/free-regular-svg-icons/faCirclePause'
@@ -10,16 +10,14 @@ import { useRoute } from '@react-navigation/native';
 const CountdownTimer = ({ navigation }) => {
     const route = useRoute();
     const [isTimerStart, setIsTimerStart] = useState(false);
-    const [resetTimer, setResetTimer] = useState(false);
     return (
 
         <SafeAreaView style={styles.container}>
-            <View style={styles.sectionStyle}>
+            <View>
                 <Text style={styles.TextS}> Prepare</Text>
                 <Timer
                     totalDuration={route.params.Prepare*1000}
                     start={isTimerStart}
-                    reset={resetTimer}
                     options={options}
 
                 />
@@ -28,7 +26,6 @@ const CountdownTimer = ({ navigation }) => {
                 <Timer
                     totalDuration={route.params.Sets*1000}
                     start={isTimerStart}
-                    reset={resetTimer}
                     options={options}
 
                 />
@@ -36,7 +33,6 @@ const CountdownTimer = ({ navigation }) => {
                 <Timer
                     totalDuration={route.params.Work*1000}
                     start={isTimerStart}
-                    reset={resetTimer}
                     options={options}
 
                 />
@@ -44,7 +40,6 @@ const CountdownTimer = ({ navigation }) => {
                 <Timer
                     totalDuration={route.params.Rest*1000}
                     start={isTimerStart}
-                    reset={resetTimer}
                     options={options}
 
                 />
@@ -52,20 +47,18 @@ const CountdownTimer = ({ navigation }) => {
                 <Timer
                     totalDuration={route.params.Cooldown*1000}
                     start={isTimerStart}
-                    reset={resetTimer}
                     options={options}
 
                 />
-                <TouchableHighlight
+                <Pressable style={styles.pause}
                     onPress={() => {
                         setIsTimerStart(!isTimerStart);
-                        setResetTimer(false);
-                    }}>
-                    <Text style={styles.buttonText}>
-                        {!isTimerStart ? <FontAwesomeIcon icon={faCirclePause} size={50} /> : <FontAwesomeIcon icon={faCirclePlay} size={50} /> }
-                    </Text>
-                </TouchableHighlight>
-                <TouchableOpacity title="Start" style={styles.ExitIcon} onLongPress={() => navigation.navigate("Timer")}  ><FontAwesomeIcon icon={faCircleXmark} size={50} /></TouchableOpacity>
+    
+                    }}
+                    >
+                    {!isTimerStart ? <FontAwesomeIcon icon={faCirclePause} size={50} /> : <FontAwesomeIcon icon={faCirclePlay} size={50} /> }
+                </Pressable>
+                <TouchableOpacity style={styles.ExitIcon} onLongPress={() => navigation.navigate("Timer")}  ><FontAwesomeIcon icon={faCircleXmark} size={50} /></TouchableOpacity>
 
             </View>
         </SafeAreaView>
@@ -97,6 +90,12 @@ const styles = StyleSheet.create({
         left:'45%',
         top: '30%',
       },
+      pause: {
+        left:'45%',
+        top: '2%',
+        
+      },
+
 
 })
 const options = {

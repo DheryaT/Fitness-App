@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import CountDown from 'react-native-countdown-component';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView,TouchableOpacity } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -6,6 +6,8 @@ import { faCirclePlay } from '@fortawesome/free-solid-svg-icons/faCirclePlay';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons/faBookmark';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons/faCirclePlus';
 import { faCircleMinus } from '@fortawesome/free-solid-svg-icons/faCircleMinus';
+import { doc, setDoc } from "firebase/firestore"; 
+import { auth, db } from "../firebase-config";
 
 
 
@@ -17,8 +19,8 @@ export default function Timer({ navigation }){
     const [Work, setCount2] = useState(0)
     const [Rest, setCount3] = useState(0)
     const [Cooldown, setCount4] = useState(0)
-    const incrementPrepare = useCallback(() => setCount(Prepare + 1), [Prepare]);
-    const DecrementPrepare = useCallback(() => setCount(Prepare - 1), [Prepare]);
+    const incrementPrepare = async() => {setCount(Prepare + 1);}
+    const DecrementPrepare =async() => {if(Prepare>=0){setCount(Prepare - 1);}}
     const incrementSets= () => {setCount1(Sets + 1);}
     const DecrementSets = () => {if(Sets>=0){setCount1(Sets - 1);}}
     const incrementWork = () => {setCount2(Work + 1);}
@@ -29,7 +31,7 @@ export default function Timer({ navigation }){
     const DecrementCooldown = () => {if(Cooldown>=0){setCount4(Cooldown - 1);}}
 
     const SavePreset = async () => {
-        await setDoc(doc(db, "preset", `${route.params.user?.email}`), 
+        await setDoc(doc(db, "users",auth.currentUser), 
         {
             Prepare: Prepare,
             Sets: Sets,
@@ -154,7 +156,7 @@ export default function Timer({ navigation }){
                 <View style={styles.container1}>
                     <TouchableOpacity style={styles.startBut} onPress={() => StartTimer()} ><FontAwesomeIcon icon={faCirclePlay} size={50} /></TouchableOpacity>
                     <Text style={styles.textStart}>Start</Text>
-                    <TouchableOpacity style={styles.saveBut} onPress={() => { alert("save preset") }} ><FontAwesomeIcon icon={faBookmark} size={50} /></TouchableOpacity>
+                    <TouchableOpacity style={styles.saveBut} onPress={() => { SavePreset()}} ><FontAwesomeIcon icon={faBookmark} size={50} /></TouchableOpacity>
                     <Text style={styles.textSave}>Bookmark</Text>
                 </View>
                 <View style={styles.quickhead}>
