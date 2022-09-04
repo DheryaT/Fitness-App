@@ -19,8 +19,8 @@ export default function Timer({ navigation }){
     const [Work, setCount2] = useState(0)
     const [Rest, setCount3] = useState(0)
     const [Cooldown, setCount4] = useState(0)
-    const incrementPrepare = async() => {setCount(Prepare + 1);}
-    const DecrementPrepare =async() => {if(Prepare>=0){setCount(Prepare - 1);}}
+    const incrementPrepare = () => {setCount(Prepare + 1);}
+    const DecrementPrepare =() => {if(Prepare>=0){setCount(Prepare - 1);}}
     const incrementSets= () => {setCount1(Sets + 1);}
     const DecrementSets = () => {if(Sets>=0){setCount1(Sets - 1);}}
     const incrementWork = () => {setCount2(Work + 1);}
@@ -31,7 +31,7 @@ export default function Timer({ navigation }){
     const DecrementCooldown = () => {if(Cooldown>=0){setCount4(Cooldown - 1);}}
 
     const SavePreset = async () => {
-        await setDoc(doc(db, "users",auth.currentUser), 
+        await setDoc(doc(db, "users",`${auth.currentUser.email}`), 
         {
             Prepare: Prepare,
             Sets: Sets,
@@ -39,7 +39,7 @@ export default function Timer({ navigation }){
             Rest: Rest,
             Cooldown: Cooldown,
         },
-        
+        {merge: true}
         )
     }
     const StartTimer = () => {
