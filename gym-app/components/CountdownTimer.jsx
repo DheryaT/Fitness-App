@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Pressable, Animated, Button, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Pressable, Animated } from 'react-native';
 import Constants from 'expo-constants';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons/faCircleXmark'
 import { faCirclePause } from '@fortawesome/free-regular-svg-icons/faCirclePause'
 import { faCirclePlay } from '@fortawesome/free-regular-svg-icons/faCirclePlay'
-import { Timer } from 'react-native-stopwatch-timer';
 import { useRoute } from '@react-navigation/native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
@@ -66,7 +65,7 @@ const CountdownTimer = ({ navigation }) => {
                             return newIndex;
                         });
                         if (newIndex == 6) {
-                            setThing('Finished');
+                            setThing('Workout Finished');
                 
                         }}}
 
@@ -76,7 +75,8 @@ const CountdownTimer = ({ navigation }) => {
                         <Animated.Text style={{ color: animatedColor, fontSize: 40, textAlign: 'center' }}>
 
                             {thing}{"\n"}
-                            {remainingTime}
+                            {remainingTime}{"\n"}
+                            Seconds
                         </Animated.Text>
 
                     )}
