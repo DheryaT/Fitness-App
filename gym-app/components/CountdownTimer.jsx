@@ -17,26 +17,11 @@ const CountdownTimer = ({ navigation }) => {
     const duration = [0.000001,route.params.Prepare, route.params.Sets, route.params.Work, route.params.Rest, route.params.Cooldown,0.000001];
     var newIndex;
     const setTHING = () => {
-        if (newIndex == 1) {
-            setThing('Prepare');
-
-        }
-        else if (newIndex == 2) {
-            setThing('Sets');
-
-        }
-        else if (newIndex == 3) {
-            setThing('Work');
-
-        }
-        else if (newIndex == 4) {
-            setThing('Rest');
-
-        }
-        else if (newIndex == 5) {
-            setThing('Cooldown');
-
-        }
+        if (newIndex == 1) {setThing('Prepare');}
+        else if (newIndex == 2) {setThing('Sets');}
+        else if (newIndex == 3) {setThing('Work');}
+        else if (newIndex == 4) {setThing('Rest');}
+        else if (newIndex == 5) {setThing('Cooldown');}
     }
 
     return (
@@ -66,7 +51,7 @@ const CountdownTimer = ({ navigation }) => {
                         });
                         if (newIndex == 6) {
                             setThing('Workout Finished');
-                
+                            alert("Workout Finished")
                         }}}
 
                 >
