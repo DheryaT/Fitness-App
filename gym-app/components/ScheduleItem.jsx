@@ -3,7 +3,7 @@ import {ImageBackground, StyleSheet,Text,View, Image,TextInput, Button, FlatList
 import { faArrowTrendUp, faChevronDown, faChevronUp, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
-const ScheduleItem = ({plan, extended, set, toForm}) => {
+const ScheduleItem = ({plan, extended, set, toForm, onDelete}) => {
     
     const toggle = () => {
         if(extended.includes(plan.id)){
@@ -21,18 +21,18 @@ const ScheduleItem = ({plan, extended, set, toForm}) => {
                     <FontAwesomeIcon icon={faPenToSquare} size={25} color={'white'}/>
                     </TouchableOpacity>
                 <Text style= {styles.HeaderTitle}>{plan.name}</Text>
-                <TouchableOpacity style={styles.HeaderBut} onPress={toggle} >
+                <TouchableOpacity style={styles.HeaderBut} onPress={() => onDelete(plan.id)} >
                     <FontAwesomeIcon icon={faTrashCan} size={25} color={'white'}/>
-                    </TouchableOpacity>
+                </TouchableOpacity>
             </View>
 
                 {plan.workout.map((item, index) => ((!extended?.includes(plan.id)) ? 
-                    ((index < 3) ? <View style={styles.container}>
+                    ((index < 3) ? <View style={styles.container} key = {index}>
                     <Text style= {{color: 'white', width: '10%'}}>{item.sets}</Text>
                     <Text style= {{color: 'white', width: '80%'}}>{item.exercise}</Text>
                     <Text style= {{color: 'white', width: '10%'}}>{item.reps}</Text>
-                    </View> : <></>): 
-                    <View style={styles.container}>
+                    </View> : <View key = {index}></View>): 
+                    <View style={styles.container} key = {index}>
                         <Text style= {{color: 'white', width: '10%'}}>{item.sets}</Text>
                         <Text style= {{color: 'white', width: '80%'}}>{item.exercise}</Text>
                         <Text style= {{color: 'white', width: '10%'}}>{item.reps}</Text>

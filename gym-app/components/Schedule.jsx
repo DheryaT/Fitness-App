@@ -25,7 +25,7 @@ const Schedule = ({navigation, route}) => {
 
     useEffect(() => {
         getUser();
-    }, [showForm])
+    }, [showForm, plans])
     
 
     const toForm = (id) => {
@@ -33,18 +33,44 @@ const Schedule = ({navigation, route}) => {
         setShowForm(true)
     }
 
+    const deleteItem = async (id) =>{
+        const newSchedule = plans.filter(item => item.id != id)
+        await setDoc(doc(db, "users", `${auth.currentUser.email}`), 
+        {
+            schedule: newSchedule
+        },
+        {merge: true}
+        )
+    }
+
+    const createNew = async () =>{
+        let max = 0
+        plans.forEach(item => {if(item.id > max){max = item.id}})
+        max++;
+        const newSchedule = [...plans,{id: max, name: 'New'+max, workout:[]}]
+        await setDoc(doc(db, "users", `${auth.currentUser.email}`), 
+        {
+            schedule: newSchedule
+        },
+            {merge: true}
+        )
+        setPlans(newSchedule)
+        setEditing(max)
+        setShowForm(true)
+    }
+
     return(
         showForm ? <ScheduleForm editing = {editing} setShowForm = {setShowForm} plans = {plans}/> :
         <View style={styles.container}>
             <FlatList
-            keyExtractor = {(item) => item.id.toString()}
+            keyExtractor = {(item, index) => item.id}
             data = {plans}
-            renderItem={({item}) => (
-                <ScheduleItem plan = {item} extended = {extended} set = {setExtended} toForm = {toForm}/>
-            )}
+            renderItem={({item}) => 
+                <ScheduleItem plan = {item} extended = {extended} set = {setExtended} toForm = {toForm} onDelete = {deleteItem}/>
+            }
             contentContainerStyle = {styles.List}
             />
-            
+            <Button title="Add Workout" onPress={createNew}/>
         </View>
     )
 }

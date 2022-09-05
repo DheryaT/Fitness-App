@@ -35,13 +35,14 @@ const ScheduleForm = ({editing, setShowForm, plans}) => {
         )
         setShowForm(false)
     }
+
     return(
         <KeyboardAwareScrollView style = {{flexGrow: 1}}>
                 <View style = {styles.ListItem}>
                     <TextInput defaultValue= {editObj.name} style = {styles.inputTitle} onChangeText = {(text) => {setTitle(text)} }/>
 
                     {pList.map((item, index) => 
-                    (<View style = {styles.container}>
+                    (<View style = {styles.container} key={index}>
                         <TextInput defaultValue = {item.sets} style = {styles.inputNum} onChangeText= {(text)=>updateItem(index, text, 'sets')}/>
                         <TextInput defaultValue = {item.exercise} style = {styles.input} onChangeText= {(text)=>updateItem(index, text, 'exercise')}/>
                         <TextInput defaultValue = {item.reps} style = {styles.inputNum} onChangeText= {(text)=>updateItem(index, text, 'reps')}/>
