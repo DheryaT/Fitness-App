@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { ImageBackground, StyleSheet, Text, View, Image, TextInput } from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, Image, TextInput, Button, Pressable } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-
+import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../firebase-config";
+import { Score } from "./Score";
 
 const Calculator = () => {
 
+    const [Output, setOutput] = useState('');
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('One Rep Max');
     const [items, setItems] = useState([
@@ -13,7 +16,24 @@ const Calculator = () => {
     ])
     const [weightLifted, setWeightLifted] = useState(0);
     const [repsPerformed, setRepsPerformed] = useState(0);
+    const [Max, setMaxLift] = useState(0);
 
+    //const OneRepMax = (weightLifted, repsPerformed) => {
+    //  setMaxLift(weightLifted * (1 + (repsPerformed / 30)));
+    //
+
+    const maxCalculation = () => {
+        Output = "Your Max Lift Is " + parseFloat(Max).toFixed(2) + " KG";
+    }
+
+    const SaveLift = async () => {
+        await setDoc(doc(db, "users", `${auth.currentUser.email}`),
+            {
+                MaxLift: { Max: Max },
+            },
+            { merge: true }
+        )
+    }
 
     return (
         <View style={styles.container}>
@@ -36,8 +56,6 @@ const Calculator = () => {
                     listItemLabelStyle={{
                         fontSize: 15,
                     }}
-
-
                     open={open}
                     value={value}
                     items={items}
@@ -60,21 +78,54 @@ const Calculator = () => {
                 </View>
                 <View style={styles.inputFields}>
                     <TextInput style={styles.input}
-                        placeholder="Weight"
+                        placeholder="Weight in KG (e.g 89)"
                         onChangeText={(text) => {
                             setWeightLifted(text);
                         }}>
 
                     </TextInput>
                     <TextInput style={styles.input}
-                        placeholder="Weight"
+                        placeholder="Number Of Reps"
                         onChangeText={(text) => {
                             setRepsPerformed(text);
                         }}>
                     </TextInput>
                 </View>
-
+                <View style={styles.SubmitButton}>
+                    <Pressable
+                        onPressIn={() => {
+                            setMaxLift(weightLifted * (1 + (repsPerformed / 30)))
+                        }}
+                        onPressOut={() => {
+                            setOutput("Your One Rep Max is: \n" + parseFloat(Max).toFixed(2) + " KG")
+                        }}>
+                        <Text style={styles.CalculateButton}>
+                            Calculate
+                        </Text>
+                    </Pressable>
+                    <Pressable
+                        onPressIn={() => {
+                            setMaxLift(weightLifted * (1 + (repsPerformed / 30)))
+                        }}
+                        onPressOut={() => {
+                            setOutput("Your One Rep Max is:\n" + parseFloat(Max).toFixed(2) + " KG")
+                            SaveLift()
+                        }}>
+                        <Text style={styles.CalculateButton}>
+                            Save
+                        </Text>
+                    </Pressable>
+                </View>
+                <Text style={styles.OneRM}>
+                    {Output}
+                </Text>
+                
             </View>
+            <View style={styles.Score}>
+                <Score></Score>
+            </View>
+            
+            
         </View>
     );
 }
@@ -85,6 +136,7 @@ const styles = StyleSheet.create({
         backgroundColor: "black",
     },
     content: {
+        flex: 2,
         backgroundColor: '#171717',
         borderRadius: '5%',
         borderRadius: 10,
@@ -103,17 +155,18 @@ const styles = StyleSheet.create({
         color: "white",
         backgroundColor: '#171717',
         borderRadius: 5,
+        borderColor: "#171717",
         color: "white",
     },
     textinputscontainer: {
-        flex: 1,
+        flex: 5,
         flexDirection: "row",
-        backgroundColor: "#171717",
+        backgroundColor: "black",
         flexWrap: "wrap",
         zIndex: -1,
     },
     headerText: {
-        backgroundColor: 'blue',
+        backgroundColor: '#171717',
         fontSize: 36,
         padding: 10,
         marginLeft: 20,
@@ -123,12 +176,12 @@ const styles = StyleSheet.create({
     inputFields: {
         width: '60%',
         paddingTop: 5,
-        backgroundColor: 'red',
+        backgroundColor: '#171717',
     },
     input: {
         backgroundColor: "#FFFFFF",
         padding: 10,
-        width: '40%',
+        width: '90%',
         fontSize: 16,
         borderRadius: 15,
         margin: 10,
@@ -137,6 +190,45 @@ const styles = StyleSheet.create({
         alignContent: "center",
         alignItems: "center",
     },
+
+    SubmitButton: {
+        marginLeft: '5%',
+        marginTop: '5%',
+        backgroundColor: 'black',
+        borderRadius: 10,
+        flexDirection: "row",
+        width: "90%",
+        justifyContent: "space-evenly",
+        alignItem: "center",
+        alignContent: "center",
+    },
+    CalculateButton: {
+        padding: '10%',
+        fontSize: 28,
+        borderRadius: 10,
+        color: 'white',
+        borderWidth: 1,
+        borderColor: 'white',
+        backgroundColor: '#171717',
+        padding: 5,
+    },
+
+    OneRM: {
+        marginLeft: '5%',
+        marginTop: '5%',
+        color: 'white',
+        fontSize: 26,
+        backgroundColor: 'black',
+        zIndex: 1,
+        width: '100%',
+    },
+    Score: {
+        flex: 4,
+        backgroundColor: 'blue',
+        borderRadius: 20,
+        borderWidth: 10,
+    },
+
 })
 
 export { Calculator }; //tes
