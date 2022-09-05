@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {ImageBackground, StyleSheet,Text,View, Image,TextInput, Button, FlatList, Item, TouchableOpacity} from 'react-native';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/'
+import { faPlusCircle, faTrashCan } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { doc, setDoc } from "firebase/firestore"; 
@@ -21,10 +21,15 @@ const ScheduleForm = ({editing, setShowForm, plans}) => {
         console.log(pList)
     }
 
+    const deleteItem = (i) => {
+        setPList(pList.filter((item, index) => index!=i))
+    }
+
     const saveSchedule = async () => {
+        const newSchedule = plans.map(item => editing == item.id ? {id: editObj.id, name: title, workout: pList} : item)
         await setDoc(doc(db, "users", `${auth.currentUser.email}`), 
         {
-            schedule: {id: editObj.id, name: title, pList}
+            schedule: newSchedule
         },
         {merge: true}
         )
@@ -40,6 +45,11 @@ const ScheduleForm = ({editing, setShowForm, plans}) => {
                         <TextInput defaultValue = {item.sets} style = {styles.inputNum} onChangeText= {(text)=>updateItem(index, text, 'sets')}/>
                         <TextInput defaultValue = {item.exercise} style = {styles.input} onChangeText= {(text)=>updateItem(index, text, 'exercise')}/>
                         <TextInput defaultValue = {item.reps} style = {styles.inputNum} onChangeText= {(text)=>updateItem(index, text, 'reps')}/>
+                        
+                        <TouchableOpacity style = {styles.itemBut}  onPress={() => deleteItem(index)}>
+                            <FontAwesomeIcon icon={faTrashCan} size={25} color={'black'}/>
+                        </TouchableOpacity>
+
                     </View>))}
     
                     <TouchableOpacity style = {styles.botBut}  onPress={addItem}>
@@ -95,12 +105,16 @@ const styles = StyleSheet.create({
     botBut: {
         marginTop: 20
     },
+    itemBut: {
+        padding: 5,
+        marginTop: 10
+    },
     input: {
         backgroundColor: "#FFFFFF",
-        width: '70%',
+        width: '60%',
         padding: 5,
         fontSize: 16,
-        borderRadius: 5,
+        borderRadius: 5,  
         margin: 5,
         color: "#000000",
         borderWidth: 1,

@@ -9,7 +9,7 @@ const Schedule = ({navigation, route}) => {
 
     const docRef = doc(db, "users", `${auth.currentUser.email}`);
 
-    const [plans, setPlans] = useState([{id: 1, name: "back", workout:[{sets: '1', exercise: 'rows', reps: '12'}, {sets: '3', exercise: 'pull ups', reps: '12'}, {sets: '3', exercise: 'pull ups', reps: '12'}, {sets: '3', exercise: 'pull ups', reps: '12'},{sets: '3', exercise: 'pull ups', reps: '12'}]}, {id: '2', name: "back", workout:[{sets: '1', exercise: 'rows', reps: '12'}]}])
+    const [plans, setPlans] = useState([])
     const [extended, setExtended] = useState([])
     const [showForm, setShowForm] = useState(false)
     const [editing , setEditing] = useState(0)
@@ -25,7 +25,7 @@ const Schedule = ({navigation, route}) => {
 
     useEffect(() => {
         getUser();
-    }, [])
+    }, [showForm])
     
 
     const toForm = (id) => {

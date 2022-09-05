@@ -17,7 +17,7 @@ const Home = ({navigation, route}) => {
         await setDoc(doc(db, "users", `${route.params.user?.email}`), 
         {
             schedule: 
-            [{id: 1, name: "back", workout:[{sets: '1', exercise: 'rows', reps: '12'}, {sets: '3', exercise: 'pull ups', reps: '12'}, {sets: '3', exercise: 'pull ups', reps: '12'}, {sets: '3', exercise: 'pull ups', reps: '12'},{sets: '3', exercise: 'pull ups', reps: '12'}]}, {id: '2', name: "back", workout:[{sets: '1', exercise: 'rows', reps: '12'}]}]
+            [{id: '1', name: "back", workout:[{sets: '1', exercise: 'rows', reps: '12'}, {sets: '3', exercise: 'pull ups', reps: '12'}, {sets: '3', exercise: 'pull ups', reps: '12'}, {sets: '3', exercise: 'pull ups', reps: '12'},{sets: '3', exercise: 'pull ups', reps: '12'}]}, {id: '2', name: "back", workout:[{sets: '1', exercise: 'rows', reps: '12'}]}]
 
         },
         {merge: true}
