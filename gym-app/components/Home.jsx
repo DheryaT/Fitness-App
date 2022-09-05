@@ -15,15 +15,9 @@ const Home = ({navigation, route}) => {
 
     const sendUser = async () => {
         await setDoc(doc(db, "users", `${route.params.user?.email}`), 
-        
         {
-            countdown: {
-                rest: 10,
-                sets: 15
-            },
-            max: {
-                bench: 10
-            }
+            schedule: 
+            [{id: 1, name: "back", workout:[{sets: '1', exercise: 'rows', reps: '12'}, {sets: '3', exercise: 'pull ups', reps: '12'}, {sets: '3', exercise: 'pull ups', reps: '12'}, {sets: '3', exercise: 'pull ups', reps: '12'},{sets: '3', exercise: 'pull ups', reps: '12'}]}, {id: '2', name: "back", workout:[{sets: '1', exercise: 'rows', reps: '12'}]}]
 
         },
         {merge: true}

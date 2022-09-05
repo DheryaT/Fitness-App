@@ -1,25 +1,69 @@
 import React, { useState } from "react";
 import {ImageBackground, StyleSheet,Text,View, Image,TextInput, Button, FlatList, Item, TouchableOpacity} from 'react-native';
-import { faChevronDown, faChevronUp, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons/'
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { doc, setDoc } from "firebase/firestore"; 
+import { auth, db } from "../firebase-config";
 
-const ScheduleForm = ({editing, setShowForm}) => {
+const ScheduleForm = ({editing, setShowForm, plans}) => {
 
+    const editObj = plans.find(item => item.id == editing)
+    const [pList, setPList] = useState(editObj.workout)
+    const [title, setTitle] = useState(editObj.name)
 
+    const addItem = () =>{
+        setPList([...pList, {sets: '', exercise: '', reps: ''}])
+    }
+
+    const updateItem = (index, text, type) => {
+        setPList(pList.map((item, i) => i==index ? (type=='sets' ? Object.assign(item, {sets: text}): (type=='exercise' ? Object.assign(item, {exercise: text}): Object.assign(item, {reps: text}))): item))
+        console.log(pList)
+    }
+
+    const saveSchedule = async () => {
+        await setDoc(doc(db, "users", `${auth.currentUser.email}`), 
+        {
+            schedule: {id: editObj.id, name: title, pList}
+        },
+        {merge: true}
+        )
+        setShowForm(false)
+    }
     return(
-        <View >
+        <KeyboardAwareScrollView style = {{flexGrow: 1}}>
                 <View style = {styles.ListItem}>
-                    <TextInput style = {styles.input}/>
+                    <TextInput defaultValue= {editObj.name} style = {styles.inputTitle} onChangeText = {(text) => {setTitle(text)} }/>
+
+                    {pList.map((item, index) => 
+                    (<View style = {styles.container}>
+                        <TextInput defaultValue = {item.sets} style = {styles.inputNum} onChangeText= {(text)=>updateItem(index, text, 'sets')}/>
+                        <TextInput defaultValue = {item.exercise} style = {styles.input} onChangeText= {(text)=>updateItem(index, text, 'exercise')}/>
+                        <TextInput defaultValue = {item.reps} style = {styles.inputNum} onChangeText= {(text)=>updateItem(index, text, 'reps')}/>
+                    </View>))}
+    
+                    <TouchableOpacity style = {styles.botBut}  onPress={addItem}>
+                        <FontAwesomeIcon icon={faPlusCircle} size={40} color={'white'}/>
+                    </TouchableOpacity>
                 </View>
-                <Button title= "Cancel" onPress={()=> setShowForm(false)}></Button>
-        </View>
+                <View style = {styles.controls}>
+                    <Button title= "Cancel" onPress={()=> setShowForm(false)}></Button>
+                    <Button title= "Save" onPress={saveSchedule}></Button>
+                </View>
+        </KeyboardAwareScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        padding: 10,
+        margin: 10,
+        backgroundColor: 'darkgrey',
+        borderRadius: 5
+    },
+    controls: {
+        flexDirection: 'row',
     },
     Title:{
         fontSize: 22
@@ -48,9 +92,12 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         textAlign: 'center'
     },
+    botBut: {
+        marginTop: 20
+    },
     input: {
         backgroundColor: "#FFFFFF",
-        width: '80%',
+        width: '70%',
         padding: 5,
         fontSize: 16,
         borderRadius: 5,
@@ -59,7 +106,34 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         alignContent: "center",
         alignItems: "center",
-        
+        height: 40,
+
+    },
+    inputTitle: {
+        backgroundColor: "#FFFFFF",
+        width: '70%',
+        padding: 5,
+        fontSize: 16,
+        borderRadius: 5,
+        margin: 5,
+        color: "#000000",
+        borderWidth: 1,
+        alignContent: "center",
+        alignItems: "center",
+        height: 50
+    },
+    inputNum:{
+        backgroundColor: "#FFFFFF",
+        width: '15%',
+        padding: 5,
+        fontSize: 16,
+        borderRadius: 5,
+        color: "#000000",
+        borderWidth: 1,
+        alignContent: "center",
+        alignItems: "center",
+        height: 40,
+        margin: 5,
     }
 
 })

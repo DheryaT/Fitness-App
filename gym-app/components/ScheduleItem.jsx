@@ -4,7 +4,6 @@ import { faArrowTrendUp, faChevronDown, faChevronUp, faPenToSquare, faTrashCan }
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
 const ScheduleItem = ({plan, extended, set, toForm}) => {
-    console.log(extended.includes(1))
     
     const toggle = () => {
         if(extended.includes(plan.id)){
@@ -30,12 +29,12 @@ const ScheduleItem = ({plan, extended, set, toForm}) => {
                 {plan.workout.map((item, index) => ((!extended?.includes(plan.id)) ? 
                     ((index < 3) ? <View style={styles.container}>
                     <Text style= {{color: 'white', width: '10%'}}>{item.sets}</Text>
-                    <Text style= {{color: 'white', width: '80%'}}>{item.excercise}</Text>
+                    <Text style= {{color: 'white', width: '80%'}}>{item.exercise}</Text>
                     <Text style= {{color: 'white', width: '10%'}}>{item.reps}</Text>
                     </View> : <></>): 
                     <View style={styles.container}>
                         <Text style= {{color: 'white', width: '10%'}}>{item.sets}</Text>
-                        <Text style= {{color: 'white', width: '80%'}}>{item.excercise}</Text>
+                        <Text style= {{color: 'white', width: '80%'}}>{item.exercise}</Text>
                         <Text style= {{color: 'white', width: '10%'}}>{item.reps}</Text>
                     </View> 
                 ))}
