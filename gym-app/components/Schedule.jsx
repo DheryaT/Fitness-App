@@ -78,7 +78,7 @@ const Schedule = ({navigation, route}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
+        backgroundColor: 'rgb(38, 38, 38)'
     },
     Title:{
         fontSize: 22
@@ -86,13 +86,7 @@ const styles = StyleSheet.create({
     List:{
         flexGrow: 1,
         padding: '5%',
-
     },
-    ListItem: {
-        flex: 1,
-        backgroundColor: 'black'
-    }
-
 })
 
 export { Schedule };

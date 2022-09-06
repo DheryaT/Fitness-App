@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import {ImageBackground, StyleSheet,Text,View, Image,TextInput} from 'react-native';
+import {ImageBackground, StyleSheet,Text,View, Image,TextInput, ScrollView} from 'react-native';
 import { registerFunction } from '../api/Authentication';
 import { Button } from 'react-native';
+import { auth } from '../firebase-config';
 
 const image = { uri: "https://preview.redd.it/32zg2lkzo9l81.png?auto=webp&s=b2bad9bd024bf71d4a2592ddc8aace2cef65af0a" };
 
@@ -9,23 +10,48 @@ const Register = ({navigation, route}) => {
 
     const [registerEmail, setRegisterEmail] = useState("");
     const [registerPassword, setRegisterPassword] = useState("");
+    const [username, setUsername] = useState("")
+    const [error, setError] = useState("")
+
+    const registerClick = () => {
+      registerFunction(auth, registerEmail, registerPassword, username, setError);
+
+      if(error){
+        alert(error)
+      }
+
+      
+    }
 
     return(
 
-        <View style={styles.container}>
-            <Text>{route.params.auth ? "Yes" : "No"}</Text>
+        <ScrollView contentContainerStyle={styles.container}>
+            
             <View style={styles.inputView}>
                 <TextInput
                 style={styles.TextInput}
                 placeholder="Register Email"
+                placeholderTextColor="grey" 
                 onChangeText={(text) => {
                   setRegisterEmail(text);
                 }}
             />
             </View>
+            
+            <View style={styles.inputView}>
+            <TextInput style={styles.TextInput}
+             placeholder="Username"
+             placeholderTextColor="grey" 
+             onChangeText={(text) => {
+                setUsername(text);
+              }}
+            />
+            </View>
+            
             <View style={styles.inputView}>
             <TextInput style={styles.TextInput}
              placeholder="Register Password"
+             placeholderTextColor="grey" 
              onChangeText={(text) => {
                 setRegisterPassword(text);
               }}
@@ -34,12 +60,10 @@ const Register = ({navigation, route}) => {
             
             <Button
               title = "Register"
-              onPress={() => registerFunction( route.params.auth,
-                registerEmail,
-                registerPassword)}
+              onPress={registerClick}
             />
             
-        </View>
+        </ScrollView>
 
         
     )
@@ -55,6 +79,8 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         marginLeft: 20,
+        color: 'white',
+        
       },
       image: {
         flex: 1,
@@ -64,11 +90,11 @@ const styles = StyleSheet.create({
         height: '100%',
       },
       inputView: {
-        backgroundColor: "#FFC0CB",
+        backgroundColor: "black",
         borderRadius: 30,
         width: "70%",
         height: 50,
-        marginBottom: 20,
+        margin: 20,
         alignItems: "left",
       },
 })

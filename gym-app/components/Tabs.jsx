@@ -25,7 +25,13 @@ const Tabs = (props) => {
 
   return (
     <NavigationContainer >
-      <Tab.Navigator>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarStyle: { backgroundColor: 'black', },
+          headerStyle: { backgroundColor: 'black', },
+          headerTitleStyle: { color: 'white'}
+        }}
+      >
         <Tab.Screen name="Home" component={Home} initialParams={{ user: props.user }} options={{
           headerTitle: "Home",
           headerRight: () => (
@@ -35,8 +41,11 @@ const Tabs = (props) => {
               color="black"
             />
           ),
-          tabBarIcon: (info) => (<FontAwesomeIcon icon= {faHouse} size={25}/>)
-        }} />
+          tabBarIcon: (info) => (<FontAwesomeIcon icon= {faHouse} color='white' size={25}/>)
+          
+        }} 
+        
+        />
         <Tab.Screen name="Schedule" component={Schedule} options={{
           headerTitle: "Schedule",
           headerRight: () => (
@@ -46,7 +55,7 @@ const Tabs = (props) => {
               color="black"
             />
           ),
-          tabBarIcon: (info) => (<FontAwesomeIcon icon= {faCalendarDays} size={25}/>)
+          tabBarIcon: (info) => (<FontAwesomeIcon icon= {faCalendarDays} color='white' size={25}/>)
         }} />
 
         <Tab.Screen name="Calc" component={Calculator} options={{
@@ -58,7 +67,7 @@ const Tabs = (props) => {
               color="black"
             />
           ),
-          tabBarIcon: (info) => (<FontAwesomeIcon icon= {faCalculator} size={25}/>)
+          tabBarIcon: (info) => (<FontAwesomeIcon icon= {faCalculator} color='white' size={25}/>)
         }} />
         <Tab.Screen name="Timer" component={TimerContainer} options={{
 
@@ -76,7 +85,7 @@ const Tabs = (props) => {
               <FontAwesomeIcon icon = {faCircleQuestion} size = {30}/>
             </TouchableOpacity>
           ),
-          tabBarIcon: (info) => (<FontAwesomeIcon icon={faStopwatch} size={25}/>)
+          tabBarIcon: (info) => (<FontAwesomeIcon icon={faStopwatch} color='white' size={25}/>)
           
         }} />
 

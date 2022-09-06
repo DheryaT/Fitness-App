@@ -5,20 +5,31 @@ import {
     signOut,
   } from "firebase/auth";
 
+import { doc, setDoc } from "firebase/firestore"; 
+import { auth, db } from "../firebase-config";
 
 
 export const registerFunction = async (auth,
   registerEmail,
-  registerPassword) => {
+  registerPassword,
+  username,
+  setError) => {
   try {
     const user = await createUserWithEmailAndPassword(
       auth,
       registerEmail,
       registerPassword
-    );
-    console.log(user);
+    ); 
+   
+    await setDoc(doc(db, "users", `${registerEmail}`), 
+    {
+      name: username,
+      schedule: [],
+      timer: [],
+    },)
+  
   } catch (error) {
-    console.log(error.message);
+    console.log(error)
   }
 };
 
