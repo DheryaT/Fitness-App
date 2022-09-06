@@ -10,9 +10,9 @@ import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
 const CountdownTimer = ({ navigation }) => {
     const route = useRoute();
-    const [isPlaying, setIsPlaying] = React.useState(true);
-    const [timeIndex, setTimeIndex] = React.useState(0);
-    const [thing, setThing] = React.useState('');
+    const [isPlaying, setIsPlaying] = useState(true);
+    const [timeIndex, setTimeIndex] = useState(0);
+    const [thing, setThing] = useState('');
 
     const duration = [0.000001,route.params.Prepare, route.params.Sets, route.params.Work, route.params.Rest, route.params.Cooldown,0.000001];
     var newIndex;
