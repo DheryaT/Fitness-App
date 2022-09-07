@@ -27,15 +27,15 @@ const ScheduleItem = ({plan, extended, set, toForm, onDelete}) => {
             </View>
 
                 {plan.workout.map((item, index) => ((!extended?.includes(plan.id)) ? 
-                    ((index < 3) ? <View style={styles.container} key = {index}>
-                    <Text style= {{color: 'white', width: '10%'}}>{item.sets}</Text>
-                    <Text style= {{color: 'white', width: '80%'}}>{item.exercise}</Text>
-                    <Text style= {{color: 'white', width: '10%'}}>{item.reps}</Text>
+                    ((index < 3) ? <View style={styles.lineContainer} key = {index}>
+                    <Text style= {{color: 'white', width: '10%', fontSize: '20'}}>{item.sets}</Text>
+                    <Text style= {{color: 'white', width: '80%', fontSize: '18'}}>{item.exercise}</Text>
+                    <Text style= {{color: 'white', width: '10%', fontSize: '20'}}>{item.reps}</Text>
                     </View> : <View key = {index}></View>): 
-                    <View style={styles.container} key = {index}>
-                        <Text style= {{color: 'white', width: '10%'}}>{item.sets}</Text>
-                        <Text style= {{color: 'white', width: '80%'}}>{item.exercise}</Text>
-                        <Text style= {{color: 'white', width: '10%'}}>{item.reps}</Text>
+                    <View style={styles.lineContainer} key = {index}>
+                        <Text style= {{color: 'white', width: '10%', fontSize: '20'}}>{item.sets}</Text>
+                        <Text style= {{color: 'white', width: '80%', fontSize: '18'}}>{item.exercise}</Text>
+                        <Text style= {{color: 'white', width: '10%', fontSize: '20'}}>{item.reps}</Text>
                     </View> 
                 ))}
                 <TouchableOpacity style={styles.saveBut} onPress={toggle} ><FontAwesomeIcon icon={extended.includes(plan.id) ? faChevronUp : faChevronDown} size={25} color={'white'}/></TouchableOpacity>
@@ -48,26 +48,48 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row'
     },
+    lineContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        paddingVertical: '2.5%',
+        paddingHorizontal: '5%',
+        borderBottomColor: 'rgb(191, 191, 191)',
+        borderBottomWidth: 1,
+        
+    },
     Title:{
         fontSize: 22
     },
     ListItem: {
-        padding: '5%',
+        borderWidth: 1,
+        borderTopColor: 'rgb(191, 191, 191)',
+        borderLeftColor: 'rgb(191, 191, 191)',
         margin: '5%',
         backgroundColor: 'black',
         borderRadius: '10px',
-        borderColor: '',
-        alignItems: 'center'
+        alignItems: 'center',
+        shadowColor: "black",
+        
     },
     Header: {
         flex: 1,
         flexDirection: 'row',
-        padding: '1%',
-        marginBottom: '2.5%'
+        paddingVertical: '2.5%',
+        paddingHorizontal: '5%',
+        marginBottom: '2.5%',
+        backgroundColor: 'rgb(51, 51, 51)',
+        borderTopRightRadius: 10,
+        borderTopLeftRadius: 10
+
     },
     HeaderBut: {
         width: '10%'
     },
+    saveBut: {
+        width: '10%',
+        marginVertical: '2.5%',
+    },
+    
     HeaderTitle: {
         width: '80%',
         color: 'white', 

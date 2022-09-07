@@ -21,7 +21,7 @@ export const registerFunction = async (auth,
       registerPassword
     ); 
    
-    await setDoc(doc(db, "users", `${registerEmail}`), 
+    await setDoc(doc(db, "users", `${registerEmail.toLowerCase()}`), 
     {
       name: username,
       schedule: [],

@@ -27,10 +27,12 @@ const Tabs = (props) => {
     <NavigationContainer >
       <Tab.Navigator
         screenOptions={{
-          tabBarStyle: { backgroundColor: 'black', },
-          headerStyle: { backgroundColor: 'black', },
-          headerTitleStyle: { color: 'white'}
+          tabBarStyle: { backgroundColor: 'rgb(51, 51, 51)', padding: 10, height: "12%", },
+          headerStyle: { backgroundColor: 'rgb(51, 51, 51)', },
+          headerTitleStyle: { color: 'white'},
+          tabBarLabelStyle: {fontSize: 14, color: "white" }
         }}
+        
       >
         <Tab.Screen name="Home" component={Home} initialParams={{ user: props.user }} options={{
           headerTitle: "Home",
@@ -41,8 +43,8 @@ const Tabs = (props) => {
               color="black"
             />
           ),
-          tabBarIcon: (info) => (<FontAwesomeIcon icon= {faHouse} color='white' size={25}/>)
           
+          tabBarIcon: ({focused}) => (<FontAwesomeIcon icon= {faHouse} color={focused ? "red": "white"} size={25}/>),
         }} 
         
         />
