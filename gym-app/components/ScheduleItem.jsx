@@ -25,6 +25,11 @@ const ScheduleItem = ({plan, extended, set, toForm, onDelete}) => {
                     <FontAwesomeIcon icon={faTrashCan} size={25} color={'white'}/>
                 </TouchableOpacity>
             </View>
+            <View style = {styles.HeaderText}>
+                <Text style= {styles.headerFontLeft}>Sets</Text>
+                <Text style= {styles.headerFontMid}>Exercise</Text>
+                <Text style= {styles.headerFontRight}>Reps</Text>
+            </View>
 
                 {plan.workout.map((item, index) => ((!extended?.includes(plan.id)) ? 
                     ((index < 3) ? <View style={styles.lineContainer} key = {index}>
@@ -75,11 +80,33 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingVertical: '2.5%',
         paddingHorizontal: '5%',
-        marginBottom: '2.5%',
         backgroundColor: 'rgb(51, 51, 51)',
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
         
+    },
+    HeaderText: {
+        flex: 1,
+        flexDirection: 'row',
+        paddingVertical: '2.5%',
+        paddingHorizontal: '5%',
+        marginBottom: '2.5%',
+        backgroundColor: 'rgb(51, 51, 51)',
+    },
+    headerFontMid:{
+        width: '75%',
+        textAlign: 'center',
+        color: 'white'
+    },
+    headerFontLeft:{
+        width: '10%',
+        textAlign: 'center',
+        color: 'white'
+    },
+    headerFontRight:{
+        width: '15%',
+        textAlign: 'center',
+        color: 'white'
     },
     HeaderBut: {
         width: '10%'

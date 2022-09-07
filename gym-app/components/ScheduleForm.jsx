@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {ImageBackground, StyleSheet,Text,View, Image,TextInput, Button, FlatList, Item, TouchableOpacity} from 'react-native';
-import { faPlusCircle, faTrashCan } from '@fortawesome/free-solid-svg-icons/'
+import { faPlusCircle, faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { doc, setDoc } from "firebase/firestore"; 
@@ -48,7 +48,7 @@ const ScheduleForm = ({editing, setShowForm, plans}) => {
                         <TextInput defaultValue = {item.reps} style = {styles.inputNum} onChangeText= {(text)=>updateItem(index, text, 'reps')}/>
                         
                         <TouchableOpacity style = {styles.itemBut}  onPress={() => deleteItem(index)}>
-                            <FontAwesomeIcon icon={faTrashCan} size={25} color={'black'}/>
+                            <FontAwesomeIcon icon={faXmark} size={25} color={'white'}/>
                         </TouchableOpacity>
 
                     </View>))}
@@ -58,10 +58,10 @@ const ScheduleForm = ({editing, setShowForm, plans}) => {
                     </TouchableOpacity>
                 </View>
                 <View style = {styles.controls}>
-                    <TouchableOpacity style = {styles.botBut}  onPress={()=> setShowForm(false)}>
+                    <TouchableOpacity style = {styles.csBut}  onPress={()=> setShowForm(false)}>
                         <Text style={styles.ButText}>Cancel</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style = {styles.botBut}  onPress={saveSchedule}>
+                    <TouchableOpacity style = {styles.csBut}  onPress={saveSchedule}>
                         <Text style={styles.ButText}>Save</Text>
                     </TouchableOpacity>
                 </View>
@@ -85,13 +85,14 @@ const styles = StyleSheet.create({
     },
     controls: {
         flexDirection: 'row',
+        marginVertical: '5%'
     },
     Title:{
         fontSize: 22
     },
     ListItem: {
         borderWidth: 3,
-        borderColor: 'rgb(0, 115, 153)',
+        borderColor: 'rgb(204, 153, 0)',
         margin: '5%',
         backgroundColor: 'rgb(64, 64, 64)',
         borderRadius: '10px',
@@ -121,7 +122,8 @@ const styles = StyleSheet.create({
     },
     itemBut: {
         padding: 5,
-        marginTop: 10
+        marginTop: 10,
+        
     },
     input: {
         backgroundColor: "#FFFFFF",
@@ -162,6 +164,22 @@ const styles = StyleSheet.create({
         alignItems: "center",
         height: 40,
         margin: 5,
+    },
+    csBut: {
+        width: '40%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgb(50, 50, 50)',
+        padding: '5%',
+        margin: '5%',
+        borderRadius: 5,
+        borderWidth: 3
+    },
+    ButText: {
+        color: 'white',
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginHorizontal: 10
     }
 
 })
