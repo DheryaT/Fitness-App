@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { ImageBackground, StyleSheet, Text, View, Image, TextInput, Button, Pressable } from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, Image, TextInput, Button, Pressable, ScrollView } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 import { Score } from "./Score";
 
@@ -19,7 +19,10 @@ const Calculator = () => {
     const [weightLifted, setWeightLifted] = useState(0);
     const [repsPerformed, setRepsPerformed] = useState(0);
     const [Max, setMaxLift] = useState(0);
+
     const [history, setHistory] = useState([])
+    const [localhist, setlocalHist] = useState([])
+    const [expanded, setExpanded] = useState(false)
 
     //const OneRepMax = (weightLifted, repsPerformed) => {
     //  setMaxLift(weightLifted * (1 + (repsPerformed / 30)));
@@ -32,7 +35,8 @@ const Calculator = () => {
     const getUser = async () => {
         const docSnap = await getDoc(docRef)
         if (docSnap.exists()) {
-            setHistory(docSnap.data().calchistory)
+            console.log("uh oh")
+            setlocalHist(docSnap.data().calchistory)
           } else {
             console.log("No such document!");
         }
@@ -53,9 +57,9 @@ const Calculator = () => {
 
     const newRecord = async () =>{
         let curMax = 0;
-        history.forEach(item => {if(item.id > curMax){curMax = item.id}})
+        localhist.forEach(item => {if(item.id > curMax){curMax = item.id}})
         curMax++;
-        const newHist = [...history,{id: curMax, Weight: weightLifted, Reps: repsPerformed, Max: parseFloat(Max).toFixed(2)}];
+        const newHist = [...localhist,{id: curMax, Weight: weightLifted, Reps: repsPerformed, Max: parseFloat(Max).toFixed(2)}];
         await setDoc(doc(db, "users", `${auth.currentUser.email}`), 
         {
             calchistory: newHist
@@ -65,10 +69,14 @@ const Calculator = () => {
         setHistory(newHist)
     }
 
+    const clearHistory = () => {
+
+    }
+
 
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={styles.content}>
                 <Text style={styles.calculatorTitle}>
                     Calculate
@@ -154,11 +162,11 @@ const Calculator = () => {
                 
             </View>
             <View style={styles.Score}>
-                <Score></Score> 
+                <Score history = {localhist.reverse()} expanded = {expanded} clearHist = {clearHistory} ></Score> 
             </View>
             
             
-        </View>
+        </ScrollView>
     );
 }
 
@@ -255,8 +263,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     Score: {
-        flex: 4,
-        backgroundColor: 'blue',
+        flex: 2,
         borderRadius: 20,
         borderWidth: 10,
     },
