@@ -69,8 +69,24 @@ const Calculator = () => {
         setHistory(newHist)
     }
 
-    const clearHistory = () => {
+    const clearHistory = async () => {
+        const newHist = [];
+        await setDoc(doc(db, "users", `${auth.currentUser.email}`), 
+        {
+            calchistory: newHist
+        },
+        )
+        setHistory(newHist)
+    }
 
+    const deleteRecord = async (ind) => {
+        const filtered = localhist.filter((item, index) => item.id != ind)
+        await setDoc(doc(db, "users", `${auth.currentUser.email}`), 
+        {
+            calchistory: filtered
+        },
+        )
+        setHistory(filtered)
     }
 
 
@@ -118,6 +134,7 @@ const Calculator = () => {
                 </View>
                 <View style={styles.inputFields}>
                     <TextInput style={styles.input}
+                        keyboardType='numeric'
                         placeholder="Weight in KG (e.g 89)"
                         onChangeText={(text) => {
                             setWeightLifted(text);
@@ -125,6 +142,7 @@ const Calculator = () => {
 
                     </TextInput>
                     <TextInput style={styles.input}
+                        keyboardType='numeric'
                         placeholder="Number Of Reps"
                         onChangeText={(text) => {
                             setRepsPerformed(text);
@@ -162,7 +180,8 @@ const Calculator = () => {
                 
             </View>
             <View style={styles.Score}>
-                <Score history = {localhist.reverse()} expanded = {expanded} clearHist = {clearHistory} ></Score> 
+                {localhist.length == 0 ? <></>: <Score history = {localhist} expanded = {expanded} clearHist = {clearHistory} deleteItem = {deleteRecord} ></Score>}
+                
             </View>
             
             

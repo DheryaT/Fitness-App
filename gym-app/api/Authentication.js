@@ -26,6 +26,7 @@ export const registerFunction = async (auth,
       name: username,
       schedule: [],
       preset: [],
+      calchistory: [],
     },)
   
   } catch (error) {
