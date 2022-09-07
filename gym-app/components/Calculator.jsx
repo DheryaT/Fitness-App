@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ImageBackground, StyleSheet, Text, View, Image, TextInput, Button, Pressable } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { doc, setDoc } from "firebase/firestore";
@@ -7,6 +7,7 @@ import { Score } from "./Score";
 
 const Calculator = () => {
 
+    const docRef = doc(db, "users", `${auth.currentUser.email}`);
     const [Output, setOutput] = useState('');
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('One Rep Max');
@@ -14,9 +15,11 @@ const Calculator = () => {
         { label: 'One Rep Max', value: 'One Rep Max' },
         { label: 'Strength Level', value: 'Strength Level' }
     ])
+
     const [weightLifted, setWeightLifted] = useState(0);
     const [repsPerformed, setRepsPerformed] = useState(0);
     const [Max, setMaxLift] = useState(0);
+    const [history, setHistory] = useState([])
 
     //const OneRepMax = (weightLifted, repsPerformed) => {
     //  setMaxLift(weightLifted * (1 + (repsPerformed / 30)));
@@ -26,6 +29,19 @@ const Calculator = () => {
         Output = "Your Max Lift Is " + parseFloat(Max).toFixed(2) + " KG";
     }
 
+    const getUser = async () => {
+        const docSnap = await getDoc(docRef)
+        if (docSnap.exists()) {
+            setHistory(docSnap.data().calchistory)
+          } else {
+            console.log("No such document!");
+        }
+    };
+
+    useEffect(() => {
+        getUser();
+    }, [history])
+
     const SaveLift = async () => {
         await setDoc(doc(db, "users", `${auth.currentUser.email}`),
             {
@@ -34,6 +50,22 @@ const Calculator = () => {
             { merge: true }
         )
     }
+
+    const newRecord = async () =>{
+        let curMax = 0;
+        history.forEach(item => {if(item.id > curMax){curMax = item.id}})
+        curMax++;
+        const newHist = [...history,{id: curMax, Weight: weightLifted, Reps: repsPerformed, Max: parseFloat(Max).toFixed(2)}];
+        await setDoc(doc(db, "users", `${auth.currentUser.email}`), 
+        {
+            calchistory: newHist
+        },
+            {merge: true}
+        )
+        setHistory(newHist)
+    }
+
+
 
     return (
         <View style={styles.container}>
@@ -109,7 +141,7 @@ const Calculator = () => {
                         }}
                         onPressOut={() => {
                             setOutput("Your One Rep Max is:\n" + parseFloat(Max).toFixed(2) + " KG")
-                            SaveLift()
+                            newRecord()
                         }}>
                         <Text style={styles.CalculateButton}>
                             Save
@@ -122,7 +154,7 @@ const Calculator = () => {
                 
             </View>
             <View style={styles.Score}>
-                <Score></Score>
+                <Score></Score> 
             </View>
             
             
