@@ -25,7 +25,7 @@ export const registerFunction = async (auth,
     {
       name: username,
       schedule: [],
-      timer: [],
+      preset: [],
     },)
   
   } catch (error) {

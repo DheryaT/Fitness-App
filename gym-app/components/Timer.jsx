@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Pressable, Button, Modal,TextInput } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Pressable, Button, Modal,TextInput,FlatList } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCirclePlay } from '@fortawesome/free-solid-svg-icons/faCirclePlay';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons/faBookmark';
@@ -17,6 +17,9 @@ const Timer = ({ navigation, route }) => {
     // State to store count value
     const [modalVisible, setModalVisible] = useState(false);
     const [presetnames, setPresetNames] = useState('');
+
+    const [namesList, setNamesList] = useState([ {name:''}]);
+
     const [times1, setTime] = useState([])
     const [Prepare, setCount] = useState(0)
     const [Sets, setCount1] = useState(0)
@@ -33,12 +36,32 @@ const Timer = ({ navigation, route }) => {
     const DecrementRest = () => { if (Rest > 0) { setCount3(Rest - 1); } }
     const incrementCooldown = () => { setCount4(Cooldown + 1); }
     const DecrementCooldown = () => { if (Cooldown > 0) { setCount4(Cooldown - 1); } }
+
     const update = () => {
         setCount(times1.Prepare)
         setCount1(times1.Sets)
         setCount2(times1.Work)
         setCount3(times1.Rest)
         setCount4(times1.Cooldown)
+    }
+        
+    
+    
+    const Addpreset = async () =>{
+        console.log('hello')
+        let curMax = 0;
+        times1.forEach(item => {if(item.id > curMax){curMax = item.id}})
+        curMax++;
+      console.log({Prepare})
+      const newPre = [...times1,{id: curMax,Name:presetnames, Prepare:Prepare, Sets:Sets, Work:Work, Rest: Rest, Cooldown:Cooldown}];
+        
+      await setDoc(doc(db, "users", `${auth.currentUser.email}`), 
+        {
+            preset: newPre
+        },
+            {merge: true}
+        )
+        setTime(newPre)
     }
     const SavePreset = async () => {
         await setDoc(doc(db, "users", `${auth.currentUser.email}`),
@@ -73,14 +96,15 @@ const Timer = ({ navigation, route }) => {
         const docSnap = await getDoc(docRef)
 
         if (docSnap.exists()) {
-            setTime(docSnap.data().time1)
+            setTime(docSnap.data().preset)
+            
         } else {
             console.log("No such document!");
         }
     };
 
 
-    useEffect(() => { getTime(); }, [])
+    useEffect(() => { getTime(); }, [times1])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -145,16 +169,15 @@ const Timer = ({ navigation, route }) => {
                         <View style={styles.modalView}>
                         
                             <View style={styles.inputView}>
-                        <TextInput style={styles.TextInput} placeholder="Preset Name" placeholderTextColor="black" onChangeText={newText => setPresetNames(newText)} defaultValue={presetnames}
-
-
-/></View>                     
+                        <TextInput style={styles.TextInput} 
+                        placeholder="Preset Name" placeholderTextColor="black" 
+                        onChangeText={name => setPresetNames(name)} value={presetnames}/></View>                     
                             <View style={styles.SaveCan}>   
-                            <Pressable 
-                                onPress={() => {SavePreset(),setPresetNames(presetnames),setModalVisible(!modalVisible)}}
+                            <TouchableOpacity
+                                onPress={() => {Addpreset(),setModalVisible(!modalVisible)}}
                             >   
                                 <Text style={styles.texts}>Save</Text>
-                            </Pressable >
+                            </TouchableOpacity>
                             <Pressable 
                                 onPress={() => setModalVisible(!modalVisible)}
                             >
@@ -166,7 +189,7 @@ const Timer = ({ navigation, route }) => {
                 </Modal>
                 <View style={styles.ButtonSS}>
                 <TouchableOpacity style={styles.startBut} onPress={() => StartTimer()} ><FontAwesomeIcon icon={faCirclePlay} size={50} /></TouchableOpacity>
-                <TouchableOpacity style={styles.saveBut} onPress={() => { getTime(), setModalVisible(true) }} ><FontAwesomeIcon icon={faBookmark} size={50} /></TouchableOpacity>
+                <TouchableOpacity style={styles.saveBut} onPress={() => { setModalVisible(true) }} ><FontAwesomeIcon icon={faBookmark} size={50} /></TouchableOpacity>
                 </View>
                 <View style={styles.saveText}>
                 <Text style={styles.textSaveStart}> Start</Text>
@@ -179,11 +202,12 @@ const Timer = ({ navigation, route }) => {
 
                 </View>
                 <View style={styles.presetContainer}>
+                <FlatList>
+                keyExtractor={(item, index) => item.id}
+                data={times1}
+                renderItem={({ item }) => <Text><FontAwesomeIcon icon={faEdit} size={25} />{item.name}<FontAwesomeIcon icon={faTrash} size={25} /></Text>}
 
-                    <Text style={styles.presetTextSize}><TouchableOpacity onPress={() => { }}><FontAwesomeIcon icon={faEdit} size={25} /></TouchableOpacity><Button title={presetnames} onPress={() => { update() }}></Button> <TouchableOpacity onPress={() => { }}><FontAwesomeIcon icon={faTrash} size={25} /></TouchableOpacity>{"\n"}</Text>
-                    <Text style={styles.presetTextSize}>Preset two: <TouchableOpacity onPress={() => { }}><FontAwesomeIcon icon={faTrash} size={25} /></TouchableOpacity>{"\n"}</Text>
-                    <Text style={styles.presetTextSize}>Preset three: <TouchableOpacity onPress={() => { }}><FontAwesomeIcon icon={faTrash} size={25} /></TouchableOpacity>{"\n"}</Text>
-
+                </FlatList>
 
                 </View>
             </ScrollView>
