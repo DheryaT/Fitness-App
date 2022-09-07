@@ -28,14 +28,14 @@ const ScheduleItem = ({plan, extended, set, toForm, onDelete}) => {
 
                 {plan.workout.map((item, index) => ((!extended?.includes(plan.id)) ? 
                     ((index < 3) ? <View style={styles.lineContainer} key = {index}>
-                    <Text style= {{color: 'white', width: '10%', fontSize: '20'}}>{item.sets}</Text>
-                    <Text style= {{color: 'white', width: '80%', fontSize: '18'}}>{item.exercise}</Text>
-                    <Text style= {{color: 'white', width: '10%', fontSize: '20'}}>{item.reps}</Text>
+                    <Text style= {{color: 'white', width: '10%', fontSize: 20}}>{item.sets}</Text>
+                    <Text style= {{color: 'white', width: '80%', fontSize: 18}}>{item.exercise}</Text>
+                    <Text style= {{color: 'white', width: '10%', fontSize: 20}}>{item.reps}</Text>
                     </View> : <View key = {index}></View>): 
                     <View style={styles.lineContainer} key = {index}>
-                        <Text style= {{color: 'white', width: '10%', fontSize: '20'}}>{item.sets}</Text>
-                        <Text style= {{color: 'white', width: '80%', fontSize: '18'}}>{item.exercise}</Text>
-                        <Text style= {{color: 'white', width: '10%', fontSize: '20'}}>{item.reps}</Text>
+                        <Text style= {{color: 'white', width: '10%', fontSize: 20}}>{item.sets}</Text>
+                        <Text style= {{color: 'white', width: '80%', fontSize: 18}}>{item.exercise}</Text>
+                        <Text style= {{color: 'white', width: '10%', fontSize: 20}}>{item.reps}</Text>
                     </View> 
                 ))}
                 <TouchableOpacity style={styles.saveBut} onPress={toggle} ><FontAwesomeIcon icon={extended.includes(plan.id) ? faChevronUp : faChevronDown} size={25} color={'white'}/></TouchableOpacity>
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingVertical: '2.5%',
         paddingHorizontal: '5%',
-        borderBottomColor: 'rgb(191, 191, 191)',
+        borderBottomColor: 'black',
         borderBottomWidth: 1,
         
     },
@@ -61,15 +61,14 @@ const styles = StyleSheet.create({
         fontSize: 22
     },
     ListItem: {
-        borderWidth: 1,
-        borderTopColor: 'rgb(191, 191, 191)',
-        borderLeftColor: 'rgb(191, 191, 191)',
+        borderWidth: 3,
+        borderColor: 'rgb(0, 115, 153)',
         margin: '5%',
-        backgroundColor: 'black',
+        backgroundColor: 'rgb(64, 64, 64)',
         borderRadius: '10px',
         alignItems: 'center',
-        shadowColor: "black",
-        
+        shadowOpacity: .5,
+        shadowOffset: {width: 10, height: 10}
     },
     Header: {
         flex: 1,
@@ -79,8 +78,8 @@ const styles = StyleSheet.create({
         marginBottom: '2.5%',
         backgroundColor: 'rgb(51, 51, 51)',
         borderTopRightRadius: 10,
-        borderTopLeftRadius: 10
-
+        borderTopLeftRadius: 10,
+        
     },
     HeaderBut: {
         width: '10%'
@@ -95,7 +94,8 @@ const styles = StyleSheet.create({
         color: 'white', 
         fontSize: 26,
         alignContent: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontWeight: 'bold'
     }
 
 })

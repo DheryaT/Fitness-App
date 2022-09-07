@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {ImageBackground, StyleSheet,Text,View, Image,TextInput, Button, FlatList, Item} from 'react-native';
+import {ImageBackground, StyleSheet,Text,View, Image,TextInput, Button, FlatList, Item, TouchableOpacity} from 'react-native';
 import { ScheduleForm } from "./ScheduleForm";
 import { ScheduleItem } from "./ScheduleItem";
 import { doc, setDoc, getDoc } from "firebase/firestore"; 
 import { auth, db } from "../firebase-config";
+import { faPlus } from '@fortawesome/free-solid-svg-icons/'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
 const Schedule = ({navigation, route}) => {
 
@@ -70,7 +72,10 @@ const Schedule = ({navigation, route}) => {
             }
             contentContainerStyle = {styles.List}
             />
-            <Button title="Add Workout" onPress={createNew}/>
+            <TouchableOpacity style={styles.AddBut} onPress={createNew}>
+                <Text style={styles.ButText}>Add Workout</Text>
+                <FontAwesomeIcon icon={faPlus} size={25} color={'white'}/>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -87,6 +92,21 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         padding: '5%',
     },
+    AddBut:{
+        backgroundColor: 'black',
+        height: '8%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        borderColor: 'green',
+        borderWidth: 2
+    },
+    ButText: {
+        color: 'white',
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginHorizontal: 10
+    }
 })
 
 export { Schedule };

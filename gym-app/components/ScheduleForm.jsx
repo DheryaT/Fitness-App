@@ -37,7 +37,7 @@ const ScheduleForm = ({editing, setShowForm, plans}) => {
     }
 
     return(
-        <KeyboardAwareScrollView style = {{flexGrow: 1}}>
+        <KeyboardAwareScrollView style = {styles.screenContainer}>
                 <View style = {styles.ListItem}>
                     <TextInput defaultValue= {editObj.name} style = {styles.inputTitle} onChangeText = {(text) => {setTitle(text)} }/>
 
@@ -58,8 +58,12 @@ const ScheduleForm = ({editing, setShowForm, plans}) => {
                     </TouchableOpacity>
                 </View>
                 <View style = {styles.controls}>
-                    <Button title= "Cancel" onPress={()=> setShowForm(false)}></Button>
-                    <Button title= "Save" onPress={saveSchedule}></Button>
+                    <TouchableOpacity style = {styles.botBut}  onPress={()=> setShowForm(false)}>
+                        <Text style={styles.ButText}>Cancel</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style = {styles.botBut}  onPress={saveSchedule}>
+                        <Text style={styles.ButText}>Save</Text>
+                    </TouchableOpacity>
                 </View>
         </KeyboardAwareScrollView>
     )
@@ -70,8 +74,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         padding: 10,
         margin: 10,
-        backgroundColor: 'darkgrey',
-        borderRadius: 5
+        backgroundColor: 'rgb(89, 89, 89)',
+        borderRadius: 5,
+        shadowOpacity: .5,
+
+        
+    },
+    screenContainer: {
+        backgroundColor: 'rgb(77, 77, 77)'
     },
     controls: {
         flexDirection: 'row',
@@ -80,12 +90,15 @@ const styles = StyleSheet.create({
         fontSize: 22
     },
     ListItem: {
-        padding: '5%',
+        borderWidth: 3,
+        borderColor: 'rgb(0, 115, 153)',
         margin: '5%',
-        backgroundColor: 'black',
+        backgroundColor: 'rgb(64, 64, 64)',
         borderRadius: '10px',
-        borderColor: '',
-        alignItems: 'center'
+        alignItems: 'center',
+        shadowOpacity: .5,
+        shadowOffset: {width: 10, height: 10},
+        padding: '5%'
     },
     Header: {
         flex: 1,
