@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Button } from 'react-native';
-import {ImageBackground, StyleSheet,Text,View, Image,TextInput} from 'react-native';
+import {ImageBackground, StyleSheet,Text,View, Image,TextInput, TouchableOpacity} from 'react-native';
 import { loginFunction, logoutFunction } from '../api/Authentication';
+import { faRightToBracket } from '@fortawesome/free-solid-svg-icons/'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const image = { uri: "https://preview.redd.it/32zg2lkzo9l81.png?auto=webp&s=b2bad9bd024bf71d4a2592ddc8aace2cef65af0a" };
 
@@ -20,8 +23,8 @@ const Login = ({navigation, route}) => {
 
     return(
         
-        <View style={styles.container}>
-
+        <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+            <FontAwesomeIcon style= {styles.logo} icon= {faRightToBracket} size={75} color= 'white'/>
             <View style={styles.inputView}>
                 <TextInput
                 style={styles.TextInput}
@@ -40,20 +43,14 @@ const Login = ({navigation, route}) => {
             }}
             />
             </View>
-            <Button
-                 title="Login"
-                 onPress={() =>
-                    loginLoad()
-                }
-            />
-            <Button
-                 title="Register"
-                 onPress={() =>
-                 navigation.navigate('Register', {auth: route.params.auth})
-                }
-            />
+            <TouchableOpacity style={styles.Button} onPress={() => loginLoad()}>
+                <Text style={styles.butText}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate('Register', {auth: route.params.auth})}>
+                <Text style={styles.butText}>Register</Text>
+            </TouchableOpacity>
             
-        </View>
+        </KeyboardAwareScrollView>
 
         
     )
@@ -62,7 +59,20 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        backgroundColor: 'rgb(77, 77, 77)'     
+    },
+    Button : {
+        backgroundColor: 'black',
+        width: '40%',
+        margin: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '2.5%',
+        borderRadius: 5,
+    },
+    butText:{
+        color: 'white'
     },
     TextInput: {
         height: 50,
@@ -71,16 +81,12 @@ const styles = StyleSheet.create({
         padding: 10,
         marginLeft: 20,
       },
-      image: {
-        flex: 1,
-        resizeMode: 'cover',
-        justifyContent: 'center',
-        width: '100%', 
-        height: '100%',
+      logo: {
+        marginBottom: 50
       },
       inputView: {
-        backgroundColor: "#FFC0CB",
-        borderRadius: 30,
+        backgroundColor: "white",
+        borderRadius: 10,
         width: "70%",
         height: 50,
         marginBottom: 20,

@@ -29,7 +29,14 @@ export default function App() {
 
   return (
     isLoading ?<View style={styles.container}><ActivityIndicator size="large" color="black"/></View>  :  (loggedin ? <Tabs user={user} auth={auth}/> : <NavigationContainer >
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        tabBarStyle: { backgroundColor: 'rgb(51, 51, 51)', padding: 10, height: "12%", },
+        headerStyle: { backgroundColor: 'rgb(51, 51, 51)', },
+        headerTitleStyle: { color: 'white'},
+        tabBarLabelStyle: {fontSize: 14, color: "white" }
+      }}
+    >
       <Stack.Screen
         name="Login"
         component={Login}

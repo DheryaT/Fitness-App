@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import {ImageBackground, StyleSheet,Text,View, Image,TextInput, ScrollView} from 'react-native';
+import {ImageBackground, StyleSheet,Text,View, Image,TextInput, TouchableOpacity,} from 'react-native';
 import { registerFunction } from '../api/Authentication';
 import { Button } from 'react-native';
 import { auth } from '../firebase-config';
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons/'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const image = { uri: "https://preview.redd.it/32zg2lkzo9l81.png?auto=webp&s=b2bad9bd024bf71d4a2592ddc8aace2cef65af0a" };
 
@@ -19,14 +22,12 @@ const Register = ({navigation, route}) => {
       if(error){
         alert(error)
       }
-
-      
     }
 
     return(
 
-        <ScrollView contentContainerStyle={styles.container}>
-            
+        <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+            <FontAwesomeIcon style= {styles.logo} icon= {faUserPlus} size={100} color= 'white'/>
             <View style={styles.inputView}>
                 <TextInput
                 style={styles.TextInput}
@@ -58,45 +59,53 @@ const Register = ({navigation, route}) => {
             />
             </View>
             
-            <Button
-              title = "Register"
-              onPress={registerClick}
-            />
+      
+            <TouchableOpacity style={styles.Button} onPress={registerClick} >
+                <Text style={styles.butText}>Register User</Text>
+            </TouchableOpacity>
             
-        </ScrollView>
+        </KeyboardAwareScrollView>
 
         
     )
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center"
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: 'rgb(77, 77, 77)'   
     },
     TextInput: {
-        height: 50,
-        flex: 1,
-        padding: 10,
-        marginLeft: 20,
-        color: 'white',
-        
-      },
-      image: {
-        flex: 1,
-        resizeMode: 'cover',
-        justifyContent: 'center',
-        width: '100%', 
-        height: '100%',
-      },
-      inputView: {
-        backgroundColor: "black",
-        borderRadius: 30,
-        width: "70%",
-        height: 50,
-        margin: 20,
-        alignItems: "left",
-      },
+      height: 50,
+      width: '100%',
+      flex: 1,
+      padding: 10,
+      marginLeft: 20,
+    },
+    Button : {
+      backgroundColor: 'black',
+      width: '40%',
+      margin: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '2.5%',
+      borderRadius: 5,
+  },
+  butText:{
+      color: 'white'
+  },
+  logo: {
+    marginBottom: 50
+  },
+    inputView: {
+      backgroundColor: "white",
+      borderRadius: 10,
+      width: "70%",
+      height: 50,
+      marginBottom: 20,
+      alignItems: "left",
+    },
 })
 
 export { Register }; //tes

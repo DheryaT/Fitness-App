@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
 const Schedule = ({navigation, route}) => {
 
-    const docRef = doc(db, "users", `${auth.currentUser.email}`);
+    const docRef = doc(db, "users", `${auth.currentUser?.email}`);
 
     const [plans, setPlans] = useState([])
     const [extended, setExtended] = useState([])

@@ -40,11 +40,11 @@ const Tabs = (props) => {
             <Button
               onPress={() => logoutFunction(props.auth)}
               title="LogOut"
-              color="black"
+              color="white"
             />
           ),
           
-          tabBarIcon: ({focused}) => (<FontAwesomeIcon icon= {faHouse} color={focused ? "red": "white"} size={25}/>),
+          tabBarIcon: ({focused}) => (<FontAwesomeIcon icon= {faHouse} color={focused ? "white": "rgb(150, 150, 150)"} size={25}/>),
         }} 
         
         />
@@ -54,10 +54,10 @@ const Tabs = (props) => {
             <Button
               onPress={() => logoutFunction(props.auth)}
               title="LogOut"
-              color="black"
+              color="white"
             />
           ),
-          tabBarIcon: (info) => (<FontAwesomeIcon icon= {faCalendarDays} color='white' size={25}/>)
+          tabBarIcon: ({focused}) => (<FontAwesomeIcon icon= {faCalendarDays} color={focused ? "white": "rgb(150, 150, 150)"} size={25}/>)
         }} />
 
         <Tab.Screen name="Calc" component={Calculator} options={{
@@ -66,10 +66,10 @@ const Tabs = (props) => {
             <Button
               onPress={() => logoutFunction(props.auth)}
               title="LogOut"
-              color="black"
+              color="white"
             />
           ),
-          tabBarIcon: (info) => (<FontAwesomeIcon icon= {faCalculator} color='white' size={25}/>)
+          tabBarIcon: ({focused}) => (<FontAwesomeIcon icon= {faCalculator} color={focused ? "white": "rgb(150, 150, 150)"} size={25}/>)
         }} />
         <Tab.Screen name="Timer" component={TimerContainer} options={{
 
@@ -78,7 +78,7 @@ const Tabs = (props) => {
             <Button
               onPress={() => logoutFunction(props.auth)}
               title="LogOut"
-              color="black"
+              color="white"
             />
             
           ),
@@ -87,7 +87,7 @@ const Tabs = (props) => {
               <FontAwesomeIcon icon = {faCircleQuestion} size = {30}/>
             </TouchableOpacity>
           ),
-          tabBarIcon: (info) => (<FontAwesomeIcon icon={faStopwatch} color='white' size={25}/>)
+          tabBarIcon: ({focused}) => (<FontAwesomeIcon icon={faStopwatch} color={focused ? "white": "rgb(150, 150, 150)"} size={25}/>)
           
         }} />
 
