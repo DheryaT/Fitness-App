@@ -75,6 +75,7 @@ const Calculator = () => {
         {
             calchistory: newHist
         },
+        {merge: true}
         )
         setHistory(newHist)
     }
@@ -85,6 +86,7 @@ const Calculator = () => {
         {
             calchistory: filtered
         },
+        {merge: true}
         )
         setHistory(filtered)
     }

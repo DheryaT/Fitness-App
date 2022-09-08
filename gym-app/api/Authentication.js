@@ -27,6 +27,7 @@ export const registerFunction = async (auth,
       schedule: [],
       preset: [],
       calchistory: [],
+      mealplans: [],
     },)
   
   } catch (error) {

@@ -45,11 +45,11 @@ const Score = ({ history, expanded, clearHist, deleteItem }) => {
             {history.map((item, index) =>
                 <View key={index} style={styles.historyItems}>
                     <View style={styles.lineContainer} key={index}>
-                        <Text style={{ color: 'white', fontSize: 20}}>{item.Reps}</Text>
-                        <Text style={{ color: 'white', fontSize: 20, justifyContent: 'center'}}>{item.Weight}</Text>
-                        <Text style={{ color: 'white', fontSize: 20}}>{item.Max}</Text>
-                        <TouchableOpacity style = {styles.itemBut}  onPress={() => deleteItem(item.id)}>
-                            <FontAwesomeIcon icon={faXmark} size={25} color={'white'}/>
+                        <Text style={{ color: 'white', fontSize: 20, width: '25%', textAlign: "center"}}>{item.Reps}</Text>
+                        <Text style={{ color: 'white', fontSize: 20, width: '25%', textAlign: "center"}}>{item.Weight}</Text>
+                        <Text style={{ color: 'white', fontSize: 20, width: '25%', textAlign: "center"}}>{item.Max}</Text>
+                        <TouchableOpacity style = {{width: '25%'}}  onPress={() => deleteItem(item.id)}>
+                            <FontAwesomeIcon  style = {{marginLeft: '40%'}}icon={faXmark} size={25} color={'white'}/>
                         </TouchableOpacity>
                     </View>
                 </View>)}
@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
         borderBottomColor: 'black',
         borderBottomWidth: 1,
         width: '100%',
-        justifyContent: "space-evenly",
     },
     historyItems: {
         flex: 1,
@@ -110,17 +109,17 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     headerFontMid:{
-        
+        width: '25%',
         textAlign: 'center',
         color: 'white'
     },
     headerFontLeft:{
-        
+        width: '25%',
         textAlign: 'center',
         color: 'white'
     },
     headerFontRight:{
-        
+        width: '25%',
         textAlign: 'center',
         color: 'white'
     },
