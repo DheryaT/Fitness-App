@@ -24,26 +24,16 @@ const Timer = ({ navigation, route }) => {
     const [Work, setCount2] = useState(0)
     const [Rest, setCount3] = useState(0)
     const [Cooldown, setCount4] = useState(0)
-    const incrementPrepare = () => { setCount(Prepare + 1); }
-    const DecrementPrepare = () => { if (Prepare > 0) { setCount(Prepare - 1); } }
+    const incrementPrepare = () => { setCount(Prepare + 5); }
+    const DecrementPrepare = () => { if (Prepare > 0) { setCount(Prepare - 5); } }
     const incrementSets = () => { setCount1(Sets + 1); }
     const DecrementSets = () => { if (Sets > 0) { setCount1(Sets - 1); } }
-    const incrementWork = () => { setCount2(Work + 1); }
-    const DecrementWork = () => { if (Work > 0) { setCount2(Work - 1); } }
-    const incrementRest = () => { setCount3(Rest + 1); }
-    const DecrementRest = () => { if (Rest > 0) { setCount3(Rest - 1); } }
-    const incrementCooldown = () => { setCount4(Cooldown + 1); }
-    const DecrementCooldown = () => { if (Cooldown > 0) { setCount4(Cooldown - 1); } }
-
-   // const update = () => {
-   //     setCount(times1.Prepare)
-   //     setCount1(times1.Sets)
-   //     setCount2(times1.Work)
-   //     setCount3(times1.Rest)
-   //     setCount4(times1.Cooldown)
-   // }
-   //     
-    
+    const incrementWork = () => { setCount2(Work + 5); }
+    const DecrementWork = () => { if (Work > 0) { setCount2(Work - 5); } }
+    const incrementRest = () => { setCount3(Rest + 5); }
+    const DecrementRest = () => { if (Rest > 0) { setCount3(Rest - 5); } }
+    const incrementCooldown = () => { setCount4(Cooldown + 5); }
+    const DecrementCooldown = () => { if (Cooldown > 0) { setCount4(Cooldown - 5); } }
     
     const Addpreset = async () =>{
         if (presetnames.length!==0 &&!Prepare == 0 && !Sets == 0 && !Work == 0 && !Rest == 0 && !Cooldown == 0) {
@@ -71,6 +61,7 @@ const Timer = ({ navigation, route }) => {
             
             preset: newPre
         },
+            {merge: true}
         )
         setTime(newPre)
     }
@@ -105,7 +96,6 @@ const Timer = ({ navigation, route }) => {
         const docSnap = await getDoc(docRef)
 
         if (docSnap.exists()) {
-            console.log("aqwweqeqweqweqwe")
             setTime2(docSnap.data().preset)
             
         } else {
@@ -145,7 +135,7 @@ const Timer = ({ navigation, route }) => {
 
                                 <View style = {styles.horizontalalignment}> 
                                 <TouchableOpacity style={styles.image1} onPress={() => { DecrementSets() }}><FontAwesomeIcon icon={faCircleMinus} size={30}color={'#a9a9a9'} /></TouchableOpacity>
-                                <Text style={styles.timeStyle}>{Sets}{"\n"}Secs </Text>
+                                <Text style={styles.timeStyle}>{Sets}{"\n"}Sets </Text>
                                 <TouchableOpacity style={styles.image2} onPress={() => { incrementSets() }}><FontAwesomeIcon icon={faCirclePlus} size={30} color={'#a9a9a9'} /></TouchableOpacity>
                                 </View>
                                 <View style = {styles.horizontalalignment}> 
