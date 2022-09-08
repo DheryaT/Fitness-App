@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Pressable, Button, Modal,TextInput,FlatList } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Pressable, Button, Modal,TextInput,FlatList,ListItem } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCirclePlay } from '@fortawesome/free-solid-svg-icons/faCirclePlay';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons/faBookmark';
@@ -9,7 +9,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import { faEdit } from '@fortawesome/free-solid-svg-icons/faEdit';
 import { doc, DocumentSnapshot, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
-
+import { TimerPresets } from "./TimerPresets";
 
 
 
@@ -17,10 +17,8 @@ const Timer = ({ navigation, route }) => {
     // State to store count value
     const [modalVisible, setModalVisible] = useState(false);
     const [presetnames, setPresetNames] = useState('');
-
-    const [namesList, setNamesList] = useState([ {name:''}]);
-
     const [times1, setTime] = useState([])
+    const [times2, setTime2] = useState([])
     const [Prepare, setCount] = useState(0)
     const [Sets, setCount1] = useState(0)
     const [Work, setCount2] = useState(0)
@@ -37,23 +35,23 @@ const Timer = ({ navigation, route }) => {
     const incrementCooldown = () => { setCount4(Cooldown + 1); }
     const DecrementCooldown = () => { if (Cooldown > 0) { setCount4(Cooldown - 1); } }
 
-    const update = () => {
-        setCount(times1.Prepare)
-        setCount1(times1.Sets)
-        setCount2(times1.Work)
-        setCount3(times1.Rest)
-        setCount4(times1.Cooldown)
-    }
-        
+   // const update = () => {
+   //     setCount(times1.Prepare)
+   //     setCount1(times1.Sets)
+   //     setCount2(times1.Work)
+   //     setCount3(times1.Rest)
+   //     setCount4(times1.Cooldown)
+   // }
+   //     
     
     
     const Addpreset = async () =>{
-        console.log('hello')
+        if (presetnames.length!==0 &&!Prepare == 0 && !Sets == 0 && !Work == 0 && !Rest == 0 && !Cooldown == 0) {
+
         let curMax = 0;
-        times1.forEach(item => {if(item.id > curMax){curMax = item.id}})
+        times2.forEach(item => {if(item.id > curMax){curMax = item.id}})
         curMax++;
-      console.log({Prepare})
-      const newPre = [...times1,{id: curMax,Name:presetnames, Prepare:Prepare, Sets:Sets, Work:Work, Rest: Rest, Cooldown:Cooldown}];
+      const newPre = [...times2,{id: curMax,Name:presetnames, Prepare:Prepare, Sets:Sets, Work:Work, Rest: Rest, Cooldown:Cooldown}];
         
       await setDoc(doc(db, "users", `${auth.currentUser.email}`), 
         {
@@ -62,20 +60,31 @@ const Timer = ({ navigation, route }) => {
             {merge: true}
         )
         setTime(newPre)
+    }else{
+        alert('fill in all the timers and add a preset name');
     }
-    const SavePreset = async () => {
-        await setDoc(doc(db, "users", `${auth.currentUser.email}`),
-            {
-                time1: {
-                    Prepare: Prepare,
-                    Sets: Sets,
-                    Work: Work,
-                    Rest: Rest,
-                    Cooldown: Cooldown
-                },
-            },
-            { merge: true }
+}
+    const deleteItem = async (id) =>{
+        const newPre = times2.filter(item => item.id != id)
+        await setDoc(doc(db, "users", `${auth.currentUser.email}`), 
+        {
+            
+            preset: newPre
+        },
         )
+        setTime(newPre)
+    }
+    const startPresetTimer = (id) => {
+        times2.forEach(item => {if(item.id==id)
+            navigation.navigate('CountdownTimer', {
+                Prepare: item.Prepare,
+                Sets: item.Sets,
+                Work: item.Work,
+                Rest: item.Rest,
+                Cooldown: item.Cooldown,
+            })
+        })
+
     }
     const StartTimer = () => {
         if (!Prepare == 0 && !Sets == 0 && !Work == 0 && !Rest == 0 && !Cooldown == 0) {
@@ -96,11 +105,13 @@ const Timer = ({ navigation, route }) => {
         const docSnap = await getDoc(docRef)
 
         if (docSnap.exists()) {
-            setTime(docSnap.data().preset)
+            console.log("aqwweqeqweqweqwe")
+            setTime2(docSnap.data().preset)
             
         } else {
             console.log("No such document!");
         }
+
     };
 
 
@@ -126,31 +137,31 @@ const Timer = ({ navigation, route }) => {
                         <View style={styles.buttons}>
                             <View style={styles. verticalalignment}>
                                 <View style = {styles.horizontalalignment}> 
-                                <TouchableOpacity style={styles.image1} onPress={() => { DecrementPrepare() }}><FontAwesomeIcon icon={faCircleMinus} size={30} /></TouchableOpacity>
+                                <TouchableOpacity style={styles.image1} onPress={() => { DecrementPrepare() }}><FontAwesomeIcon icon={faCircleMinus} size={30} color={'#a9a9a9'}/></TouchableOpacity>
                                 <Text style={styles.timeStyle}>{Prepare}{"\n"}Secs </Text>
-                                <TouchableOpacity style={styles.image2} onPress={() => { incrementPrepare() }}><FontAwesomeIcon icon={faCirclePlus} size={30} /></TouchableOpacity>
+                                <TouchableOpacity style={styles.image2} onPress={() => { incrementPrepare() }}><FontAwesomeIcon icon={faCirclePlus} size={30}color={'#a9a9a9'} /></TouchableOpacity>
                                 </View>
 
 
                                 <View style = {styles.horizontalalignment}> 
-                                <TouchableOpacity style={styles.image1} onPress={() => { DecrementSets() }}><FontAwesomeIcon icon={faCircleMinus} size={30} /></TouchableOpacity>
+                                <TouchableOpacity style={styles.image1} onPress={() => { DecrementSets() }}><FontAwesomeIcon icon={faCircleMinus} size={30}color={'#a9a9a9'} /></TouchableOpacity>
                                 <Text style={styles.timeStyle}>{Sets}{"\n"}Secs </Text>
-                                <TouchableOpacity style={styles.image2} onPress={() => { incrementSets() }}><FontAwesomeIcon icon={faCirclePlus} size={30} /></TouchableOpacity>
+                                <TouchableOpacity style={styles.image2} onPress={() => { incrementSets() }}><FontAwesomeIcon icon={faCirclePlus} size={30} color={'#a9a9a9'} /></TouchableOpacity>
                                 </View>
                                 <View style = {styles.horizontalalignment}> 
-                                <TouchableOpacity style={styles.image1} onPress={() => { DecrementWork() }}><FontAwesomeIcon icon={faCircleMinus} size={30} /></TouchableOpacity>
+                                <TouchableOpacity style={styles.image1} onPress={() => { DecrementWork() }}><FontAwesomeIcon icon={faCircleMinus} size={30}color={'#a9a9a9'} /></TouchableOpacity>
                                 <Text style={styles.timeStyle}>{Work}{"\n"}Secs </Text>
-                                <TouchableOpacity style={styles.image2} onPress={() => { incrementWork() }}><FontAwesomeIcon icon={faCirclePlus} size={30} /></TouchableOpacity>
+                                <TouchableOpacity style={styles.image2} onPress={() => { incrementWork() }}><FontAwesomeIcon icon={faCirclePlus} size={30}color={'#a9a9a9'} /></TouchableOpacity>
                                 </View>
                                 <View style = {styles.horizontalalignment}> 
-                                <TouchableOpacity style={styles.image1} onPress={() => { DecrementRest() }}><FontAwesomeIcon icon={faCircleMinus} size={30} /></TouchableOpacity>
+                                <TouchableOpacity style={styles.image1} onPress={() => { DecrementRest() }}><FontAwesomeIcon icon={faCircleMinus} size={30}color={'#a9a9a9'} /></TouchableOpacity>
                                 <Text style={styles.timeStyle}>{Rest}{"\n"}Secs </Text>
-                                <TouchableOpacity style={styles.image2} onPress={() => { incrementRest() }}><FontAwesomeIcon icon={faCirclePlus} size={30} /></TouchableOpacity>
+                                <TouchableOpacity style={styles.image2} onPress={() => { incrementRest() }}><FontAwesomeIcon icon={faCirclePlus} size={30}color={'#a9a9a9'} /></TouchableOpacity>
                                 </View>
                                 <View style = {styles.horizontalalignment}> 
-                                <TouchableOpacity style={styles.image1} onPress={() => { DecrementCooldown() }}><FontAwesomeIcon icon={faCircleMinus} size={30} /></TouchableOpacity>
+                                <TouchableOpacity style={styles.image1} onPress={() => { DecrementCooldown() }}><FontAwesomeIcon icon={faCircleMinus} size={30}color={'#a9a9a9'} /></TouchableOpacity>
                                 <Text style={styles.timeStyle}>{Cooldown}{"\n"}Secs </Text>
-                                <TouchableOpacity style={styles.image2} onPress={() => { incrementCooldown() }}><FontAwesomeIcon icon={faCirclePlus} size={30} /></TouchableOpacity>
+                                <TouchableOpacity style={styles.image2} onPress={() => { incrementCooldown() }}><FontAwesomeIcon icon={faCirclePlus} size={30} color={'#a9a9a9'}/></TouchableOpacity>
                             </View>
                             </View>
                         </View>
@@ -169,9 +180,8 @@ const Timer = ({ navigation, route }) => {
                         <View style={styles.modalView}>
                         
                             <View style={styles.inputView}>
-                        <TextInput style={styles.TextInput} 
-                        placeholder="Preset Name" placeholderTextColor="black" 
-                        onChangeText={name => setPresetNames(name)} value={presetnames}/></View>                     
+                            <TextInput style={styles.TextInput} placeholder="Preset Name" placeholderTextColor="white" value={presetnames} onChangeText={name => setPresetNames(name)}  />
+                        </View>                     
                             <View style={styles.SaveCan}>   
                             <TouchableOpacity
                                 onPress={() => {Addpreset(),setModalVisible(!modalVisible)}}
@@ -179,7 +189,7 @@ const Timer = ({ navigation, route }) => {
                                 <Text style={styles.texts}>Save</Text>
                             </TouchableOpacity>
                             <Pressable 
-                                onPress={() => setModalVisible(!modalVisible)}
+                                onPress={() => {setModalVisible(!modalVisible),setPresetNames('')}}
                             >
                                 <Text style={styles.texts}>Cancel</Text>
                             </Pressable>
@@ -188,27 +198,23 @@ const Timer = ({ navigation, route }) => {
                     </View>
                 </Modal>
                 <View style={styles.ButtonSS}>
-                <TouchableOpacity style={styles.startBut} onPress={() => StartTimer()} ><FontAwesomeIcon icon={faCirclePlay} size={50} /></TouchableOpacity>
-                <TouchableOpacity style={styles.saveBut} onPress={() => { setModalVisible(true) }} ><FontAwesomeIcon icon={faBookmark} size={50} /></TouchableOpacity>
+                <TouchableOpacity style={styles.startBut} onPress={() => StartTimer()} ><FontAwesomeIcon icon={faCirclePlay}color={'#a9a9a9'} size={60} /><Text style={styles.textSaveStart}>  Start</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.saveBut} onPress={() => { setModalVisible(true) }} ><FontAwesomeIcon icon={faBookmark}color={'#a9a9a9'} size={60} /><Text style={styles.textSaveStart}>  Save</Text></TouchableOpacity>
                 </View>
-                <View style={styles.saveText}>
-                <Text style={styles.textSaveStart}> Start</Text>
-                <Text style={styles.textSaveStart}>Bookmark</Text>
-
-                </View>
+               
                 <View style={styles.quickSave}>
 
                     <Text style={styles.textStyle}>Presets:</Text>
 
                 </View>
                 <View style={styles.presetContainer}>
-                <FlatList>
-                keyExtractor={(item, index) => item.id}
-                data={times1}
-                renderItem={({ item }) => <Text><FontAwesomeIcon icon={faEdit} size={25} />{item.name}<FontAwesomeIcon icon={faTrash} size={25} /></Text>}
-
-                </FlatList>
-
+                <FlatList 
+                    keyExtractor = {(item) => item.id}
+                    data={times2}
+                    renderItem={({ item }) => 
+                        <TimerPresets preset = {item} deleteItem = {deleteItem} startTime={startPresetTimer}> </TimerPresets>
+                    }
+                />
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -217,13 +223,8 @@ const Timer = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#e0e0e0',
+        backgroundColor: 'rgb(77, 77, 77)',
         flex: 1,
-    },
-    container1: {
-        backgroundColor: '#e0e0e0',
-        borderColor: '#000000',
-
     },
     inputView: {
         backgroundColor: "#FFC0CB",
@@ -245,20 +246,23 @@ const styles = StyleSheet.create({
         textAlign:'center'
       },
     body: {
-        backgroundColor: '#e0e0e0',
         flex: 5,
+        backgroundColor : 'rgb(77, 77, 77)',
+
     },
     presetContainer: {
-        backgroundColor: '#e0e0e0',
+        backgroundColor : 'rgb(77, 77, 77)',
+
  
 
     },
     presetTextSize: {
         fontSize: 20,
         left: '7%',
+        
     },
     quickhead: {
-        backgroundColor: '#D3D3D3',
+        backgroundColor: '#171717',
         padding: "5%",
         alignItems: "left",
         justifyContent: "center"
@@ -269,8 +273,8 @@ const styles = StyleSheet.create({
         padding: "5%",
         alignItems: "left",
         justifyContent: "center",
-        bottom: "6%",
-        
+        backgroundColor: '#171717',
+
     },
 
 
@@ -278,6 +282,7 @@ const styles = StyleSheet.create({
     textStyle: {
         fontSize: 30,
         left: '3%',
+        color:'white',
     },
     textStyleModal: {
         fontSize: 30,
@@ -293,19 +298,23 @@ const styles = StyleSheet.create({
         marginLeft: "20%",
         justifyContent: "space-evenly",
         marginTop: "14%",
+        color: 'white'
+
     },
 
     image1: {
-        marginTop: '12%',
-        
+        marginTop: '11%',
+       
+
     },
     image2: {
-        marginTop: '12%'
+        marginTop: '11%',
     },
     timeStyle: {
         fontSize: 15,
         textAlign: 'center',
         marginTop:'12%',
+        color: 'white',
     },
     modalView: {
         flexDirection: 'row',
@@ -322,8 +331,8 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5
-        
+        elevation: 5,
+
     },
     centeredView: {
         flex: 1,
@@ -360,7 +369,8 @@ const styles = StyleSheet.create({
     },
     horizontalalignment: {
         justifyContent: "space-evenly",
-        flexDirection: "row"
+        flexDirection: "row",
+
     },
     verticalalignment: {
         flex: 1,
@@ -370,9 +380,15 @@ const styles = StyleSheet.create({
     ButtonSS: {
         flex:1,
         flexDirection: "row",
-        marginVertical:'10%',
-        justifyContent: "space-evenly",
-        top: "6%",
+        marginVertical:'5%',
+        justifyContent: 'space-around',
+        borderColor: 'white',
+        backgroundColor: '#414a4c',
+        borderRadius:30,
+        borderWidth: 3,
+        paddingBottom:10,
+        paddingTop:10,
+        top:'5%',
 
     },
     saveText: {

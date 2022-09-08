@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         paddingTop: Constants.statusBarHeight,
-        backgroundColor: '#ecf0f1',
+        backgroundColor : 'rgb(77, 77, 77)',
         padding: 8,
     },
     pause: {
