@@ -217,10 +217,11 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     inputView: {
-        backgroundColor: "#FFC0CB",
+        backgroundColor: "#D3D3D3",
         borderRadius: 30,
-        width: "80%",
+        width: "90%",
         height: 50,
+        bottom:'15%',
         marginLeft: '100%',
         alignItems: "left",
         justifyContent: "center",
@@ -280,8 +281,8 @@ const styles = StyleSheet.create({
     },
     textSaveStart: {
         fontSize: 20,
-        top: "6%",
-   
+        color:'white',
+
     },
     textSets: {
         fontSize: 24,
@@ -309,8 +310,8 @@ const styles = StyleSheet.create({
     modalView: {
         flexDirection: 'row',
         justifyContent: "space-evenly",
-        margin: '10%',
-        backgroundColor: "white",
+        margin: '17.5%',
+        backgroundColor: "#808080",
         borderRadius: 20,
         padding: '5%',
         alignItems: "center",
@@ -322,6 +323,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
+        borderWidth:3,
+        borderColor:'white',
+        
 
     },
     centeredView: {
@@ -341,7 +345,12 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     texts: {
-        fontSize: 30,
+        fontSize: 25,
+        color: 'white',
+        padding:5,
+        borderRadius: 15,
+        borderWidth:3,
+        borderColor:'white',
     },
     buttons: {
         width: '70%',

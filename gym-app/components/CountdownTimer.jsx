@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection: 'row',
         justifyContent:'space-around',
-        marginTop:'5%',
+        marginTop:'2.5%',
     
     },
     setsTitle:{
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         backgroundColor: '#a9a9a9',
         borderWidth:3,
-        padding:30,
+        padding:20,
         paddingLeft:'25%',
         paddingRight:'25%',
         borderRadius: 30,
