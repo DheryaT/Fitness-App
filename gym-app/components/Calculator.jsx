@@ -22,22 +22,14 @@ const Calculator = () => {
 
     const [history, setHistory] = useState([])
     const [localhist, setlocalHist] = useState([])
-    const [expanded, setExpanded] = useState(false)
 
-    //const OneRepMax = (weightLifted, repsPerformed) => {
-    //  setMaxLift(weightLifted * (1 + (repsPerformed / 30)));
-    //
-
-    const maxCalculation = () => {
-        Output = "Your Max Lift Is " + parseFloat(Max).toFixed(2) + " KG";
-    }
 
     const getUser = async () => {
         const docSnap = await getDoc(docRef)
         if (docSnap.exists()) {
             console.log("uh oh")
             setlocalHist(docSnap.data().calchistory)
-          } else {
+        } else {
             console.log("No such document!");
         }
     };
@@ -46,47 +38,38 @@ const Calculator = () => {
         getUser();
     }, [history])
 
-    const SaveLift = async () => {
+    const newRecord = async () => {
+        let curMax = 0;
+        localhist.forEach(item => { if (item.id > curMax) { curMax = item.id } })
+        curMax++;
+        const newHist = [...localhist, { id: curMax, Weight: weightLifted, Reps: repsPerformed, Max: parseFloat(Max).toFixed(2) }];
         await setDoc(doc(db, "users", `${auth.currentUser.email}`),
             {
-                MaxLift: { Max: Max },
+                calchistory: newHist
             },
             { merge: true }
-        )
-    }
-
-    const newRecord = async () =>{
-        let curMax = 0;
-        localhist.forEach(item => {if(item.id > curMax){curMax = item.id}})
-        curMax++;
-        const newHist = [...localhist,{id: curMax, Weight: weightLifted, Reps: repsPerformed, Max: parseFloat(Max).toFixed(2)}];
-        await setDoc(doc(db, "users", `${auth.currentUser.email}`), 
-        {
-            calchistory: newHist
-        },
-            {merge: true}
         )
         setHistory(newHist)
     }
 
     const clearHistory = async () => {
         const newHist = [];
-        await setDoc(doc(db, "users", `${auth.currentUser.email}`), 
-        {
-            calchistory: newHist
-        },
-        {merge: true}
+        await setDoc(doc(db, "users", `${auth.currentUser.email}`),
+            {
+                calchistory: newHist
+            },
+            { merge: true }
         )
         setHistory(newHist)
     }
 
     const deleteRecord = async (ind) => {
         const filtered = localhist.filter((item, index) => item.id != ind)
-        await setDoc(doc(db, "users", `${auth.currentUser.email}`), 
-        {
-            calchistory: filtered
-        },
-        {merge: true}
+        await setDoc(doc(db, "users", `${auth.currentUser.email}`),
+            {
+                calchistory: filtered
+            },
+            { merge: true }
         )
         setHistory(filtered)
     }
@@ -179,14 +162,14 @@ const Calculator = () => {
                 <Text style={styles.OneRM}>
                     {Output}
                 </Text>
-                
+
             </View>
             <View style={styles.Score}>
-                {localhist.length == 0 ? <></>: <Score history = {localhist} expanded = {expanded} clearHist = {clearHistory} deleteItem = {deleteRecord} ></Score>}
-                
+                {localhist.length == 0 ? <></> : <Score history={localhist} clearHist={clearHistory} deleteItem={deleteRecord} ></Score>}
+
             </View>
-            
-            
+
+
         </ScrollView>
     );
 }
@@ -198,10 +181,10 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 2,
-        backgroundColor: '#171717',
+        backgroundColor: '#2b2a2a',
         borderRadius: '5%',
         borderRadius: 10,
-        margin: '3%',
+        margin: '5%',
     },
     calculatorTitle: {
         alignItems: "center",
@@ -214,9 +197,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         alignContent: "center",
         color: "white",
-        backgroundColor: '#171717',
+        backgroundColor: '#2b2a2a',
         borderRadius: 5,
-        borderColor: "#171717",
         color: "white",
     },
     textinputscontainer: {
@@ -226,24 +208,24 @@ const styles = StyleSheet.create({
         zIndex: -1,
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: 'red',
-        backgroundColor: '#171717',
+        borderColor: 'white',
+        backgroundColor: "rgb(51, 51, 51)",
+        width: '90%',
+        marginLeft: '5%'
+
     },
     headerText: {
-        backgroundColor: '#171717',
         fontSize: 36,
         padding: 10,
         marginLeft: 20,
         color: "white",
         width: '100%',
-        borderWidth: 1,
-        
+
     },
     inputFields: {
         width: '60%',
         paddingTop: 5,
-        backgroundColor: '#171717',
-        borderWidth: 1,
+
     },
     input: {
         backgroundColor: "#FFFFFF",
@@ -261,7 +243,7 @@ const styles = StyleSheet.create({
     SubmitButton: {
         marginLeft: '5%',
         marginTop: '5%',
-        
+
         borderRadius: 10,
         flexDirection: "row",
         width: "90%",
@@ -288,10 +270,12 @@ const styles = StyleSheet.create({
         fontSize: 26,
         zIndex: 1,
         width: '100%',
+        paddingBottom: '5%',
+        paddingLeft: '5%',
     },
     Score: {
         flex: 2,
-        
+
     },
 
 })

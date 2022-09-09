@@ -67,7 +67,7 @@ const Tabs = (props) => {
         }} />
 
         <Tab.Screen name="Calc" component={Calculator} options={{
-          headerTitle: "Home",
+          headerTitle: "Calculator / History",
           headerRight: () => (
             <Button
               onPress={() => logoutFunction(props.auth)}

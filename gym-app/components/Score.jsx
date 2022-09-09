@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ImageBackground, StyleSheet, Text, View, Image, TextInput, Button, Pressable, TouchableOpacity} from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, Image, TextInput, Button, Pressable, TouchableOpacity } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
@@ -7,25 +7,10 @@ import { faArrowTrendUp, faChevronDown, faChevronUp, faPenToSquare, faTrashCan, 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
 
-const Score = ({ history, expanded, clearHist, deleteItem }) => {
+const Score = ({ history, clearHist, deleteItem }) => {
 
-    const toggle = () => {
-        if (expanded == true) {
-            expanded = false;
-        }
-        else {
-            expanded = true;
-        }
-    }
-
+    history.sort(function (a, b) { return a.id < b.id })
     
-    const rev = () => {
-        for(let k = 0 ; k < history.length ; k++){
-            history.push(history.shift())
-        }
-    }
-
-    history.sort(function(a, b){return a.id < b.id})
     return (
         <View style={styles.listItem}>
             <View style={styles.headerContent}>
@@ -33,23 +18,23 @@ const Score = ({ history, expanded, clearHist, deleteItem }) => {
                     History:
                 </Text>
                 <TouchableOpacity style={styles.HeaderBut} onPress={() => clearHist(history)} >
-                    <FontAwesomeIcon icon={faTrashCan} size={25} color={'white'}/>
+                    <FontAwesomeIcon icon={faTrashCan} size={25} color={'white'} />
                 </TouchableOpacity>
             </View>
-            <View style = {styles.HeaderText}>
-                <Text style= {styles.headerFontLeft}>Reps</Text>
-                <Text style= {styles.headerFontMid}>Weight</Text>
-                <Text style= {styles.headerFontRight}>Max</Text>
-                <Text style= {styles.headerFontRight}>Remove</Text>
+            <View style={styles.HeaderText}>
+                <Text style={styles.headerFontLeft}>Reps</Text>
+                <Text style={styles.headerFontMid}>Weight</Text>
+                <Text style={styles.headerFontRight}>Max</Text>
+                <Text style={styles.headerFontRight}>Remove</Text>
             </View>
             {history.map((item, index) =>
                 <View key={index} style={styles.historyItems}>
                     <View style={styles.lineContainer} key={index}>
-                        <Text style={{ color: 'white', fontSize: 20, width: '25%', textAlign: "center"}}>{item.Reps}</Text>
-                        <Text style={{ color: 'white', fontSize: 20, width: '25%', textAlign: "center"}}>{item.Weight}</Text>
-                        <Text style={{ color: 'white', fontSize: 20, width: '25%', textAlign: "center"}}>{item.Max}</Text>
-                        <TouchableOpacity style = {{width: '25%'}}  onPress={() => deleteItem(item.id)}>
-                            <FontAwesomeIcon  style = {{marginLeft: '40%'}}icon={faXmark} size={25} color={'white'}/>
+                        <Text style={{ color: 'white', fontSize: 20, width: '25%', textAlign: "center" }}>{item.Reps}</Text>
+                        <Text style={{ color: 'white', fontSize: 20, width: '25%', textAlign: "center" }}>{item.Weight}</Text>
+                        <Text style={{ color: 'white', fontSize: 20, width: '25%', textAlign: "center" }}>{item.Max}</Text>
+                        <TouchableOpacity style={{ width: '25%' }} onPress={() => deleteItem(item.id)}>
+                            <FontAwesomeIcon style={{ marginLeft: '40%' }} icon={faXmark} size={25} color={'white'} />
                         </TouchableOpacity>
                     </View>
                 </View>)}
@@ -60,7 +45,7 @@ const Score = ({ history, expanded, clearHist, deleteItem }) => {
 const styles = StyleSheet.create({
     header: {
         width: '90%',
-        color: 'white', 
+        color: 'white',
         fontSize: 26,
         alignContent: 'center',
         textAlign: 'center',
@@ -78,7 +63,7 @@ const styles = StyleSheet.create({
     listItem: {
         flex: 1,
         borderWidth: 3,
-        borderColor: 'rgb(0, 115, 153)',
+        borderColor: 'white',
         margin: '5%',
         backgroundColor: 'rgb(64, 64, 64)',
         borderRadius: '10px',
@@ -103,22 +88,21 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingVertical: '2.5%',
         marginBottom: '2.5%',
-        
         backgroundColor: 'rgb(51, 51, 51)',
         justifyContent: "space-evenly",
         width: '100%',
     },
-    headerFontMid:{
+    headerFontMid: {
         width: '25%',
         textAlign: 'center',
         color: 'white'
     },
-    headerFontLeft:{
+    headerFontLeft: {
         width: '25%',
         textAlign: 'center',
         color: 'white'
     },
-    headerFontRight:{
+    headerFontRight: {
         width: '25%',
         textAlign: 'center',
         color: 'white'
