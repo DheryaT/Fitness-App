@@ -43,9 +43,9 @@ const ScheduleForm = ({editing, setShowForm, plans}) => {
 
                     {pList.map((item, index) => 
                     (<View style = {styles.container} key={index}>
-                        <TextInput defaultValue = {item.sets} style = {styles.inputNum} onChangeText= {(text)=>updateItem(index, text, 'sets')}/>
-                        <TextInput defaultValue = {item.exercise} style = {styles.input} onChangeText= {(text)=>updateItem(index, text, 'exercise')}/>
-                        <TextInput defaultValue = {item.reps} style = {styles.inputNum} onChangeText= {(text)=>updateItem(index, text, 'reps')}/>
+                        <TextInput defaultValue = {item.sets} style = {styles.inputNum} placeholder="Sets" onChangeText= {(text)=>updateItem(index, text, 'sets')}/>
+                        <TextInput defaultValue = {item.exercise} style = {styles.input} placeholder="Exercise" onChangeText= {(text)=>updateItem(index, text, 'exercise')}/>
+                        <TextInput defaultValue = {item.reps} style = {styles.inputNum}  placeholder="Reps" onChangeText= {(text)=>updateItem(index, text, 'reps')}/>
                         
                         <TouchableOpacity style = {styles.itemBut}  onPress={() => deleteItem(index)}>
                             <FontAwesomeIcon icon={faXmark} size={25} color={'white'}/>
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     },
     input: {
         backgroundColor: "#FFFFFF",
-        width: '60%',
+        width: '50%',
         padding: 5,
         fontSize: 16,
         borderRadius: 5,  
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     },
     inputNum:{
         backgroundColor: "#FFFFFF",
-        width: '15%',
+        width: '20%',
         padding: 5,
         fontSize: 16,
         borderRadius: 5,

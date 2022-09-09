@@ -95,7 +95,8 @@ const styles = StyleSheet.create({
     AddBut:{
         backgroundColor: 'black',
         height: '8%',
-         
+        alignItems: 'center',
+        justifyContent: 'center',
         flexDirection: 'row',
         borderColor: 'green',
         borderWidth: 2
