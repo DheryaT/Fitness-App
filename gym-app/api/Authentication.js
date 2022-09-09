@@ -31,6 +31,7 @@ export const registerFunction = async (auth,
     },)
   
   } catch (error) {
+    alert("Email already in use")
     console.log(error)
   }
 };
@@ -46,6 +47,7 @@ export const loginFunction = async (auth,
     );
     console.log(user);
   } catch (error) {
+    alert("Error! Incorrect User/Pass")
     console.log(error.message);
   }
 };
