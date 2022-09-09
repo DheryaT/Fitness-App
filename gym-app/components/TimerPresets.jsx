@@ -1,9 +1,6 @@
-import React, { useState } from "react";
-import { ImageBackground, StyleSheet, Text, View, Image, TextInput, Button, Pressable, TouchableOpacity } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
-import { doc, setDoc } from "firebase/firestore";
-import { auth, db } from "../firebase-config";
-import { faArrowTrendUp, faChevronDown, faChevronUp, faPenToSquare, faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons/'
+import React from "react";
+import {StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCirclePlay } from "@fortawesome/free-regular-svg-icons";
 
@@ -86,7 +83,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingVertical: '2.5%',
         marginBottom: '2.5%',
-
         backgroundColor: 'rgb(51, 51, 51)',
         justifyContent: "space-evenly",
         width: '100%',
