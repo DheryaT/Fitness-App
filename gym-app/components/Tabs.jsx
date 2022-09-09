@@ -77,7 +77,7 @@ const Tabs = (props) => {
           ),
           tabBarIcon: ({ focused }) => (<FontAwesomeIcon icon={faCalculator} color={focused ? "white" : "rgb(150, 150, 150)"} size={25} />)
         }} />
-        <Tab.Screen name="Timer" component={TimerContainer} options={{
+        <Tab.Screen name="Time" component={TimerContainer} options={{
 
           headerTitle: "Timer",
           headerRight: () => (
@@ -87,11 +87,6 @@ const Tabs = (props) => {
               color="white"
             />
 
-          ),
-          headerLeft: () => (
-            <TouchableOpacity style={styles.buttonLoc} onPress={() => { alert("Timer does this and does that") }}>
-              <FontAwesomeIcon icon={faCircleQuestion} size={30} />
-            </TouchableOpacity>
           ),
           tabBarIcon: ({ focused }) => (<FontAwesomeIcon icon={faStopwatch} color={focused ? "white" : "rgb(150, 150, 150)"} size={25} />)
 

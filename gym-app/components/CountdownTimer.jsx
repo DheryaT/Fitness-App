@@ -10,10 +10,13 @@ import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
 const CountdownTimer = ({ navigation }) => {
     const route = useRoute();
+    //states
     const [isPlaying, setIsPlaying] = useState(true);
     const [timeIndex, setTimeIndex] = useState(0);
     const [thing, setThing] = useState('');
-
+    const [set, setSets] = useState(route.params.Sets);
+    const [counT, setCount] = useState(1);
+    //array storing the values from previous page
     const duration = [0.000001, route.params.Prepare, route.params.Work, route.params.Rest, route.params.Cooldown, 0.000001];
     var newIndex;
     const setTHING = () => {
@@ -22,8 +25,7 @@ const CountdownTimer = ({ navigation }) => {
         else if (newIndex == 3) { setThing('Rest'); }
         else if (newIndex == 4) { setThing('Cooldown'); }
     }
-    const [set, setSets] = useState(route.params.Sets);
-    const [counT, setCount] = useState(1);
+
 
 
     return (
@@ -32,7 +34,7 @@ const CountdownTimer = ({ navigation }) => {
             <View style={styles.setsTitle}>
                 <Text style={styles.setsText}>Sets left: {set}</Text>
             </View>
-            <CountdownCircleTimer
+            <CountdownCircleTimer 
                 size={350}
                 key={timeIndex}
                 isPlaying={isPlaying}
@@ -78,11 +80,14 @@ const CountdownTimer = ({ navigation }) => {
             <View style={styles.buttons}>
 
                 <View style={styles.buttons}>
-                    <TouchableOpacity onPress={() => { setIsPlaying((prev) => !prev) }}>
+                    <TouchableOpacity onPress={() => { setIsPlaying((prev) => !prev) }} //switches button icons when paused
+                    >
                         {!isPlaying ? <FontAwesomeIcon icon={faCirclePlay} size={65} /> : <FontAwesomeIcon icon={faCirclePause} size={65} color={'#a9a9a9'} />}
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => navigation.navigate("Timer")}  ><FontAwesomeIcon icon={faCircleXmark} size={65} color={'#a9a9a9'} /></TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate("Timer")}  ><FontAwesomeIcon icon={faCircleXmark} size={65} color={'#a9a9a9'} //navigates back to Timer screen
+                    />
+                    </TouchableOpacity>
                 </View>
             </View>
 
