@@ -17,12 +17,14 @@ const TimerPresets = ({ preset, deleteItem,startTime }) => {
             </View>
                 <View style={styles.container}>
                     <View style={styles.lineContainer}>
-                    <TouchableOpacity onPress={() => startTime(preset.id)}>
+                    <TouchableOpacity onPress={() => startTime(preset.id)} //starts the depending on the id
+                    >
                             <FontAwesomeIcon icon={faCirclePlay} size={30} color={'white'} />
                         </TouchableOpacity>
                         <Text style={{ color: 'white', fontSize: 30 }}>{preset.Name}</Text>
 
-                        <TouchableOpacity onPress={() => deleteItem(preset.id)}>
+                        <TouchableOpacity onPress={() => deleteItem(preset.id)} //deletes the depending on the id
+                        >
                             <FontAwesomeIcon icon={faTrashCan} size={30} color={'white'} />
                         </TouchableOpacity>
                     </View>

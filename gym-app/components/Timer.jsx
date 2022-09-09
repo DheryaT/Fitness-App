@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Pressable, Modal, TextInput, FlatList } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Modal, TextInput, FlatList } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCirclePlay } from '@fortawesome/free-solid-svg-icons/faCirclePlay';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons/faBookmark';
@@ -12,6 +12,7 @@ import { TimerPresets } from "./TimerPresets";
 
 
 const Timer = ({ navigation, route }) => {
+    //state variables
     const [modalVisible, setModalVisible] = useState(false);
     const [presetnames, setPresetNames] = useState('');
     const [times1, setTime] = useState([])
@@ -21,6 +22,7 @@ const Timer = ({ navigation, route }) => {
     const [Work, setCount2] = useState(0)
     const [Rest, setCount3] = useState(0)
     const [Cooldown, setCount4] = useState(0)
+    //increment and decrement methods
     const incrementPrepare = () => { setCount(Prepare + 5); }
     const DecrementPrepare = () => { if (Prepare > 0) { setCount(Prepare - 5); } }
     const incrementSets = () => { setCount1(Sets + 1); }
@@ -32,6 +34,7 @@ const Timer = ({ navigation, route }) => {
     const incrementCooldown = () => { setCount4(Cooldown + 5); }
     const DecrementCooldown = () => { if (Cooldown > 0) { setCount4(Cooldown - 5); } }
 
+    //adds all the states into a array adding it to the database
     const Addpreset = async () => {
         if (presetnames.length !== 0 && !Prepare == 0 && !Sets == 0 && !Work == 0 && !Rest == 0 && !Cooldown == 0) {
             let curMax = 0;
@@ -45,11 +48,13 @@ const Timer = ({ navigation, route }) => {
                 },
                 { merge: true }
             )
-            setTime(newPre)
+            setTime(newPre)//sets the array
         } else {
             alert('fill in all the timers and sets and add a preset name');
         }
     }
+
+    //deletes from the database depending on the index of the array
     const deleteItem = async (id) => {
         const newPre = times2.filter(item => item.id != id)
         await setDoc(doc(db, "users", `${auth.currentUser.email}`),
@@ -61,6 +66,7 @@ const Timer = ({ navigation, route }) => {
         )
         setTime(newPre)
     }
+    //starts the preset timers, navigating to next screen
     const startPresetTimer = (id) => {
         times2.forEach(item => {
             if (item.id == id)
@@ -74,6 +80,7 @@ const Timer = ({ navigation, route }) => {
         })
 
     }
+    //starts the timers from start button, navigating to next screen
     const StartTimer = () => {
         if (!Prepare == 0 && !Sets == 0 && !Work == 0 && !Rest == 0 && !Cooldown == 0) {
             navigation.navigate('CountdownTimer', {
@@ -88,12 +95,13 @@ const Timer = ({ navigation, route }) => {
             alert("Fill all timers and number of set");
         }
     }
+    //get data from database
     const docRef = doc(db, "users", `${auth.currentUser.email}`);
     const getTime = async () => {
         const docSnap = await getDoc(docRef)
 
         if (docSnap.exists()) {
-            setTime2(docSnap.data().preset)
+            setTime2(docSnap.data().preset)//sets the data into array
 
         } else {
             console.log("No such document!");
@@ -101,7 +109,7 @@ const Timer = ({ navigation, route }) => {
 
     };
 
-
+    //call get data everytime data is changed in the times1 array
     useEffect(() => { getTime(); }, [times1])
 
     return (
@@ -153,14 +161,14 @@ const Timer = ({ navigation, route }) => {
                     </View>
                 </View>
                 <Modal
+                    //pop up when the user trys to save a preset
                     animationType="slide"
                     transparent={true}
                     visible={modalVisible}
                     onRequestClose={() => {
                         alert("Modal has been closed.");
                         setModalVisible(!modalVisible);
-                    }}
-                >
+                    }}>
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
 
@@ -169,20 +177,23 @@ const Timer = ({ navigation, route }) => {
                             </View>
                             <View style={styles.SaveCan}>
                                 <TouchableOpacity
+                                //when user presses the save button it will call Addpreset method and exit the popup
                                     onPress={() => { Addpreset(), setModalVisible(!modalVisible) }}
                                 >
                                     <Text style={styles.texts}>Save</Text>
                                 </TouchableOpacity>
-                                <Pressable
+                                <TouchableOpacity
                                     onPress={() => { setModalVisible(!modalVisible), setPresetNames('') }}
                                 >
                                     <Text style={styles.texts}>Cancel</Text>
-                                </Pressable>
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </View>
                 </Modal>
-                <View style={styles.ButtonSS}>
+                <View style={styles.ButtonSS}
+                    //start and save button
+                    >
                     <TouchableOpacity style={styles.startBut} onPress={() => StartTimer()} ><FontAwesomeIcon icon={faCirclePlay} color={'#a9a9a9'} size={60} /><Text style={styles.textSaveStart}>  Start</Text></TouchableOpacity>
                     <TouchableOpacity style={styles.saveBut} onPress={() => { setModalVisible(true) }} ><FontAwesomeIcon icon={faBookmark} color={'#a9a9a9'} size={60} /><Text style={styles.textSaveStart}>  Save</Text></TouchableOpacity>
                 </View>
@@ -193,11 +204,12 @@ const Timer = ({ navigation, route }) => {
 
                 </View>
                 <View style={styles.presetContainer}>
-                    <FlatList
+                    <FlatList //flatlist used to render the presets in a scrollable list view
                         keyExtractor={(item) => item.id}
                         data={times2}
                         renderItem={({ item }) =>
-                            <TimerPresets preset={item} deleteItem={deleteItem} startTime={startPresetTimer}> </TimerPresets>
+                            <TimerPresets //custom component for the presets
+                             preset={item} deleteItem={deleteItem} startTime={startPresetTimer}> </TimerPresets>
                         }
                     />
                 </View>
@@ -238,10 +250,8 @@ const styles = StyleSheet.create({
     },
     presetContainer: {
         backgroundColor: 'rgb(77, 77, 77)',
-
-
-
     },
+
     presetTextSize: {
         fontSize: 20,
         left: '7%',
@@ -262,8 +272,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#171717',
 
     },
-
-
 
     textStyle: {
         fontSize: 30,
