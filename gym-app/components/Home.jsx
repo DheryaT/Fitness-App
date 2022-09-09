@@ -5,7 +5,18 @@ import { auth, db } from "../firebase-config";
 import { useState } from "react";
 import { Pedometer } from 'expo-sensors';
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import { faPersonWalking } from '@fortawesome/free-solid-svg-icons/faPersonWalking';
+import { faHand } from '@fortawesome/free-solid-svg-icons/faHand';
 
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+const getCurrentDate=()=>{
+ 
+    var date = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+
+    return date + '-' + month + '-' + year;
+}
 const Home = ({navigation, route}) => {
 
     const [pastStepCount, setNumber] = useState(0);
@@ -18,16 +29,19 @@ const Home = ({navigation, route}) => {
         setNumber(result.steps);
       },
     );
-  
 
     return(
         <View style={styles.container}>
-                        <Text style={styles.Title}>Hi {route.params.user?.email} </Text>
+                    <View style={styles.head}>
+
+                        <Text style={styles.Title}>Hi {route.params.user?.email}<FontAwesomeIcon icon={faHand} size={30} color={'#a9a9a9'}/> </Text>
+                        
+                        </View>
 
         <View style={styles.steps}>
-
-            <Text style={styles.stepText}>Your Activity:</Text>
-            <Text style={styles.stepText}>Steps: {pastStepCount}</Text>
+            <Text style={styles.stepText}>{getCurrentDate()}</Text> 
+            <Text style={styles.stepText}>Your Activity today:</Text>
+            <Text style={styles.stepText}><FontAwesomeIcon icon={faPersonWalking} size={30} color={'#a9a9a9'}/>Steps: {pastStepCount}</Text>
 
             </View>
 
@@ -39,7 +53,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems:"center",
-        padding: 20,
         backgroundColor: 'rgb(77, 77, 77)',
 
 
@@ -50,11 +63,21 @@ const styles = StyleSheet.create({
         backgroundColor: "#D3D3D3",
         borderWidth:3,
         borderRadius:20,
-        borderColor:'white'
-
+        borderColor:'white',
+        marginVertical:'30%',
+    },
+    head: {
+        alignItems:"center",
+        backgroundColor: "#D3D3D3",
+        width:'100%',
+        paddingBottom:50,
+        borderColor:'white',
+        borderWidth:3,
+        borderRadius:10,
     },
     Title:{
-        fontSize: 22
+        fontSize: 30,
+        top:'50%',
     },
     stepText:{
         fontSize: 30,

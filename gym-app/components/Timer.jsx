@@ -5,8 +5,6 @@ import { faCirclePlay } from '@fortawesome/free-solid-svg-icons/faCirclePlay';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons/faBookmark';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons/faCirclePlus';
 import { faCircleMinus } from '@fortawesome/free-solid-svg-icons/faCircleMinus';
-import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
-import { faEdit } from '@fortawesome/free-solid-svg-icons/faEdit';
 import { doc, DocumentSnapshot, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 import { TimerPresets } from "./TimerPresets";
