@@ -88,7 +88,7 @@ const Timer = ({ navigation, route }) => {
             })
         }
         else {
-            alert("Fill all timers");
+            alert("Fill all timers and number of set");
         }
     }
     const docRef = doc(db, "users", `${auth.currentUser.email}`);

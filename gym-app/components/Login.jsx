@@ -38,6 +38,7 @@ const Login = ({navigation, route}) => {
             <TextInput style={styles.TextInput}
             secureTextEntry={true} 
              placeholder="Password"
+             autoCorrect={false}
              onChangeText={(text) => {
                 setLoginPassword(text);
             }}

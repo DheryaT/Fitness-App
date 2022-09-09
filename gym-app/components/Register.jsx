@@ -53,6 +53,8 @@ const Register = ({navigation, route}) => {
             <TextInput style={styles.TextInput}
              placeholder="Register Password"
              placeholderTextColor="grey" 
+             secureTextEntry={true}
+             autoCorrect={false}
              onChangeText={(text) => {
                 setRegisterPassword(text);
               }}
