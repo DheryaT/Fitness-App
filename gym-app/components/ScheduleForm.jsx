@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import {ImageBackground, StyleSheet,Text,View, Image,TextInput, Button, FlatList, Item, TouchableOpacity} from 'react-native';
-import { faPlusCircle, faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons/'
+import { StyleSheet,Text,View,TextInput, TouchableOpacity} from 'react-native';
+import { faPlusCircle, faXmark } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { doc, setDoc } from "firebase/firestore"; 
@@ -76,9 +76,7 @@ const styles = StyleSheet.create({
         margin: 10,
         backgroundColor: 'rgb(89, 89, 89)',
         borderRadius: 5,
-        shadowOpacity: .5,
-
-        
+        shadowOpacity: .5,    
     },
     screenContainer: {
         backgroundColor: 'rgb(77, 77, 77)'

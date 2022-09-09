@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import {ImageBackground, StyleSheet,Text,View, Image,TextInput, Button, FlatList, Item, TouchableOpacity} from 'react-native';
-import { faArrowTrendUp, faChevronDown, faChevronUp, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons/'
+import { StyleSheet,Text,View, TouchableOpacity} from 'react-native';
+import { faChevronDown, faChevronUp, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
 const ScheduleItem = ({plan, extended, set, toForm, onDelete}) => {
@@ -12,7 +12,6 @@ const ScheduleItem = ({plan, extended, set, toForm, onDelete}) => {
             set([...extended, plan.id])
         }
     }
-
 
     return(
         <View style={styles.ListItem}>

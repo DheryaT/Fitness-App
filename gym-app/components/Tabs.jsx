@@ -5,17 +5,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home } from "./Home";
 import { Calculator } from "./Calculator";
 import { Meal } from "./Meal";
-import { CountdownTimer } from "./CountdownTimer";
-import { Login } from "./Login";
-import { Timer } from "./Timer";
 import { logoutFunction } from "../api/Authentication";
 import { faCalendarDays } from '@fortawesome/free-regular-svg-icons/faCalendarDays'
-import Icon from 'react-native-vector-icons/FontAwesome'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faHouse } from '@fortawesome/free-solid-svg-icons/faHouse'
-import { faStopwatch } from '@fortawesome/free-solid-svg-icons/faStopwatch'
-import { faCalculator } from '@fortawesome/free-solid-svg-icons/faCalculator'
-import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons/faCircleQuestion'
+import { faHouse, faStopwatch, faCalculator, faCircleQuestion } from '@fortawesome/free-solid-svg-icons/'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TimerContainer } from "./TimerContainer";
 import { Schedule } from './Schedule'

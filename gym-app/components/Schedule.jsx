@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {ImageBackground, StyleSheet,Text,View, Image,TextInput, Button, FlatList, Item, TouchableOpacity} from 'react-native';
+import { StyleSheet,Text,View, FlatList, TouchableOpacity} from 'react-native';
 import { ScheduleForm } from "./ScheduleForm";
 import { ScheduleItem } from "./ScheduleItem";
 import { doc, setDoc, getDoc } from "firebase/firestore"; 
@@ -95,8 +95,7 @@ const styles = StyleSheet.create({
     AddBut:{
         backgroundColor: 'black',
         height: '8%',
-        alignItems: 'center',
-        justifyContent: 'center',
+         
         flexDirection: 'row',
         borderColor: 'green',
         borderWidth: 2
