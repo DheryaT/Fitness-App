@@ -34,7 +34,7 @@ const Home = ({navigation, route}) => {
         <View style={styles.container}>
                     <View style={styles.head}>
 
-                        <Text style={styles.Title}>Hi {route.params.user?.email}<FontAwesomeIcon icon={faHand} size={30} color={'#a9a9a9'}/> </Text>
+                        <Text style={styles.Title}>Hi {auth.currentUser?.email}<FontAwesomeIcon icon={faHand} size={30} color={'#a9a9a9'}/> </Text>
                         
                         </View>
 

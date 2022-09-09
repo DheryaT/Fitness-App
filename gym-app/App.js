@@ -41,7 +41,6 @@ export default function App() {
         name="Login"
         component={Login}
         options={{ title: 'Login'}}
-        initialParams = {{auth: auth, log: setIsLoading }}
       />
       <Stack.Screen name="Register" component={Register} />
     </Stack.Navigator>

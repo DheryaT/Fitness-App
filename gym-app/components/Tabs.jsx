@@ -28,7 +28,7 @@ const Tabs = (props) => {
         }}
 
       >
-        <Tab.Screen name="Home" component={Home} initialParams={{ user: props.user }} options={{
+        <Tab.Screen name="Home" component={Home} options={{
           headerTitle: "Home",
           headerRight: () => (
             <Button
