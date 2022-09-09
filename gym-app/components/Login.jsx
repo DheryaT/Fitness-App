@@ -5,6 +5,7 @@ import { loginFunction, logoutFunction } from '../api/Authentication';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { auth } from '../firebase-config';
 
 const image = { uri: "https://preview.redd.it/32zg2lkzo9l81.png?auto=webp&s=b2bad9bd024bf71d4a2592ddc8aace2cef65af0a" };
 
@@ -15,7 +16,7 @@ const Login = ({navigation, route}) => {
 
     const loginLoad = ()=>{
 
-        loginFunction(route.params.auth,
+        loginFunction(auth,
             loginEmail,
             loginPassword)
         
@@ -47,7 +48,7 @@ const Login = ({navigation, route}) => {
             <TouchableOpacity style={styles.Button} onPress={() => loginLoad()}>
                 <Text style={styles.butText}>Login</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate('Register', {auth: route.params.auth})}>
+            <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate('Register', {auth: auth})}>
                 <Text style={styles.butText}>Register</Text>
             </TouchableOpacity>
             
