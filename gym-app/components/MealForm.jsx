@@ -43,8 +43,8 @@ const MealForm = ({editing, setShowForm, plans}) => {
 
                     {pList.map((item, index) => 
                     (<View style = {styles.container} key={index}>
-                        <TextInput defaultValue = {item.food} style = {styles.inputFood} onChangeText= {(text)=>updateItem(index, text, 'food')}/>
-                        <TextInput defaultValue = {item.amount} style = {styles.inputAmount} onChangeText= {(text)=>updateItem(index, text, 'amount')}/>
+                        <TextInput placeholder = "Food" defaultValue = {item.food} style = {styles.inputFood} onChangeText= {(text)=>updateItem(index, text, 'food')}/>
+                        <TextInput placeholder = "Amount" defaultValue = {item.amount} style = {styles.inputAmount} onChangeText= {(text)=>updateItem(index, text, 'amount')}/>
                         
                         <TouchableOpacity style = {styles.itemBut}  onPress={() => deleteItem(index)}>
                             <FontAwesomeIcon icon={faXmark} size={25} color={'white'}/>
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     },
     inputAmount: {
         backgroundColor: "#FFFFFF",
-        width: '20%',
+        width: '40%',
         padding: 5,
         fontSize: 16,
         borderRadius: 5,  
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     },
     inputTitle: {
         backgroundColor: "#FFFFFF",
-        width: '70%',
+        width: '60%',
         padding: 5,
         fontSize: 16,
         borderRadius: 5,
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     },
     inputFood:{
         backgroundColor: "#FFFFFF",
-        width: '80%',
+        width: '50%',
         padding: 5,
         fontSize: 16,
         borderRadius: 5,

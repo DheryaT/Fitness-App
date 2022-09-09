@@ -194,7 +194,7 @@ const Calculator = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "black",
+        backgroundColor: 'rgb(77, 77, 77)'
     },
     content: {
         flex: 2,
@@ -222,9 +222,12 @@ const styles = StyleSheet.create({
     textinputscontainer: {
         flex: 5,
         flexDirection: "row",
-        backgroundColor: "black",
         flexWrap: "wrap",
         zIndex: -1,
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: 'red',
+        backgroundColor: '#171717',
     },
     headerText: {
         backgroundColor: '#171717',
@@ -233,11 +236,14 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         color: "white",
         width: '100%',
+        borderWidth: 1,
+        
     },
     inputFields: {
         width: '60%',
         paddingTop: 5,
         backgroundColor: '#171717',
+        borderWidth: 1,
     },
     input: {
         backgroundColor: "#FFFFFF",
@@ -247,7 +253,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         margin: 10,
         color: "#000000",
-        borderWidth: 1,
+        borderColor: 'white',
         alignContent: "center",
         alignItems: "center",
     },
@@ -255,7 +261,7 @@ const styles = StyleSheet.create({
     SubmitButton: {
         marginLeft: '5%',
         marginTop: '5%',
-        backgroundColor: 'black',
+        
         borderRadius: 10,
         flexDirection: "row",
         width: "90%",
@@ -272,6 +278,7 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         backgroundColor: '#171717',
         padding: 5,
+        borderRadius: 10,
     },
 
     OneRM: {
@@ -279,14 +286,12 @@ const styles = StyleSheet.create({
         marginTop: '5%',
         color: 'white',
         fontSize: 26,
-        backgroundColor: 'black',
         zIndex: 1,
         width: '100%',
     },
     Score: {
         flex: 2,
-        borderRadius: 20,
-        borderWidth: 10,
+        
     },
 
 })

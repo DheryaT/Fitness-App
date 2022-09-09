@@ -36,8 +36,8 @@ const MealItem = ({plan, extended, set, toForm, onDelete}) => {
                     <Text style= {{color: 'white', width: '50%', fontSize: 20, textAlign: 'center'}}>{item.amount}</Text>
                     </View> : <View key = {index}></View>): 
                     <View style={styles.lineContainer} key = {index}>
-                        <Text style= {{color: 'white', width: '30%', fontSize: 18}}>{item.food}</Text>
-                        <Text style= {{color: 'white', width: '30%', fontSize: 20}}>{item.amount}</Text>
+                        <Text style= {{color: 'white', width: '50%', fontSize: 18, textAlign: 'center'}}>{item.food}</Text>
+                        <Text style= {{color: 'white', width: '50%', fontSize: 20, textAlign: 'center'}}>{item.amount}</Text>
                     </View> 
                 ))}
                 <TouchableOpacity style={styles.saveBut} onPress={toggle} ><FontAwesomeIcon icon={extended.includes(plan.id) ? faChevronUp : faChevronDown} size={25} color={'white'}/></TouchableOpacity>

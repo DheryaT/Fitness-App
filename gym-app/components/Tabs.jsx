@@ -8,7 +8,7 @@ import { Meal } from "./Meal";
 import { logoutFunction } from "../api/Authentication";
 import { faCalendarDays } from '@fortawesome/free-regular-svg-icons/faCalendarDays'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faHouse, faStopwatch, faCalculator, faCircleQuestion } from '@fortawesome/free-solid-svg-icons/'
+import { faHouse, faStopwatch, faCalculator, faCircleQuestion, faUtensils } from '@fortawesome/free-solid-svg-icons/'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TimerContainer } from "./TimerContainer";
 import { Schedule } from './Schedule'
@@ -63,7 +63,7 @@ const Tabs = (props) => {
               color="white"
             />
           ),
-          tabBarIcon: ({ focused }) => (<FontAwesomeIcon icon={faCalculator} color={focused ? "white" : "rgb(150, 150, 150)"} size={25} />)
+          tabBarIcon: ({ focused }) => (<FontAwesomeIcon icon={faUtensils} color={focused ? "white" : "rgb(150, 150, 150)"} size={25} />)
         }} />
 
         <Tab.Screen name="Calc" component={Calculator} options={{
