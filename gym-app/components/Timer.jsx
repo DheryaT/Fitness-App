@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Pressable, Button, Modal,TextInput,FlatList,ListItem } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Pressable, Modal, TextInput, FlatList } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCirclePlay } from '@fortawesome/free-solid-svg-icons/faCirclePlay';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons/faBookmark';
@@ -12,7 +12,6 @@ import { TimerPresets } from "./TimerPresets";
 
 
 const Timer = ({ navigation, route }) => {
-    // State to store count value
     const [modalVisible, setModalVisible] = useState(false);
     const [presetnames, setPresetNames] = useState('');
     const [times1, setTime] = useState([])
@@ -32,46 +31,46 @@ const Timer = ({ navigation, route }) => {
     const DecrementRest = () => { if (Rest > 0) { setCount3(Rest - 5); } }
     const incrementCooldown = () => { setCount4(Cooldown + 5); }
     const DecrementCooldown = () => { if (Cooldown > 0) { setCount4(Cooldown - 5); } }
-    
-    const Addpreset = async () =>{
-        if (presetnames.length!==0 &&!Prepare == 0 && !Sets == 0 && !Work == 0 && !Rest == 0 && !Cooldown == 0) {
 
-        let curMax = 0;
-        times2.forEach(item => {if(item.id > curMax){curMax = item.id}})
-        curMax++;
-      const newPre = [...times2,{id: curMax,Name:presetnames, Prepare:Prepare, Sets:Sets, Work:Work, Rest: Rest, Cooldown:Cooldown}];
-        
-      await setDoc(doc(db, "users", `${auth.currentUser.email}`), 
-        {
-            preset: newPre
-        },
-            {merge: true}
-        )
-        setTime(newPre)
-    }else{
-        alert('fill in all the timers and add a preset name');
+    const Addpreset = async () => {
+        if (presetnames.length !== 0 && !Prepare == 0 && !Sets == 0 && !Work == 0 && !Rest == 0 && !Cooldown == 0) {
+            let curMax = 0;
+            times2.forEach(item => { if (item.id > curMax) { curMax = item.id } })
+            curMax++;
+            const newPre = [...times2, { id: curMax, Name: presetnames, Prepare: Prepare, Sets: Sets, Work: Work, Rest: Rest, Cooldown: Cooldown }];
+
+            await setDoc(doc(db, "users", `${auth.currentUser.email}`),
+                {
+                    preset: newPre
+                },
+                { merge: true }
+            )
+            setTime(newPre)
+        } else {
+            alert('fill in all the timers and sets and add a preset name');
+        }
     }
-}
-    const deleteItem = async (id) =>{
+    const deleteItem = async (id) => {
         const newPre = times2.filter(item => item.id != id)
-        await setDoc(doc(db, "users", `${auth.currentUser.email}`), 
-        {
-            
-            preset: newPre
-        },
-            {merge: true}
+        await setDoc(doc(db, "users", `${auth.currentUser.email}`),
+            {
+
+                preset: newPre
+            },
+            { merge: true }
         )
         setTime(newPre)
     }
     const startPresetTimer = (id) => {
-        times2.forEach(item => {if(item.id==id)
-            navigation.navigate('CountdownTimer', {
-                Prepare: item.Prepare,
-                Sets: item.Sets,
-                Work: item.Work,
-                Rest: item.Rest,
-                Cooldown: item.Cooldown,
-            })
+        times2.forEach(item => {
+            if (item.id == id)
+                navigation.navigate('CountdownTimer', {
+                    Prepare: item.Prepare,
+                    Sets: item.Sets,
+                    Work: item.Work,
+                    Rest: item.Rest,
+                    Cooldown: item.Cooldown,
+                })
         })
 
     }
@@ -95,7 +94,7 @@ const Timer = ({ navigation, route }) => {
 
         if (docSnap.exists()) {
             setTime2(docSnap.data().preset)
-            
+
         } else {
             console.log("No such document!");
         }
@@ -123,34 +122,32 @@ const Timer = ({ navigation, route }) => {
                             <Text style={styles.textSets}>Cooldown:</Text >
                         </View>
                         <View style={styles.buttons}>
-                            <View style={styles. verticalalignment}>
-                                <View style = {styles.horizontalalignment}> 
-                                <TouchableOpacity style={styles.image1} onPress={() => { DecrementPrepare() }}><FontAwesomeIcon icon={faCircleMinus} size={30} color={'#a9a9a9'}/></TouchableOpacity>
-                                <Text style={styles.timeStyle}>{Prepare}{"\n"}Secs </Text>
-                                <TouchableOpacity style={styles.image2} onPress={() => { incrementPrepare() }}><FontAwesomeIcon icon={faCirclePlus} size={30}color={'#a9a9a9'} /></TouchableOpacity>
+                            <View style={styles.verticalalignment}>
+                                <View style={styles.horizontalalignment}>
+                                    <TouchableOpacity style={styles.image1} onPress={() => { DecrementPrepare() }}><FontAwesomeIcon icon={faCircleMinus} size={30} color={'#a9a9a9'} /></TouchableOpacity>
+                                    <Text style={styles.timeStyle}>{Prepare}{"\n"}Secs </Text>
+                                    <TouchableOpacity style={styles.image2} onPress={() => { incrementPrepare() }}><FontAwesomeIcon icon={faCirclePlus} size={30} color={'#a9a9a9'} /></TouchableOpacity>
                                 </View>
-
-
-                                <View style = {styles.horizontalalignment}> 
-                                <TouchableOpacity style={styles.image1} onPress={() => { DecrementSets() }}><FontAwesomeIcon icon={faCircleMinus} size={30}color={'#a9a9a9'} /></TouchableOpacity>
-                                <Text style={styles.timeStyle}>{Sets}{"\n"}Sets </Text>
-                                <TouchableOpacity style={styles.image2} onPress={() => { incrementSets() }}><FontAwesomeIcon icon={faCirclePlus} size={30} color={'#a9a9a9'} /></TouchableOpacity>
+                                <View style={styles.horizontalalignment}>
+                                    <TouchableOpacity style={styles.image1} onPress={() => { DecrementSets() }}><FontAwesomeIcon icon={faCircleMinus} size={30} color={'#a9a9a9'} /></TouchableOpacity>
+                                    <Text style={styles.timeStyle}>{Sets}{"\n"}Sets </Text>
+                                    <TouchableOpacity style={styles.image2} onPress={() => { incrementSets() }}><FontAwesomeIcon icon={faCirclePlus} size={30} color={'#a9a9a9'} /></TouchableOpacity>
                                 </View>
-                                <View style = {styles.horizontalalignment}> 
-                                <TouchableOpacity style={styles.image1} onPress={() => { DecrementWork() }}><FontAwesomeIcon icon={faCircleMinus} size={30}color={'#a9a9a9'} /></TouchableOpacity>
-                                <Text style={styles.timeStyle}>{Work}{"\n"}Secs </Text>
-                                <TouchableOpacity style={styles.image2} onPress={() => { incrementWork() }}><FontAwesomeIcon icon={faCirclePlus} size={30}color={'#a9a9a9'} /></TouchableOpacity>
+                                <View style={styles.horizontalalignment}>
+                                    <TouchableOpacity style={styles.image1} onPress={() => { DecrementWork() }}><FontAwesomeIcon icon={faCircleMinus} size={30} color={'#a9a9a9'} /></TouchableOpacity>
+                                    <Text style={styles.timeStyle}>{Work}{"\n"}Secs </Text>
+                                    <TouchableOpacity style={styles.image2} onPress={() => { incrementWork() }}><FontAwesomeIcon icon={faCirclePlus} size={30} color={'#a9a9a9'} /></TouchableOpacity>
                                 </View>
-                                <View style = {styles.horizontalalignment}> 
-                                <TouchableOpacity style={styles.image1} onPress={() => { DecrementRest() }}><FontAwesomeIcon icon={faCircleMinus} size={30}color={'#a9a9a9'} /></TouchableOpacity>
-                                <Text style={styles.timeStyle}>{Rest}{"\n"}Secs </Text>
-                                <TouchableOpacity style={styles.image2} onPress={() => { incrementRest() }}><FontAwesomeIcon icon={faCirclePlus} size={30}color={'#a9a9a9'} /></TouchableOpacity>
+                                <View style={styles.horizontalalignment}>
+                                    <TouchableOpacity style={styles.image1} onPress={() => { DecrementRest() }}><FontAwesomeIcon icon={faCircleMinus} size={30} color={'#a9a9a9'} /></TouchableOpacity>
+                                    <Text style={styles.timeStyle}>{Rest}{"\n"}Secs </Text>
+                                    <TouchableOpacity style={styles.image2} onPress={() => { incrementRest() }}><FontAwesomeIcon icon={faCirclePlus} size={30} color={'#a9a9a9'} /></TouchableOpacity>
                                 </View>
-                                <View style = {styles.horizontalalignment}> 
-                                <TouchableOpacity style={styles.image1} onPress={() => { DecrementCooldown() }}><FontAwesomeIcon icon={faCircleMinus} size={30}color={'#a9a9a9'} /></TouchableOpacity>
-                                <Text style={styles.timeStyle}>{Cooldown}{"\n"}Secs </Text>
-                                <TouchableOpacity style={styles.image2} onPress={() => { incrementCooldown() }}><FontAwesomeIcon icon={faCirclePlus} size={30} color={'#a9a9a9'}/></TouchableOpacity>
-                            </View>
+                                <View style={styles.horizontalalignment}>
+                                    <TouchableOpacity style={styles.image1} onPress={() => { DecrementCooldown() }}><FontAwesomeIcon icon={faCircleMinus} size={30} color={'#a9a9a9'} /></TouchableOpacity>
+                                    <Text style={styles.timeStyle}>{Cooldown}{"\n"}Secs </Text>
+                                    <TouchableOpacity style={styles.image2} onPress={() => { incrementCooldown() }}><FontAwesomeIcon icon={faCirclePlus} size={30} color={'#a9a9a9'} /></TouchableOpacity>
+                                </View>
                             </View>
                         </View>
                     </View>
@@ -166,43 +163,43 @@ const Timer = ({ navigation, route }) => {
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                        
+
                             <View style={styles.inputView}>
-                            <TextInput style={styles.TextInput} placeholder="Preset Name" placeholderTextColor="white" value={presetnames} onChangeText={name => setPresetNames(name)}  />
-                        </View>                     
-                            <View style={styles.SaveCan}>   
-                            <TouchableOpacity
-                                onPress={() => {Addpreset(),setModalVisible(!modalVisible)}}
-                            >   
-                                <Text style={styles.texts}>Save</Text>
-                            </TouchableOpacity>
-                            <Pressable 
-                                onPress={() => {setModalVisible(!modalVisible),setPresetNames('')}}
-                            >
-                                <Text style={styles.texts}>Cancel</Text>
-                            </Pressable>
-                            </View>    
+                                <TextInput style={styles.TextInput} placeholder="Preset Name" placeholderTextColor="white" value={presetnames} onChangeText={name => setPresetNames(name)} />
+                            </View>
+                            <View style={styles.SaveCan}>
+                                <TouchableOpacity
+                                    onPress={() => { Addpreset(), setModalVisible(!modalVisible) }}
+                                >
+                                    <Text style={styles.texts}>Save</Text>
+                                </TouchableOpacity>
+                                <Pressable
+                                    onPress={() => { setModalVisible(!modalVisible), setPresetNames('') }}
+                                >
+                                    <Text style={styles.texts}>Cancel</Text>
+                                </Pressable>
+                            </View>
                         </View>
                     </View>
                 </Modal>
                 <View style={styles.ButtonSS}>
-                <TouchableOpacity style={styles.startBut} onPress={() => StartTimer()} ><FontAwesomeIcon icon={faCirclePlay}color={'#a9a9a9'} size={60} /><Text style={styles.textSaveStart}>  Start</Text></TouchableOpacity>
-                <TouchableOpacity style={styles.saveBut} onPress={() => { setModalVisible(true) }} ><FontAwesomeIcon icon={faBookmark}color={'#a9a9a9'} size={60} /><Text style={styles.textSaveStart}>  Save</Text></TouchableOpacity>
+                    <TouchableOpacity style={styles.startBut} onPress={() => StartTimer()} ><FontAwesomeIcon icon={faCirclePlay} color={'#a9a9a9'} size={60} /><Text style={styles.textSaveStart}>  Start</Text></TouchableOpacity>
+                    <TouchableOpacity style={styles.saveBut} onPress={() => { setModalVisible(true) }} ><FontAwesomeIcon icon={faBookmark} color={'#a9a9a9'} size={60} /><Text style={styles.textSaveStart}>  Save</Text></TouchableOpacity>
                 </View>
-               
+
                 <View style={styles.quickSave}>
 
                     <Text style={styles.textStyle}>Presets:</Text>
 
                 </View>
                 <View style={styles.presetContainer}>
-                <FlatList 
-                    keyExtractor = {(item) => item.id}
-                    data={times2}
-                    renderItem={({ item }) => 
-                        <TimerPresets preset = {item} deleteItem = {deleteItem} startTime={startPresetTimer}> </TimerPresets>
-                    }
-                />
+                    <FlatList
+                        keyExtractor={(item) => item.id}
+                        data={times2}
+                        renderItem={({ item }) =>
+                            <TimerPresets preset={item} deleteItem={deleteItem} startTime={startPresetTimer}> </TimerPresets>
+                        }
+                    />
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -219,36 +216,36 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         width: "90%",
         height: 50,
-        bottom:'15%',
+        bottom: '15%',
         marginLeft: '100%',
         alignItems: "left",
         justifyContent: "center",
 
 
-      },
+    },
     TextInput: {
         height: 50,
         width: '90%',
         flex: 1,
         padding: 10,
         marginLeft: 10,
-        textAlign:'center'
-      },
+        textAlign: 'center'
+    },
     body: {
         flex: 5,
-        backgroundColor : 'rgb(77, 77, 77)',
+        backgroundColor: 'rgb(77, 77, 77)',
 
     },
     presetContainer: {
-        backgroundColor : 'rgb(77, 77, 77)',
+        backgroundColor: 'rgb(77, 77, 77)',
 
- 
+
 
     },
     presetTextSize: {
         fontSize: 20,
         left: '7%',
-        
+
     },
     quickhead: {
         backgroundColor: '#171717',
@@ -271,7 +268,7 @@ const styles = StyleSheet.create({
     textStyle: {
         fontSize: 30,
         left: '3%',
-        color:'white',
+        color: 'white',
     },
     textStyleModal: {
         fontSize: 30,
@@ -279,7 +276,7 @@ const styles = StyleSheet.create({
     },
     textSaveStart: {
         fontSize: 20,
-        color:'white',
+        color: 'white',
 
     },
     textSets: {
@@ -293,7 +290,7 @@ const styles = StyleSheet.create({
 
     image1: {
         marginTop: '11%',
-       
+
 
     },
     image2: {
@@ -302,7 +299,7 @@ const styles = StyleSheet.create({
     timeStyle: {
         fontSize: 15,
         textAlign: 'center',
-        marginTop:'12%',
+        marginTop: '12%',
         color: 'white',
     },
     modalView: {
@@ -321,9 +318,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
-        borderWidth:3,
-        borderColor:'white',
-        
+        borderWidth: 3,
+        borderColor: 'white',
+
 
     },
     centeredView: {
@@ -337,7 +334,7 @@ const styles = StyleSheet.create({
     SaveCan: {
 
         flexDirection: 'row',
-        justifyContent:'space-around',
+        justifyContent: 'space-around',
         marginTop: '60%',
         marginRight: '90%',
         width: '100%',
@@ -345,24 +342,24 @@ const styles = StyleSheet.create({
     texts: {
         fontSize: 25,
         color: 'white',
-        padding:5,
+        padding: 5,
         borderRadius: 15,
-        borderWidth:3,
-        borderColor:'white',
+        borderWidth: 3,
+        borderColor: 'white',
     },
     buttons: {
         width: '70%',
         flex: 1,
     },
     titles: {
-   
+
         justifyContent: "space-evenly",
         width: '38%'
     },
     titleandbutton: {
         flexDirection: "row",
         flexWrap: "wrap",
-        
+
     },
     horizontalalignment: {
         justifyContent: "space-evenly",
@@ -375,24 +372,24 @@ const styles = StyleSheet.create({
         justifyContent: "space-evenly",
     },
     ButtonSS: {
-        flex:1,
+        flex: 1,
         flexDirection: "row",
-        marginVertical:'5%',
+        marginVertical: '5%',
         justifyContent: 'space-around',
         borderColor: 'white',
         backgroundColor: '#414a4c',
-        borderRadius:30,
+        borderRadius: 30,
         borderWidth: 3,
-        paddingBottom:10,
-        paddingTop:10,
-        top:'5%',
+        paddingBottom: 10,
+        paddingTop: 10,
+        top: '5%',
 
     },
     saveText: {
         left: '1%',
         bottom: "10%",
         flexDirection: "row",
-        marginBottom:'20%',
+        marginBottom: '20%',
         justifyContent: "space-evenly"
 
     }

@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import CountDown from 'react-native-countdown-component';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, ScrollView, Image, Button } from 'react-native';
+import React from 'react';
 import { CountdownTimer } from "./CountdownTimer";
 import { Timer } from "./Timer";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -14,7 +12,4 @@ const TimerContainer = () => {
         </Stacks.Navigator>
     )
 }
-
-
-
 export { TimerContainer }; //tes
