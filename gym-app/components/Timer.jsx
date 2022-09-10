@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Modal, TextInput, FlatList } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Modal, TextInput, FlatList,LogBox } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCirclePlay } from '@fortawesome/free-solid-svg-icons/faCirclePlay';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons/faBookmark';
@@ -111,7 +111,7 @@ const Timer = ({ navigation, route }) => {
 
     //call get data everytime data is changed in the times1 array
     useEffect(() => { getTime(); }, [times1])
-
+    useEffect(() => {LogBox.ignoreLogs(["VirtualizedLists should never be nested"])}, [])
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -131,7 +131,9 @@ const Timer = ({ navigation, route }) => {
                         </View>
                         <View style={styles.buttons}>
                             <View style={styles.verticalalignment}>
-                                <View style={styles.horizontalalignment}>
+                                <View style={styles.horizontalalignment}
+                                //buttons below and the number of seconds and set
+                                >
                                     <TouchableOpacity style={styles.image1} onPress={() => { DecrementPrepare() }}><FontAwesomeIcon icon={faCircleMinus} size={30} color={'#a9a9a9'} /></TouchableOpacity>
                                     <Text style={styles.timeStyle}>{Prepare}{"\n"}Secs </Text>
                                     <TouchableOpacity style={styles.image2} onPress={() => { incrementPrepare() }}><FontAwesomeIcon icon={faCirclePlus} size={30} color={'#a9a9a9'} /></TouchableOpacity>
