@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from 'react-native';
-import {ImageBackground, StyleSheet,Text,View, Image,TextInput, TouchableOpacity} from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 import { loginFunction, logoutFunction } from '../api/Authentication';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -9,41 +9,39 @@ import { auth } from '../firebase-config';
 
 const image = { uri: "https://preview.redd.it/32zg2lkzo9l81.png?auto=webp&s=b2bad9bd024bf71d4a2592ddc8aace2cef65af0a" };
 
-const Login = ({navigation, route}) => {
+const Login = ({ navigation, route }) => {
 
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
 
-    const loginLoad = ()=>{
-
+    const loginLoad = () => {
         loginFunction(auth,
             loginEmail,
             loginPassword)
-        
     }
 
-    return(
-        
+    return (
+
         <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-            <FontAwesomeIcon style= {styles.logo} icon= {faRightToBracket} size={75} color= 'white'/>
+            <FontAwesomeIcon style={styles.logo} icon={faRightToBracket} size={75} color='white' />
             <View style={styles.inputView}>
                 <TextInput
-                style={styles.TextInput}
-                placeholder="Email"
-                onChangeText={(text) => {
-                    setLoginEmail(text);
-                }}
-            />
+                    style={styles.TextInput}
+                    placeholder="Email"
+                    onChangeText={(text) => {
+                        setLoginEmail(text);
+                    }}
+                />
             </View>
             <View style={styles.inputView}>
-            <TextInput style={styles.TextInput}
-            secureTextEntry={true} 
-             placeholder="Password"
-             autoCorrect={false}
-             onChangeText={(text) => {
-                setLoginPassword(text);
-            }}
-            />
+                <TextInput style={styles.TextInput}
+                    secureTextEntry={true}
+                    placeholder="Password"
+                    autoCorrect={false}
+                    onChangeText={(text) => {
+                        setLoginPassword(text);
+                    }}
+                />
             </View>
             <TouchableOpacity style={styles.Button} onPress={() => loginLoad()}>
                 <Text style={styles.butText}>Login</Text>
@@ -51,10 +49,10 @@ const Login = ({navigation, route}) => {
             <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate('Register')}>
                 <Text style={styles.butText}>Register</Text>
             </TouchableOpacity>
-            
+
         </KeyboardAwareScrollView>
 
-        
+
     )
 }
 const styles = StyleSheet.create({
@@ -62,9 +60,9 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: 'rgb(77, 77, 77)'     
+        backgroundColor: 'rgb(77, 77, 77)'
     },
-    Button : {
+    Button: {
         backgroundColor: 'black',
         width: '40%',
         margin: 10,
@@ -73,7 +71,7 @@ const styles = StyleSheet.create({
         padding: '2.5%',
         borderRadius: 5,
     },
-    butText:{
+    butText: {
         color: 'white'
     },
     TextInput: {
@@ -82,18 +80,18 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         marginLeft: 20,
-      },
-      logo: {
+    },
+    logo: {
         marginBottom: 50
-      },
-      inputView: {
+    },
+    inputView: {
         backgroundColor: "white",
         borderRadius: 10,
         width: "70%",
         height: 50,
         marginBottom: 20,
         alignItems: "left",
-      },
+    },
 })
 
 export { Login }; //tes

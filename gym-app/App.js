@@ -7,10 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator} from '@react-navigation/native-stack';
 import { auth } from "./firebase-config";
 import { useState } from 'react';
-import {
-  onAuthStateChanged
-} from "firebase/auth";
-
+import { onAuthStateChanged} from "firebase/auth";
 
 export default function App() {
 
