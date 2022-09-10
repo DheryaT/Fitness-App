@@ -38,13 +38,13 @@ const CountdownTimer = ({ navigation }) => {
                 size={350}
                 key={timeIndex}
                 isPlaying={isPlaying}
-                duration={duration[timeIndex]}
+                duration={duration[timeIndex]}//array used to store the diffrent times
                 colors={[
                     ['#FFFF00', 0.4],
                     ['#0000ff', 0.4],
                 ]}
                 onComplete={() => {
-                    setTimeIndex((index) => {
+                    setTimeIndex((index) => {//changes the index the duration of the time is finished
                         newIndex = index + 1;
                         if (newIndex == duration.length) {
                             setCount(counT + 1);
