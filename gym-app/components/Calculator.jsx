@@ -9,22 +9,19 @@ const Calculator = () => {
 
     const docRef = doc(db, "users", `${auth.currentUser.email}`);
     const [Output, setOutput] = useState('');
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState('One Rep Max');
-    const [items, setItems] = useState([
-        { label: 'One Rep Max', value: 'One Rep Max' },
-        { label: 'Strength Level', value: 'Strength Level' }
-    ])
 
+    //Calculation Variables that will be used for output and database fields
     const [weightLifted, setWeightLifted] = useState(0);
     const [repsPerformed, setRepsPerformed] = useState(0);
     const [Max, setMaxLift] = useState(0);
 
+    //User Data (from the database)
     const [history, setHistory] = useState([])
-    const [localhist, setlocalHist] = useState([])
+    const [localhist, setlocalHist] = useState([]) //prevents infinite getUser loop
 
 
     const getUser = async () => {
+        //gets the users data asynchronously from database 
         const docSnap = await getDoc(docRef)
         if (docSnap.exists()) {
             console.log("uh oh")
@@ -35,10 +32,13 @@ const Calculator = () => {
     };
 
     useEffect(() => {
+        //get user data when history array changes changes
         getUser();
     }, [history])
 
     const newRecord = async () => {
+        //creates a new record with an id reference that isn't already in the database for this 
+        //kind of storage (calchistory in database)
         let curMax = 0;
         localhist.forEach(item => { if (item.id > curMax) { curMax = item.id } })
         curMax++;
@@ -53,6 +53,7 @@ const Calculator = () => {
     }
 
     const clearHistory = async () => {
+        //resets calchistory storage array from firebase
         const newHist = [];
         await setDoc(doc(db, "users", `${auth.currentUser.email}`),
             {
@@ -64,6 +65,7 @@ const Calculator = () => {
     }
 
     const deleteRecord = async (ind) => {
+        //deletes individual records from calchistory
         const filtered = localhist.filter((item, index) => item.id != ind)
         await setDoc(doc(db, "users", `${auth.currentUser.email}`),
             {
@@ -78,34 +80,15 @@ const Calculator = () => {
 
     return (
         <ScrollView style={styles.container}>
-            <View style={styles.content}>
+            <View style={styles.content} //Provides the title for the screen, including what calculator it is
+                > 
                 <Text style={styles.calculatorTitle}>
                     Calculate
                 </Text>
 
-                <DropDownPicker style={styles.dropdown}
-                    textStyle={{
-                        fontSize: 24,
-                        color: "white",
-                        alignItems: "center",
-                        alignContent: "center",
-                    }}
-                    containerStyle={{
-                        alignItems: "center",
-                        alignContent: "center",
-                    }}
-                    listItemLabelStyle={{
-                        fontSize: 15,
-                    }}
-                    open={open}
-                    value={value}
-                    items={items}
-                    setOpen={setOpen}
-                    setValue={setValue}
-                    setItems={setItems}
-                    theme="DARK"
-
-                />
+                <Text style={styles.calculatorTitle}>
+                    One Rep Max
+                </Text>
             </View>
             <View style={styles.textinputscontainer}>
                 <View>
@@ -121,6 +104,7 @@ const Calculator = () => {
                     <TextInput style={styles.input}
                         keyboardType='numeric'
                         placeholder="Weight in KG (e.g 89)"
+                        //This will set the weightLifted when the text is changed
                         onChangeText={(text) => {
                             setWeightLifted(text);
                         }}>
@@ -129,6 +113,7 @@ const Calculator = () => {
                     <TextInput style={styles.input}
                         keyboardType='numeric'
                         placeholder="Number Of Reps"
+                        //This will set repsPerformed when changed
                         onChangeText={(text) => {
                             setRepsPerformed(text);
                         }}>
@@ -136,6 +121,7 @@ const Calculator = () => {
                 </View>
                 <View style={styles.SubmitButton}>
                     <Pressable
+                        //When the calculate button is pressed, it will provide an output of their predicted one rm
                         onPressIn={() => {
                             setMaxLift(weightLifted * (1 + (repsPerformed / 30)))
                         }}
@@ -147,6 +133,8 @@ const Calculator = () => {
                         </Text>
                     </Pressable>
                     <Pressable
+                        //When the save button is pressed, it will both provide an output of their 
+                        //predicted one rm, but also create a record to be saved in the database for display
                         onPressIn={() => {
                             setMaxLift(weightLifted * (1 + (repsPerformed / 30)))
                         }}
@@ -164,7 +152,9 @@ const Calculator = () => {
                 </Text>
 
             </View>
-            <View style={styles.Score}>
+            <View style={styles.Score}
+            //This will generate a score component that will show the history of previously saved inputs
+            >
                 {localhist.length == 0 ? <></> : <Score history={localhist} clearHist={clearHistory} deleteItem={deleteRecord} ></Score>}
 
             </View>
@@ -208,7 +198,9 @@ const styles = StyleSheet.create({
         zIndex: -1,
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: 'white',
+        borderColor: 'grey',
+        shadowOpacity: .5,
+        shadowOffset: {width: 10, height: 10},
         backgroundColor: "rgb(51, 51, 51)",
         width: '90%',
         marginLeft: '5%'

@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 const Score = ({ history, clearHist, deleteItem }) => {
 
     history.sort(function (a, b) { return a.id < b.id })
-    
+
     return (
         <View style={styles.listItem}>
             <View style={styles.headerContent}>
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     listItem: {
         flex: 1,
         borderWidth: 3,
-        borderColor: 'white',
+        borderColor: 'grey',
         margin: '5%',
         backgroundColor: 'rgb(64, 64, 64)',
         borderRadius: '10px',

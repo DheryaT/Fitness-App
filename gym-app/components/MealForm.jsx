@@ -75,8 +75,8 @@ const styles = StyleSheet.create({
         margin: 10,
         backgroundColor: 'rgb(89, 89, 89)',
         borderRadius: 5,
-        shadowOpacity: .5,
-
+        shadowOpacity: 0.7,
+        shadowOffset: { width: 5, height: 10 },
 
     },
     screenContainer: {
@@ -88,13 +88,13 @@ const styles = StyleSheet.create({
     },
     ListItem: {
         borderWidth: 3,
-        borderColor: 'rgb(204, 153, 0)',
+        borderColor: 'black',
         margin: '5%',
         backgroundColor: 'rgb(64, 64, 64)',
         borderRadius: '10px',
         alignItems: 'center',
-        shadowOpacity: .5,
-        shadowOffset: { width: 10, height: 10 },
+        shadowOpacity: .7,
+        shadowOffset: { width: 10, height: 20 },
         padding: '5%'
     },
     botBut: {
@@ -153,7 +153,9 @@ const styles = StyleSheet.create({
         padding: '5%',
         margin: '5%',
         borderRadius: 5,
-        borderWidth: 3
+        borderWidth: 3,
+        shadowOpacity: .7,
+        shadowOffset: { width: 5, height: 10 },
     },
     ButText: {
         color: 'white',

@@ -57,12 +57,12 @@ const styles = StyleSheet.create({
     },
     ListItem: {
         borderWidth: 3,
-        borderColor: '#d65c5a',
+        borderColor: 'black',
         margin: '5%',
         backgroundColor: 'rgb(64, 64, 64)',
         borderRadius: '10px',
         alignItems: 'center',
-        shadowOpacity: .5,
+        shadowOpacity: .7,
         shadowOffset: { width: 10, height: 10 }
     },
     Header: {
