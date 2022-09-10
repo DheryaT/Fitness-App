@@ -3,9 +3,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-nativ
 import { faPlusCircle, faXmark } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { doc, setDoc } from "firebase/firestore";
-import { auth, db } from "../firebase-config";
-import { setDbUser } from "../api/Databse";
+import { setDbUser } from "../api/Database";
 
 const ScheduleForm = ({ editing, setShowForm, plans }) => {
 

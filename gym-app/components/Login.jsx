@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import { Button } from 'react-native';
-import { ImageBackground, StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { loginFunction, logoutFunction } from '../api/Authentication';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { auth } from '../firebase-config';
-
-const image = { uri: "https://preview.redd.it/32zg2lkzo9l81.png?auto=webp&s=b2bad9bd024bf71d4a2592ddc8aace2cef65af0a" };
 
 const Login = ({ navigation, route }) => {
 

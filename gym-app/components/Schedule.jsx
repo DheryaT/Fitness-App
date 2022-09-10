@@ -2,15 +2,11 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import { ScheduleForm } from "./ScheduleForm";
 import { ScheduleItem } from "./ScheduleItem";
-import { doc, setDoc, getDoc } from "firebase/firestore";
-import { auth, db } from "../firebase-config";
 import { faPlus } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { setDbUser } from "../api/Databse";
+import { getDbUser, setDbUser } from "../api/Database";
 
 const Schedule = ({ navigation, route }) => {
-
-    const docRef = doc(db, "users", `${auth.currentUser?.email}`);
 
     const [plans, setPlans] = useState([])
     const [extended, setExtended] = useState([])
@@ -18,12 +14,8 @@ const Schedule = ({ navigation, route }) => {
     const [editing, setEditing] = useState(0)
 
     const getUser = async () => {
-        const docSnap = await getDoc(docRef)
-        if (docSnap.exists()) {
-            setPlans(docSnap.data().schedule)
-        } else {
-            console.log("No such document!");
-        }
+        const user = await getDbUser()
+        setPlans(user.schedule)
     };
 
     useEffect(() => {
