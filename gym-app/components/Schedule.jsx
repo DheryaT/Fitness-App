@@ -30,7 +30,7 @@ const Schedule = ({ navigation, route }) => {
 
     const deleteItem = async (id) => {
         const newSchedule = plans.filter(item => item.id != id)
-        setDbUser({schedule: newSchedule})
+        await setDbUser({schedule: newSchedule})
     }
 
     const createNew = async () => {
@@ -38,7 +38,7 @@ const Schedule = ({ navigation, route }) => {
         plans.forEach(item => { if (item.id > max) { max = item.id } })
         max++;
         const newSchedule = [...plans, { id: max, name: 'New' + max, workout: [] }]
-        setDbUser({schedule: newSchedule})
+        await setDbUser({schedule: newSchedule})
         setPlans(newSchedule)
         setEditing(max)
         setShowForm(true)

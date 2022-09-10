@@ -7,6 +7,8 @@ import { setDbUser } from "../api/Database";
 
 const ScheduleForm = ({ editing, setShowForm, plans }) => {
 
+    console.log(editing)
+    console.log(plans)
     const editObj = plans.find(item => item.id == editing)
     const [pList, setPList] = useState(editObj.workout)
     const [title, setTitle] = useState(editObj.name)
@@ -25,7 +27,7 @@ const ScheduleForm = ({ editing, setShowForm, plans }) => {
 
     const saveSchedule = async () => {
         const newSchedule = plans.map(item => editing == item.id ? { id: editObj.id, name: title, workout: pList } : item)
-        setDbUser({schedule: newSchedule})
+        await setDbUser({schedule: newSchedule})
         setShowForm(false)
     }
 
