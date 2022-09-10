@@ -6,6 +6,8 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 import { faPlus } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { setDbUser } from "../api/Database";
+import { getDbUser } from "../api/Database";
 
 const Meal = ({ navigation, route }) => {
 
@@ -18,12 +20,8 @@ const Meal = ({ navigation, route }) => {
     const [editing, setEditing] = useState(0)
 
     const getUser = async () => {
-        const docSnap = await getDoc(docRef)
-        if (docSnap.exists()) {
-            setlocalplans(docSnap.data().mealplans)
-        } else {
-            console.log("No such document!");
-        }
+        const docSnap = await getDbUser()
+        setlocalplans(docSnap.mealplans)
     };
 
     useEffect(() => {
@@ -38,12 +36,7 @@ const Meal = ({ navigation, route }) => {
 
     const deleteItem = async (id) => {
         const newRecords = localplans.filter(item => item.id != id)
-        await setDoc(doc(db, "users", `${auth.currentUser.email}`),
-            {
-                mealplans: newRecords
-            },
-            { merge: true }
-        )
+        await setDbUser({mealplans: newRecords})
         setPlans(newRecords);
     }
 
@@ -52,12 +45,7 @@ const Meal = ({ navigation, route }) => {
         localplans.forEach(item => { if (item.id > max) { max = item.id } })
         max++;
         const newRecords = [...localplans, { id: max, name: 'New' + max, meal: [] }]
-        await setDoc(doc(db, "users", `${auth.currentUser.email}`),
-            {
-                mealplans: newRecords
-            },
-            { merge: true }
-        )
+        await setDbUser({mealplans: newRecords})
         setPlans(newRecords)
         setlocalplans(newRecords)
         setEditing(max)
@@ -65,7 +53,7 @@ const Meal = ({ navigation, route }) => {
     }
 
     return (
-        showForm ? <MealForm editing={editing} setShowForm={setShowForm} plans={localplans} /> :
+        showForm ? <MealForm editing={editing} setShowForm={setShowForm} plans={localplans} deleting={deleteItem}/> :
             <View style={styles.container}>
                 <TouchableOpacity style={styles.AddBut} onPress={createNew}>
                     <Text style={styles.ButText}>Add Meal</Text>

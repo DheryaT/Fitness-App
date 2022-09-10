@@ -4,6 +4,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 import { Score } from "./Score";
+import { getDbUser, setDbUser } from "../api/Database";
 
 const Calculator = () => {
 
@@ -22,13 +23,8 @@ const Calculator = () => {
 
     const getUser = async () => {
         //gets the users data asynchronously from database 
-        const docSnap = await getDoc(docRef)
-        if (docSnap.exists()) {
-            console.log("uh oh")
-            setlocalHist(docSnap.data().calchistory)
-        } else {
-            console.log("No such document!");
-        }
+        const docsnap = await getDbUser()
+        setlocalHist(docsnap.calchistory)
     };
 
     useEffect(() => {
@@ -43,36 +39,21 @@ const Calculator = () => {
         localhist.forEach(item => { if (item.id > curMax) { curMax = item.id } })
         curMax++;
         const newHist = [...localhist, { id: curMax, Weight: weightLifted, Reps: repsPerformed, Max: parseFloat(Max).toFixed(2) }];
-        await setDoc(doc(db, "users", `${auth.currentUser.email}`),
-            {
-                calchistory: newHist
-            },
-            { merge: true }
-        )
+        await setDbUser({calchistory: newHist})
         setHistory(newHist)
     }
 
     const clearHistory = async () => {
         //resets calchistory storage array from firebase
         const newHist = [];
-        await setDoc(doc(db, "users", `${auth.currentUser.email}`),
-            {
-                calchistory: newHist
-            },
-            { merge: true }
-        )
+        await setDbUser({calchistory: newHist})
         setHistory(newHist)
     }
 
     const deleteRecord = async (ind) => {
         //deletes individual records from calchistory
         const filtered = localhist.filter((item, index) => item.id != ind)
-        await setDoc(doc(db, "users", `${auth.currentUser.email}`),
-            {
-                calchistory: filtered
-            },
-            { merge: true }
-        )
+        await setDbUser({calchistory: filtered})
         setHistory(filtered)
     }
 

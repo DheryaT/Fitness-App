@@ -3,13 +3,13 @@ import { ImageBackground, StyleSheet, Text, View, Image, TextInput, Button, Flat
 import { faPlusCircle, faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { doc, setDoc } from "firebase/firestore";
-import { auth, db } from "../firebase-config";
+import { setDbUser } from "../api/Database";
 
-const MealForm = ({ editing, setShowForm, plans }) => {
+const MealForm = ({ editing, setShowForm, plans, deleting}) => {
 
     const editObj = plans.find(item => item.id == editing)
     const [pList, setPList] = useState(editObj.meal)
+
     const [title, setTitle] = useState(editObj.name)
 
     const addItem = () => {
@@ -27,12 +27,7 @@ const MealForm = ({ editing, setShowForm, plans }) => {
 
     const saveSchedule = async () => {
         const newSchedule = plans.map(item => editing == item.id ? { id: editObj.id, name: title, meal: pList } : item)
-        await setDoc(doc(db, "users", `${auth.currentUser.email}`),
-            {
-                mealplans: newSchedule
-            },
-            { merge: true }
-        )
+        await setDbUser({mealplans: newSchedule})
         setShowForm(false)
     }
 
@@ -57,7 +52,11 @@ const MealForm = ({ editing, setShowForm, plans }) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.controls}>
-                <TouchableOpacity style={styles.csBut} onPress={() => setShowForm(false)}>
+                <TouchableOpacity style={styles.csBut} 
+                onPress={() => {
+                    setShowForm(false)
+                    deleting(editObj.id)
+                    }}>
                     <Text style={styles.ButText}>Cancel</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.csBut} onPress={saveSchedule}>
