@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
+import { setDbUser } from "../api/Databse";
 
 const ScheduleForm = ({ editing, setShowForm, plans }) => {
 
@@ -18,7 +19,6 @@ const ScheduleForm = ({ editing, setShowForm, plans }) => {
 
     const updateItem = (index, text, type) => {
         setPList(pList.map((item, i) => i == index ? (type == 'sets' ? Object.assign(item, { sets: text }) : (type == 'exercise' ? Object.assign(item, { exercise: text }) : Object.assign(item, { reps: text }))) : item))
-        console.log(pList)
     }
 
     const deleteItem = (i) => {
@@ -27,12 +27,7 @@ const ScheduleForm = ({ editing, setShowForm, plans }) => {
 
     const saveSchedule = async () => {
         const newSchedule = plans.map(item => editing == item.id ? { id: editObj.id, name: title, workout: pList } : item)
-        await setDoc(doc(db, "users", `${auth.currentUser.email}`),
-            {
-                schedule: newSchedule
-            },
-            { merge: true }
-        )
+        setDbUser({schedule: newSchedule})
         setShowForm(false)
     }
 

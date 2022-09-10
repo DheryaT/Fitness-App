@@ -6,6 +6,7 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 import { faPlus } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { setDbUser } from "../api/Databse";
 
 const Schedule = ({ navigation, route }) => {
 
@@ -37,12 +38,7 @@ const Schedule = ({ navigation, route }) => {
 
     const deleteItem = async (id) => {
         const newSchedule = plans.filter(item => item.id != id)
-        await setDoc(doc(db, "users", `${auth.currentUser.email}`),
-            {
-                schedule: newSchedule
-            },
-            { merge: true }
-        )
+        setDbUser({schedule: newSchedule})
     }
 
     const createNew = async () => {
@@ -50,12 +46,7 @@ const Schedule = ({ navigation, route }) => {
         plans.forEach(item => { if (item.id > max) { max = item.id } })
         max++;
         const newSchedule = [...plans, { id: max, name: 'New' + max, workout: [] }]
-        await setDoc(doc(db, "users", `${auth.currentUser.email}`),
-            {
-                schedule: newSchedule
-            },
-            { merge: true }
-        )
+        setDbUser({schedule: newSchedule})
         setPlans(newSchedule)
         setEditing(max)
         setShowForm(true)
