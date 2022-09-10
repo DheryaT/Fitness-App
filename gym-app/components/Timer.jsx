@@ -8,6 +8,7 @@ import { faCircleMinus } from '@fortawesome/free-solid-svg-icons/faCircleMinus';
 import { doc, DocumentSnapshot, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 import { TimerPresets } from "./TimerPresets";
+import { setDbUser,getDbUser } from "../api/Database";
 
 
 
@@ -34,7 +35,7 @@ const Timer = ({ navigation, route }) => {
     const incrementCooldown = () => { setCount4(Cooldown + 5); }
     const DecrementCooldown = () => { if (Cooldown > 0) { setCount4(Cooldown - 5); } }
 
-    //adds all the states into a array adding it to the database
+    //adds all the states into a object to the database
     const Addpreset = async () => {
         if (presetnames.length !== 0 && !Prepare == 0 && !Sets == 0 && !Work == 0 && !Rest == 0 && !Cooldown == 0) {
             let curMax = 0;
@@ -42,28 +43,18 @@ const Timer = ({ navigation, route }) => {
             curMax++;
             const newPre = [...times2, { id: curMax, Name: presetnames, Prepare: Prepare, Sets: Sets, Work: Work, Rest: Rest, Cooldown: Cooldown }];
 
-            await setDoc(doc(db, "users", `${auth.currentUser.email}`),
-                {
-                    preset: newPre
-                },
-                { merge: true }
-            )
+            await setDbUser({preset: newPre})
+
             setTime(newPre)//sets the array
         } else {
             alert('fill in all the timers and sets and add a preset name');
         }
     }
 
-    //deletes from the database depending on the index of the array
+    //deletes from the database
     const deleteItem = async (id) => {
         const newPre = times2.filter(item => item.id != id)
-        await setDoc(doc(db, "users", `${auth.currentUser.email}`),
-            {
-
-                preset: newPre
-            },
-            { merge: true }
-        )
+        await setDbUser({preset: newPre})
         setTime(newPre)
     }
     //starts the preset timers, navigating to next screen
@@ -96,17 +87,9 @@ const Timer = ({ navigation, route }) => {
         }
     }
     //get data from database
-    const docRef = doc(db, "users", `${auth.currentUser.email}`);
     const getTime = async () => {
-        const docSnap = await getDoc(docRef)
-
-        if (docSnap.exists()) {
-            setTime2(docSnap.data().preset)//sets the data into array
-
-        } else {
-            console.log("No such document!");
-        }
-
+        const user = await getDbUser()
+        setTime2(user.preset)
     };
 
     //call get data everytime data is changed in the times1 array
