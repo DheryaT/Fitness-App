@@ -180,7 +180,7 @@ const Timer = ({ navigation, route }) => {
                             <View style={styles.SaveCan}>
                                 <TouchableOpacity
                                 //when user presses the save button it will call Addpreset method and exit the popup
-                                    onPress={() => { Addpreset(), setModalVisible(!modalVisible) }}
+                                    onPress={() => { Addpreset(), setModalVisible(!modalVisible),setPresetNames('') }}
                                 >
                                     <Text style={styles.texts}>Save</Text>
                                 </TouchableOpacity>
