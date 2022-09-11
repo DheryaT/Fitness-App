@@ -1,10 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View,} from 'react-native';
-import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase-config";
 import { useState } from "react";
 import { Pedometer } from 'expo-sensors';
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import { faPersonWalking } from '@fortawesome/free-solid-svg-icons/faPersonWalking';
 import { faHand } from '@fortawesome/free-solid-svg-icons/faHand';
 
