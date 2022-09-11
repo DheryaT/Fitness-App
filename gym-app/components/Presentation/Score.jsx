@@ -6,6 +6,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const Score = ({ history, clearHist, deleteItem }) => {
 
+    //Sorts history by ID, most recently added to be displayed at the top
     history.sort(function (a, b) { return a.id < b.id })
 
     return (
@@ -18,13 +19,15 @@ const Score = ({ history, clearHist, deleteItem }) => {
                     <FontAwesomeIcon icon={faTrashCan} size={25} color={'white'} />
                 </TouchableOpacity>
             </View>
-            <View style={styles.HeaderText}>
+            <View style={styles.HeaderText}
+                //headers for display of history board
+            >
                 <Text style={styles.headerFontLeft}>Reps</Text>
                 <Text style={styles.headerFontMid}>Weight</Text>
                 <Text style={styles.headerFontRight}>Max</Text>
                 <Text style={styles.headerFontRight}>Remove</Text>
             </View>
-            {history.map((item, index) =>
+            {history.map((item, index) => //for each object in calchistory field of database, print the reps, weight, and max
                 <View key={index} style={styles.historyItems}>
                     <View style={styles.lineContainer} key={index}>
                         <Text style={{ color: 'white', fontSize: 20, width: '25%', textAlign: "center" }}>{item.Reps}</Text>

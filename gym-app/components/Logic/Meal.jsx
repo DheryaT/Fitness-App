@@ -20,6 +20,7 @@ const Meal = ({ navigation, route }) => {
     const [editing, setEditing] = useState(0)
 
     const getUser = async () => {
+        //get the user mealplans field data
         const docSnap = await getDbUser()
         setlocalplans(docSnap.mealplans)
     };
@@ -30,17 +31,20 @@ const Meal = ({ navigation, route }) => {
 
 
     const toForm = (id) => {
+        //boolean for going to the form component when creating or editing schedule
         setEditing(id)
         setShowForm(true)
     }
 
     const deleteItem = async (id) => {
+        //remove mealschedule from the database
         const newRecords = localplans.filter(item => item.id != id)
         await setDbUser({mealplans: newRecords})
         setPlans(newRecords);
     }
 
     const createNew = async () => {
+        //creates a new meal plan schedule, with empty meal array, an id and a default name, and add to users data
         let max = 0
         localplans.forEach(item => { if (item.id > max) { max = item.id } })
         max++;
@@ -53,6 +57,7 @@ const Meal = ({ navigation, route }) => {
     }
 
     return (
+        //show the meal screen if you are not editing or creating a new mealplan, otherwise show the form screen component
         showForm ? <MealForm editing={editing} setShowForm={setShowForm} plans={localplans} deleting={deleteItem}/> :
             <View style={styles.container}>
                 <TouchableOpacity style={styles.AddBut} onPress={createNew}>

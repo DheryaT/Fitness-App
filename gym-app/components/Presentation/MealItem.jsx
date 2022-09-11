@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 const MealItem = ({ plan, extended, set, toForm, onDelete }) => {
 
     const toggle = () => {
+        //toggle the extended view of the plan on the mealplans screen
         if (extended.includes(plan.id)) {
             set(extended.filter(item => item != plan.id))
         } else {
@@ -31,7 +32,9 @@ const MealItem = ({ plan, extended, set, toForm, onDelete }) => {
             </View>
 
             {plan.meal.map((item, index) => ((!extended?.includes(plan.id)) ?
-                ((index < 3) ? <View style={styles.lineContainer} key={index}>
+                ((index < 3) ? <View style={styles.lineContainer} key={index}
+                //if there are less than 3 items in a plan or the plan does not have the extended id, leave as 3 or less items rendered, else render all the items
+                >
                     <Text style={{ color: 'white', width: '50%', fontSize: 18, textAlign: 'center' }}>{item.food}</Text>
                     <Text style={{ color: 'white', width: '50%', fontSize: 20, textAlign: 'center' }}>{item.amount}</Text>
                 </View> : <View key={index}></View>) :
