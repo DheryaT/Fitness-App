@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-import { loginFunction, logoutFunction } from '../api/Authentication';
+import { loginFunction, logoutFunction } from '../../api/Authentication';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { auth } from '../firebase-config';
+import { auth } from '../../firebase-config';
 
 const Login = ({ navigation, route }) => {
 

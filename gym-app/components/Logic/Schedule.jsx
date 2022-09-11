@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import { ScheduleForm } from "./ScheduleForm";
-import { ScheduleItem } from "./ScheduleItem";
+import { ScheduleItem } from "../Presentation/ScheduleItem";
 import { faPlus } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { getDbUser, setDbUser } from "../api/Database";
+import { getDbUser, setDbUser } from "../../api/Database";
 
 const Schedule = ({ navigation, route }) => {
 

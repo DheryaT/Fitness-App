@@ -6,9 +6,9 @@ import { faBookmark } from '@fortawesome/free-solid-svg-icons/faBookmark';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons/faCirclePlus';
 import { faCircleMinus } from '@fortawesome/free-solid-svg-icons/faCircleMinus';
 import { doc, DocumentSnapshot, getDoc, setDoc } from "firebase/firestore";
-import { auth, db } from "../firebase-config";
-import { TimerPresets } from "./TimerPresets";
-import { setDbUser,getDbUser } from "../api/Database";
+import { auth, db } from "../../firebase-config";
+import { TimerPresets } from "../Presentation/TimerPresets";
+import { setDbUser,getDbUser } from "../../api/Database";
 
 
 

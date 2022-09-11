@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { LogBox } from 'react-native';
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
-import { Login } from './components/Login';
+import { Login } from './components/Presentation/Login';
 import { Tabs } from './components/Tabs';
-import { Register } from './components/Register'
+import { Register } from './components/Presentation/Register'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { auth } from "./firebase-config";

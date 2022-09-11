@@ -2,16 +2,16 @@ import React from "react";
 import { StyleSheet, Text, Button, TouchableOpacity, Image } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home } from "./Home";
-import { Calculator } from "./Calculator";
-import { Meal } from "./Meal";
+import { Home } from "./Presentation/Home";
+import { Calculator } from "./Logic/Calculator";
+import { Meal } from "./Logic/Meal";
 import { logoutFunction } from "../api/Authentication";
 import { faCalendarDays } from '@fortawesome/free-regular-svg-icons/faCalendarDays'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faHouse, faStopwatch, faCalculator, faCircleQuestion, faUtensils } from '@fortawesome/free-solid-svg-icons/'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { TimerContainer } from "./TimerContainer";
-import { Schedule } from './Schedule'
+import { TimerContainer } from "./Logic/TimerContainer";
+import { Schedule } from './Logic/Schedule'
 
 const Tabs = (props) => {
   const Tab = createBottomTabNavigator();

@@ -1,24 +1,24 @@
 import React, { useState } from "react";
-import { ImageBackground, StyleSheet, Text, View, Image, TextInput, Button, FlatList, Item, TouchableOpacity } from 'react-native';
-import { faPlusCircle, faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons/'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { faPlusCircle, faXmark } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { setDbUser } from "../api/Database";
+import { setDbUser } from "../../api/Database";
 
-const MealForm = ({ editing, setShowForm, plans, deleting}) => {
+const ScheduleForm = ({ editing, setShowForm, plans }) => {
 
+    console.log(editing)
+    console.log(plans)
     const editObj = plans.find(item => item.id == editing)
-    const [pList, setPList] = useState(editObj.meal)
-
+    const [pList, setPList] = useState(editObj.workout)
     const [title, setTitle] = useState(editObj.name)
 
     const addItem = () => {
-        setPList([...pList, { food: '', amount: '' }])
+        setPList([...pList, { sets: '', exercise: '', reps: '' }])
     }
 
     const updateItem = (index, text, type) => {
-        setPList(pList.map((item, i) => i == index ? (type == 'food' ? Object.assign(item, { food: text }) : Object.assign(item, { amount: text })) : item))
-        console.log(pList)
+        setPList(pList.map((item, i) => i == index ? (type == 'sets' ? Object.assign(item, { sets: text }) : (type == 'exercise' ? Object.assign(item, { exercise: text }) : Object.assign(item, { reps: text }))) : item))
     }
 
     const deleteItem = (i) => {
@@ -26,8 +26,8 @@ const MealForm = ({ editing, setShowForm, plans, deleting}) => {
     }
 
     const saveSchedule = async () => {
-        const newSchedule = plans.map(item => editing == item.id ? { id: editObj.id, name: title, meal: pList } : item)
-        await setDbUser({mealplans: newSchedule})
+        const newSchedule = plans.map(item => editing == item.id ? { id: editObj.id, name: title, workout: pList } : item)
+        await setDbUser({schedule: newSchedule})
         setShowForm(false)
     }
 
@@ -38,8 +38,9 @@ const MealForm = ({ editing, setShowForm, plans, deleting}) => {
 
                 {pList.map((item, index) =>
                 (<View style={styles.container} key={index}>
-                    <TextInput placeholder="Food" defaultValue={item.food} style={styles.inputFood} onChangeText={(text) => updateItem(index, text, 'food')} />
-                    <TextInput placeholder="Amount" defaultValue={item.amount} style={styles.inputAmount} onChangeText={(text) => updateItem(index, text, 'amount')} />
+                    <TextInput defaultValue={item.sets} style={styles.inputNum} placeholder="Sets" onChangeText={(text) => updateItem(index, text, 'sets')} />
+                    <TextInput defaultValue={item.exercise} style={styles.input} placeholder="Exercise" onChangeText={(text) => updateItem(index, text, 'exercise')} />
+                    <TextInput defaultValue={item.reps} style={styles.inputNum} placeholder="Reps" onChangeText={(text) => updateItem(index, text, 'reps')} />
 
                     <TouchableOpacity style={styles.itemBut} onPress={() => deleteItem(index)}>
                         <FontAwesomeIcon icon={faXmark} size={25} color={'white'} />
@@ -52,11 +53,7 @@ const MealForm = ({ editing, setShowForm, plans, deleting}) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.controls}>
-                <TouchableOpacity style={styles.csBut} 
-                onPress={() => {
-                    setShowForm(false)
-                    deleting(editObj.id)
-                    }}>
+                <TouchableOpacity style={styles.csBut} onPress={() => setShowForm(false)}>
                     <Text style={styles.ButText}>Cancel</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.csBut} onPress={saveSchedule}>
@@ -74,9 +71,7 @@ const styles = StyleSheet.create({
         margin: 10,
         backgroundColor: 'rgb(89, 89, 89)',
         borderRadius: 5,
-        shadowOpacity: 0.7,
-        shadowOffset: { width: 5, height: 10 },
-
+        shadowOpacity: .5,
     },
     screenContainer: {
         backgroundColor: 'rgb(77, 77, 77)'
@@ -85,16 +80,35 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginVertical: '5%'
     },
+    Title: {
+        fontSize: 22
+    },
     ListItem: {
         borderWidth: 3,
-        borderColor: 'black',
+        borderColor: 'rgb(204, 153, 0)',
         margin: '5%',
         backgroundColor: 'rgb(64, 64, 64)',
         borderRadius: '10px',
         alignItems: 'center',
-        shadowOpacity: .7,
-        shadowOffset: { width: 10, height: 20 },
+        shadowOpacity: .5,
+        shadowOffset: { width: 10, height: 10 },
         padding: '5%'
+    },
+    Header: {
+        flex: 1,
+        flexDirection: 'row',
+        padding: '1%',
+        marginBottom: '2.5%'
+    },
+    HeaderBut: {
+        width: '10%'
+    },
+    HeaderTitle: {
+        width: '80%',
+        color: 'white',
+        fontSize: 26,
+        alignContent: 'center',
+        textAlign: 'center'
     },
     botBut: {
         marginTop: 20
@@ -104,9 +118,9 @@ const styles = StyleSheet.create({
         marginTop: 10,
 
     },
-    inputAmount: {
+    input: {
         backgroundColor: "#FFFFFF",
-        width: '40%',
+        width: '50%',
         padding: 5,
         fontSize: 16,
         borderRadius: 5,
@@ -120,7 +134,7 @@ const styles = StyleSheet.create({
     },
     inputTitle: {
         backgroundColor: "#FFFFFF",
-        width: '60%',
+        width: '70%',
         padding: 5,
         fontSize: 16,
         borderRadius: 5,
@@ -131,9 +145,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
         height: 50
     },
-    inputFood: {
+    inputNum: {
         backgroundColor: "#FFFFFF",
-        width: '50%',
+        width: '20%',
         padding: 5,
         fontSize: 16,
         borderRadius: 5,
@@ -152,9 +166,7 @@ const styles = StyleSheet.create({
         padding: '5%',
         margin: '5%',
         borderRadius: 5,
-        borderWidth: 3,
-        shadowOpacity: .7,
-        shadowOffset: { width: 5, height: 10 },
+        borderWidth: 3
     },
     ButText: {
         color: 'white',
@@ -165,4 +177,4 @@ const styles = StyleSheet.create({
 
 })
 
-export { MealForm };
+export { ScheduleForm };

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { ImageBackground, StyleSheet, Text, View, Image, TextInput, Button, Pressable, ScrollView } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { doc, setDoc, getDoc } from "firebase/firestore";
-import { auth, db } from "../firebase-config";
-import { Score } from "./Score";
-import { getDbUser, setDbUser } from "../api/Database";
-
+import { auth, db } from "../../firebase-config";
+import { Score } from "../Presentation/Score";
+import { getDbUser, setDbUser } from "../../api/Database";
+ 
 const Calculator = () => {
 
     const docRef = doc(db, "users", `${auth.currentUser.email}`);

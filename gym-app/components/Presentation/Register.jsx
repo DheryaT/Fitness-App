@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import {ImageBackground, StyleSheet,Text,View, Image,TextInput, TouchableOpacity,} from 'react-native';
-import { registerFunction } from '../api/Authentication';
+import { registerFunction } from '../../api/Authentication';
 import { Button } from 'react-native';
-import { auth } from '../firebase-config';
+import { auth } from '../../firebase-config';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'

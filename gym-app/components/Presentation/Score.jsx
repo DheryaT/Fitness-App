@@ -1,10 +1,7 @@
-import React, { useState } from "react";
-import { ImageBackground, StyleSheet, Text, View, Image, TextInput, Button, Pressable, TouchableOpacity } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
-import { doc, setDoc } from "firebase/firestore";
-import { auth, db } from "../firebase-config";
-import { faArrowTrendUp, faChevronDown, faChevronUp, faPenToSquare, faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons/'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons/';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import React from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 
 const Score = ({ history, clearHist, deleteItem }) => {

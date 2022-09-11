@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { ImageBackground, StyleSheet, Text, View, Image, TextInput, Button, FlatList, Item, TouchableOpacity } from 'react-native';
 import { MealForm } from "./MealForm";
-import { MealItem } from "./MealItem";
+import { MealItem } from "../Presentation/MealItem";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-import { auth, db } from "../firebase-config";
+import { auth, db } from "../../firebase-config";
 import { faPlus } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { setDbUser } from "../api/Database";
-import { getDbUser } from "../api/Database";
+import { setDbUser } from "../../api/Database";
+import { getDbUser } from "../../api/Database";
 
 const Meal = ({ navigation, route }) => {
 

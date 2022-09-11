@@ -1,7 +1,7 @@
 import React from "react";
 import { ImageBackground, StyleSheet, Text, View, Image, TextInput, Button, ComponentProvider } from 'react-native';
 import { doc, setDoc } from "firebase/firestore";
-import { auth, db } from "../firebase-config";
+import { auth, db } from "../../firebase-config";
 import { useState } from "react";
 import { Pedometer } from 'expo-sensors';
 import { Colors } from "react-native/Libraries/NewAppScreen";
