@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { ImageBackground, StyleSheet, Text, View, Image, TextInput, Button, FlatList, Item, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import { MealForm } from "./MealForm";
 import { MealItem } from "../Presentation/MealItem";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc } from "firebase/firestore";
 import { auth, db } from "../../firebase-config";
 import { faPlus } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'

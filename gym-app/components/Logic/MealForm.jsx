@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { ImageBackground, StyleSheet, Text, View, Image, TextInput, Button, FlatList, Item, TouchableOpacity } from 'react-native';
-import { faPlusCircle, faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons/'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { faPlusCircle, faXmark } from '@fortawesome/free-solid-svg-icons/'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { setDbUser } from "../../api/Database";
